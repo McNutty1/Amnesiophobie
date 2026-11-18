@@ -45,7 +45,12 @@ function injectSharedComponents() {
                     <a href="https://docs.google.com/spreadsheets/d/10579llo24tiTx4tbRTlYVezNB5G735TMe5cULdpR9VM/edit?gid=1937655390#gid=1937655390" target="_blank" rel="noopener noreferrer" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-1">
                         Termine <i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
                     </a>
-                </li>				
+                </li>
+                <li>
+                    <a href="https://us05web.zoom.us/j/5511865993?pwd=SGV3WTJENFIrdk8zSi8wRjExVkFXUT09" target="_blank" rel="noopener noreferrer" class="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-1">
+                        Vorbesprechung in Zoom starten<i data-lucide="external-link" class="w-3 h-3 text-slate-400"></i>
+                    </a>
+                </li>					
             </ul>
         </div>
 
