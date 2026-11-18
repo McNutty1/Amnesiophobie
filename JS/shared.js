@@ -20,7 +20,7 @@ function injectSharedComponents() {
             <ul class="space-y-1.5">
                 <li><a href="Vorrunde2027.html" class="hover:text-sky-600 dark:hover:text-sky-400 transition">Vorrunde 2027</a></li>			
                 <li><a href="Gegner.html" class="hover:text-sky-600 dark:hover:text-sky-400 transition">Gegner-Analyse</a></li>
-                <li><a href="Hauptrunde2027.html" class="hover:text-sky-600 dark:hover:text-sky-400 transition">Hauptrunde 2027</a></li>
+                <!--li><a href="Hauptrunde2027.html" class="hover:text-sky-600 dark:hover:text-sky-400 transition">Hauptrunde 2027</a></li-->
 				<!-- Füge hier weitere deiner Seiten hinzu -->
 				
                 <!-- <li><a href="deine-naechste-seite.html" class="hover:text-sky-600 dark:hover:text-sky-400 transition">Name der Seite</a></li> -->
