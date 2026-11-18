@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DQV Online Liga 2026 – Tabellenrechner</title>
+    <title>DQV Online Liga 2027 – Tabellenrechner</title>
     
     <!-- Theme Initialization -->
     <script>
@@ -67,7 +67,7 @@
             background: rgba(63, 63, 70, 0.6);
         }
 
-        /* Number Input Pfeile ausblenden für cleaner Look */
+        /* Number Input Pfeile ausblenden für cleanen Look */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { 
             -webkit-appearance: none; 
@@ -80,7 +80,7 @@
 </head>
 <body class="min-h-full flex flex-col bg-[#f8f9fa] dark:bg-[#0c0d0f] text-zinc-900 dark:text-zinc-100 antialiased selection:bg-accent selection:text-white transition-colors duration-150">
 
-    <!-- Top Navigation Bar (Editorial / Sports Data Look) -->
+    <!-- Top Navigation Bar -->
     <header class="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#121417]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
@@ -89,9 +89,9 @@
                 <div class="w-1.5 h-8 bg-accent rounded-full"></div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-accent">DQV Online-Liga 2026</span>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-accent">DQV Online-Liga 2027</span>
                         <span class="text-zinc-300 dark:text-zinc-700">•</span>
-                        <span class="text-[11px] font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Hauptrunde Gruppe 2</span>
+                        <span class="text-[11px] font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Hauptrunde Gruppe 1</span>
                     </div>
                     <h1 class="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
                         Tabellenrechner
@@ -102,18 +102,17 @@
             <!-- Controls: Szenario-Dropdown + Reset + Theme -->
             <div class="flex items-center gap-2">
                 
-                <!-- Szenario Auswahl (statt 8 bunter Buttons) -->
+                <!-- Szenario Auswahl -->
                 <div class="relative flex items-center">
                     <label for="preset-select" class="sr-only">Szenario wählen</label>
                     <select id="preset-select" onchange="handlePresetSelect(this.value)" 
                         class="appearance-none bg-zinc-100 dark:bg-zinc-800/90 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium pl-3 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-accent/40 cursor-pointer transition">
-                        <option value="custom" disabled selected>Szenario laden...</option>
-                        <option value="amnesia-wins">Amnesiophobie gewinnt alle Spiele</option>
-                        <option value="worst-case-meister">Minimal-Anforderung für Titel</option>
-                        <option value="favorites">Favoritensiege (nach aktuellem Score)</option>
-                        <option value="max-chaos">Enges Finale (Tie-Breaker Test)</option>
-                        <option value="random">Zufällige Ergebnisse</option>
-                        <option value="amnesia-loses-all">Worst Case (Amnesiophobie verliert alles)</option>
+                        <option value="custom" disabled selected>Szenario auswählen...</option>
+                        <option value="AMP-wins">Amnesiophobie gewinnt alle Spiele</option>
+                        <option value="random">Komplette Saison zufällig simulieren</option>
+                        <option value="random-week">Aktuellen Spieltag zufällig simulieren</option>
+                        <option value="all-draws">Nur Unentschieden (Tie-Breaker Test)</option>
+                        <option value="AMP-loses-all">Worst Case (Amnesiophobie verliert alles)</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 pointer-events-none"></i>
                 </div>
@@ -144,22 +143,22 @@
             <!-- LINKE SPALTE: Fokus-Team & Live-Tabelle (7 Spalten) -->
             <div class="lg:col-span-7 flex flex-col gap-6">
 
-                <!-- Fokus-Panel: Amnesiophobie (Clean Data Card statt AI-Glow-Box) -->
+                <!-- Fokus-Panel: Amnesiophobie -->
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     <!-- Top Bar des Fokus-Panels -->
                     <div class="px-5 py-4 border-b border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center gap-3.5">
                             <div class="w-10 h-10 rounded-md bg-zinc-900 dark:bg-zinc-800 text-white flex items-center justify-center font-mono font-bold text-base border border-zinc-700">
-                                #<span id="amnesia-rank-display">1</span>
+                                #<span id="AMP-rank-display">1</span>
                             </div>
                             <div>
                                 <div class="flex items-center gap-2.5">
                                     <h2 class="text-base font-bold text-zinc-900 dark:text-white tracking-tight">Amnesiophobie</h2>
-                                    <span id="title-status-badge" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-accent/10 text-accent border border-accent/20">
-                                        Tabellenführer
+                                    <span id="title-status-badge" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20">
+                                        Saisonstart
                                     </span>
                                 </div>
-                                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Fokus-Team • Meisterschaftsanalyse</p>
+                                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">Fokus-Team • Saisonanalyse</p>
                             </div>
                         </div>
 
@@ -167,25 +166,25 @@
                         <div class="flex items-center gap-6">
                             <div class="text-right">
                                 <div class="text-[11px] uppercase tracking-wider font-semibold text-zinc-400">Gesamt-Score</div>
-                                <div id="amnesia-score-display" class="font-mono text-base font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">287</div>
+                                <div id="AMP-score-display" class="font-mono text-base font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">0</div>
                             </div>
                             <div class="h-8 w-px bg-zinc-200 dark:bg-zinc-800"></div>
                             <div class="text-right">
                                 <div class="text-[11px] uppercase tracking-wider font-semibold text-zinc-400">Punkte</div>
-                                <div id="amnesia-points-display" class="font-mono text-xl font-extrabold text-accent tabular-nums">28</div>
+                                <div id="AMP-points-display" class="font-mono text-xl font-extrabold text-accent tabular-nums">0</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Metrik-Zeile (Subtile Trennlinien statt 3 Kacheln) -->
+                    <!-- Metrik-Zeile -->
                     <div class="grid grid-cols-3 divide-x divide-zinc-100 dark:divide-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/30 border-b border-zinc-100 dark:border-zinc-800/80">
                         <div class="px-4 py-3">
                             <div class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Vorsprung / Rückstand</div>
-                            <div id="gap-to-second" class="font-mono text-sm font-bold text-zinc-900 dark:text-white mt-0.5 tabular-nums">+8 Pkt</div>
+                            <div id="gap-to-second" class="font-mono text-sm font-bold text-zinc-900 dark:text-white mt-0.5 tabular-nums">0 Pkt</div>
                         </div>
                         <div class="px-4 py-3">
                             <div class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Offene Partien</div>
-                            <div id="remaining-matches" class="font-mono text-sm font-bold text-zinc-900 dark:text-white mt-0.5 tabular-nums">2 Spiele</div>
+                            <div id="remaining-matches" class="font-mono text-sm font-bold text-zinc-900 dark:text-white mt-0.5 tabular-nums">9 Spiele</div>
                         </div>
                         <div class="px-4 py-3">
                             <div class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">Max. mögl. Punkte</div>
@@ -193,22 +192,13 @@
                         </div>
                     </div>
 
-                    <!-- Status-Meldung & Rechnerische Kandidaten -->
+                    <!-- Status-Meldung -->
                     <div class="p-4 sm:px-5 space-y-3">
                         <div id="status-message-box" class="text-xs leading-relaxed text-zinc-700 dark:text-zinc-300 flex items-start gap-2.5">
                             <i data-lucide="info" class="w-4 h-4 text-accent shrink-0 mt-0.5"></i>
                             <div id="status-message-text">
-                                Amnesiophobie führt die Tabelle souverän an.
+                                Noch keine Spiele eingetragen. Wähle rechts einen Spieltag aus, um Ergebnisse zu simulieren.
                             </div>
-                        </div>
-
-                        <!-- Kompakte Liste der Verfolger -->
-                        <div class="pt-2.5 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
-                            <span class="font-semibold text-zinc-700 dark:text-zinc-300">Max. erreichbar:</span>
-                            <span><strong class="text-zinc-800 dark:text-zinc-200 font-mono">36</strong> Amnesiophobie</span>
-                            <span><strong class="text-zinc-800 dark:text-zinc-200 font-mono">28</strong> Suedwestkurve</span>
-                            <span><strong class="text-zinc-800 dark:text-zinc-200 font-mono">28</strong> Bremer Stadtq.</span>
-                            <span class="line-through opacity-60"><strong class="font-mono">27</strong> FBI</span>
                         </div>
                     </div>
                 </section>
@@ -227,7 +217,6 @@
                                     <th class="py-2.5 pl-4 pr-2 text-center w-12">Pl.</th>
                                     <th class="py-2.5 px-3">Team</th>
                                     <th class="py-2.5 px-2 text-center w-10" title="Gespielte Partien">Sp.</th>
-                                    <th class="py-2.5 px-2 text-right w-14" title="Punkte aus simulierten Spielen">Sim.</th>
                                     <th class="py-2.5 px-3 text-right w-16" title="Erzielte Quiz-Punkte (Score)">Score</th>
                                     <th class="py-2.5 px-2.5 text-right w-14 hidden sm:table-cell" title="Buchholz-Zahl (Summe gegnerischer Punkte)">BHZ</th>
                                     <th class="py-2.5 px-2.5 text-right w-14 hidden md:table-cell" title="Feine Buchholz-Zahl">fBHZ</th>
@@ -248,22 +237,14 @@
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     
                     <!-- Spieltag-Header mit Segmented Control -->
-                    <div class="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-3">
+                    <div class="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Begegnungen</h3>
-                            <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Ergebnis & optionalen Score wählen</p>
+                            <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Spieltag <span id="active-week-title">1</span></h3>
                         </div>
 
-                        <!-- Tab Switcher -->
-                        <div class="inline-flex rounded-md bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800">
-                            <button onclick="switchTab('week8')" id="tab-week8" 
-                                class="px-3 py-1.5 rounded text-xs font-semibold transition bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs">
-                                Spieltag 8
-                            </button>
-                            <button onclick="switchTab('week9')" id="tab-week9" 
-                                class="px-3 py-1.5 rounded text-xs font-medium transition text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200">
-                                Spieltag 9
-                            </button>
+                        <!-- Tab Switcher (Spieltage 1 bis 9) -->
+                        <div id="week-tabs-container" class="inline-flex flex-wrap rounded-md bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800">
+                            <!-- Wird dynamisch gerendert -->
                         </div>
                     </div>
 
@@ -288,8 +269,8 @@
     <!-- Minimalistischer Footer -->
     <footer class="border-t border-zinc-200 dark:border-zinc-800/80 py-5 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <span>DQV Online-Liga 2026 • Hauptrunde Gruppe 2</span>
-            <span>Stand: Nach Spieltag 7</span>
+            <span>DQV Online-Liga 2027 • Hauptrunde Gruppe 1</span>
+            <span>Dummy-Spielplan (Jeder gegen jeden • 9 Spieltage)</span>
         </div>
     </footer>
 
@@ -301,88 +282,127 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        // Ausgangsdaten nach Spieltag 7
+        // Ausgangsdaten: Alle Teams starten bei 0
         const initialTeams = [
-            { id: 'amnesia', name: 'Amnesiophobie', p: 28, score: 287, played: 7, initialRank: 1 },
-            { id: 'suedwest', name: 'Suedwestkurve', p: 20, score: 234, played: 7, initialRank: 2 },
-            { id: 'bremer', name: 'Die Bremer Stadtquizzikanten', p: 20, score: 207, played: 7, initialRank: 3 },
-            { id: 'fbi', name: 'Federal Bureau of Inquizication', p: 19, score: 266, played: 7, initialRank: 4 },
-            { id: 'mcquiz', name: 'Quizzy McQuizface', p: 16, score: 193, played: 7, initialRank: 5 },
-            { id: 'grani', name: 'AC-Quiz-Grani', p: 14, score: 221, played: 7, initialRank: 6 },
-            { id: 'kate', name: 'Qiss me, Kate', p: 14, score: 214, played: 7, initialRank: 7 },
-            { id: 'schall', name: 'Schall & Rauch', p: 11, score: 230, played: 7, initialRank: 8 },
-            { id: 'ahlenfelder', name: 'Ahlenfelders Erben', p: 5, score: 207, played: 7, initialRank: 9 },
-            { id: 'haute', name: 'Haute Quizine', p: 3, score: 182, played: 7, initialRank: 10 }
+            { id: 'AMP', name: 'Amnesiophobie' },
+            { id: 'JuS', name: 'Jäger und Sammler' },
+            { id: 'QVR', name: 'Quiz van der Rohe' },
+            { id: 'BOB', name: 'Best of Breitensport' },
+            { id: 'GEP', name: 'Gemischtes Pack' },
+            { id: 'DQV', name: 'Die Quizverzager' },
+            { id: 'SVK', name: 'Senat und Volk von Köln' },
+            { id: 'QFL', name: 'Quiztenflosser' },
+            { id: 'fue', name: 'fiffig & entelligent' },
+            { id: 'RWB', name: 'Ratwurstbude' }
         ];
 
-        // Vergangene Begegnungen (Spieltage 1–7) für Buchholz-Berechnung
-        const pastFixtures = [
-            // Spieltag 1
-            { home: 'amnesia', away: 'suedwest' }, { home: 'bremer', away: 'haute' },
-            { home: 'fbi', away: 'ahlenfelder' }, { home: 'grani', away: 'kate' },
-            { home: 'mcquiz', away: 'schall' },
-            // Spieltag 2
-            { home: 'amnesia', away: 'bremer' }, { home: 'suedwest', away: 'schall' },
-            { home: 'fbi', away: 'grani' }, { home: 'mcquiz', away: 'haute' },
-            { home: 'kate', away: 'ahlenfelder' },
-            // Spieltag 3
-            { home: 'amnesia', away: 'grani' }, { home: 'suedwest', away: 'bremer' },
-            { home: 'fbi', away: 'haute' }, { home: 'schall', away: 'ahlenfelder' },
-            { home: 'kate', away: 'mcquiz' },
-            // Spieltag 4
-            { home: 'amnesia', away: 'schall' }, { home: 'suedwest', away: 'haute' },
-            { home: 'bremer', away: 'ahlenfelder' }, { home: 'fbi', away: 'mcquiz' },
-            { home: 'grani', away: 'ahlenfelder' },
-            // Spieltag 5
-            { home: 'amnesia', away: 'haute' }, { home: 'suedwest', away: 'mcquiz' },
-            { home: 'bremer', away: 'grani' }, { home: 'fbi', away: 'kate' },
-            { home: 'schall', away: 'haute' },
-            // Spieltag 6
-            { home: 'amnesia', away: 'kate' }, { home: 'suedwest', away: 'ahlenfelder' },
-            { home: 'bremer', away: 'mcquiz' }, { home: 'fbi', away: 'schall' },
-            { home: 'grani', away: 'haute' },
-            // Spieltag 7
-            { home: 'amnesia', away: 'ahlenfelder' }, { home: 'bremer', away: 'schall' },
-            { home: 'fbi', away: 'suedwest' }, { home: 'haute', away: 'kate' },
-            { home: 'grani', away: 'mcquiz' }
-        ];
-
-        // Offene Spieltage 8 & 9
+        // Sauberer Dummy-Spielplan für alle 9 Spieltage (Jeder gegen jeden, eindeutige Match-IDs)
         const initialFixtures = {
+            week1: [
+                { id: 'w1_m1', home: 'AMP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w1_m2', home: 'JuS', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w1_m3', home: 'QVR', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w1_m4', home: 'BOB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w1_m5', home: 'GEP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week2: [
+                { id: 'w2_m1', home: 'RWB', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w2_m2', home: 'SVK', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w2_m3', home: 'QFL', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w2_m4', home: 'fue', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w2_m5', home: 'AMP', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week3: [
+                { id: 'w3_m1', home: 'JuS', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w3_m2', home: 'QVR', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w3_m3', home: 'BOB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w3_m4', home: 'GEP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w3_m5', home: 'DQV', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week4: [
+                { id: 'w4_m1', home: 'RWB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w4_m2', home: 'QFL', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w4_m3', home: 'fue', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w4_m4', home: 'AMP', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w4_m5', home: 'JuS', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week5: [
+                { id: 'w5_m1', home: 'QVR', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w5_m2', home: 'BOB', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w5_m3', home: 'GEP', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w5_m4', home: 'DQV', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w5_m5', home: 'SVK', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week6: [
+                { id: 'w6_m1', home: 'RWB', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w6_m2', home: 'fue', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w6_m3', home: 'AMP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w6_m4', home: 'JuS', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w6_m5', home: 'QVR', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
+            week7: [
+                { id: 'w7_m1', home: 'BOB', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w7_m2', home: 'GEP', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w7_m3', home: 'DQV', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w7_m4', home: 'SVK', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w7_m5', home: 'QFL', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+            ],
             week8: [
-                { id: 'w8_m1', home: 'amnesia', away: 'fbi', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m2', home: 'haute', away: 'schall', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m3', home: 'bremer', away: 'mcquiz', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m4', home: 'kate', away: 'suedwest', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m5', home: 'ahlenfelder', away: 'grani', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+                { id: 'w8_m1', home: 'RWB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w8_m2', home: 'AMP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w8_m3', home: 'JuS', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w8_m4', home: 'QVR', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w8_m5', home: 'BOB', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 }
             ],
             week9: [
-                { id: 'w9_m1', home: 'amnesia', away: 'mcquiz', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m2', home: 'grani', away: 'suedwest', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m3', home: 'bremer', away: 'fbi', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m4', home: 'ahlenfelder', away: 'haute', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m5', home: 'kate', away: 'schall', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+                { id: 'w9_m1', home: 'GEP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w9_m2', home: 'DQV', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w9_m3', home: 'SVK', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w9_m4', home: 'QFL', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
+                { id: 'w9_m5', home: 'fue', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 }
             ]
         };
 
         let fixtures = JSON.parse(JSON.stringify(initialFixtures));
-        let activeWeek = 'week8';
+        let activeWeek = 'week1';
 
         function getTeam(id) {
             return initialTeams.find(t => t.id === id);
         }
 
+        function renderWeekTabs() {
+            const container = document.getElementById('week-tabs-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            for (let i = 1; i <= 9; i++) {
+                const weekKey = `week${i}`;
+                const isActive = activeWeek === weekKey;
+                // Prüfen, ob an diesem Spieltag schon mindestens ein Ergebnis eingetragen wurde
+                const hasResults = fixtures[weekKey].some(m => m.result !== 'none');
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => switchTab(weekKey);
+                btn.className = isActive
+                    ? "relative px-2.5 py-1 rounded text-xs font-semibold transition bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs"
+                    : "relative px-2.5 py-1 rounded text-xs font-medium transition text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200";
+                
+                btn.innerHTML = `
+                    ${i}
+                    ${hasResults ? '<span class="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-accent"></span>' : ''}
+                `;
+                container.appendChild(btn);
+            }
+        }
+
         function switchTab(week) {
             activeWeek = week;
-            ['week8', 'week9'].forEach(w => {
-                const btn = document.getElementById(`tab-${w}`);
-                if (!btn) return;
-                if (w === week) {
-                    btn.className = "px-3 py-1.5 rounded text-xs font-semibold transition bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs";
-                } else {
-                    btn.className = "px-3 py-1.5 rounded text-xs font-medium transition text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200";
-                }
-            });
+            const weekNum = week.replace('week', '');
+            const titleEl = document.getElementById('active-week-title');
+            if (titleEl) titleEl.innerText = weekNum;
+            
+            renderWeekTabs();
             renderFixtures();
         }
 
@@ -431,48 +451,36 @@
             initialTeams.forEach(t => {
                 tableMap[t.id] = {
                     ...t,
-                    addPoints: 0,
-                    addScore: 0,
-                    matchesSimulated: 0,
+                    totalPoints: 0,
+                    totalScore: 0,
+                    totalPlayed: 0,
                     opponents: []
                 };
-            });
-
-            pastFixtures.forEach(m => {
-                if (tableMap[m.home] && tableMap[m.away]) {
-                    tableMap[m.home].opponents.push(m.away);
-                    tableMap[m.away].opponents.push(m.home);
-                }
             });
 
             Object.keys(fixtures).forEach(w => {
                 fixtures[w].forEach(m => {
                     if (m.result !== 'none') {
                         const { homeP, awayP } = getPointsFromResult(m.result);
-                        tableMap[m.home].addPoints += homeP;
-                        tableMap[m.away].addPoints += awayP;
-                        tableMap[m.home].addScore += parseInt(m.homeAddScore || 0);
-                        tableMap[m.away].addScore += parseInt(m.awayAddScore || 0);
-                        tableMap[m.home].matchesSimulated += 1;
-                        tableMap[m.away].matchesSimulated += 1;
+                        tableMap[m.home].totalPoints += homeP;
+                        tableMap[m.away].totalPoints += awayP;
+                        tableMap[m.home].totalScore += parseInt(m.homeAddScore || 0);
+                        tableMap[m.away].totalScore += parseInt(m.awayAddScore || 0);
+                        tableMap[m.home].totalPlayed += 1;
+                        tableMap[m.away].totalPlayed += 1;
                         tableMap[m.home].opponents.push(m.away);
                         tableMap[m.away].opponents.push(m.home);
                     }
                 });
             });
 
-            Object.keys(tableMap).forEach(id => {
-                const t = tableMap[id];
-                t.totalPoints = t.p + t.addPoints;
-                t.totalScore = t.score + t.addScore;
-                t.totalPlayed = t.played + t.matchesSimulated;
-            });
-
+            // Buchholz-Zahl (Summe der Punkte der bisherigen Gegner)
             Object.keys(tableMap).forEach(id => {
                 const t = tableMap[id];
                 t.bhz = t.opponents.reduce((sum, oppId) => sum + (tableMap[oppId] ? tableMap[oppId].totalPoints : 0), 0);
             });
 
+            // Feine Buchholz-Zahl (Summe der BHZ der bisherigen Gegner)
             Object.keys(tableMap).forEach(id => {
                 const t = tableMap[id];
                 t.fbhz = t.opponents.reduce((sum, oppId) => sum + (tableMap[oppId] ? tableMap[oppId].bhz : 0), 0);
@@ -496,65 +504,52 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const amnesiaData = currentTable.find(t => t.id === 'amnesia');
-            const amnesiaRank = currentTable.findIndex(t => t.id === 'amnesia') + 1;
+            const AMPData = currentTable.find(t => t.id === 'AMP');
+            const AMPRank = currentTable.findIndex(t => t.id === 'AMP') + 1;
 
             currentTable.forEach((team, index) => {
                 const rank = index + 1;
-                const isAmnesia = team.id === 'amnesia';
-                const rankDiff = team.initialRank - rank;
-
-                let trendHtml = '';
-                if (rankDiff > 0) {
-                    trendHtml = `<span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 ml-1">▲${rankDiff}</span>`;
-                } else if (rankDiff < 0) {
-                    trendHtml = `<span class="text-[10px] font-mono text-rose-600 dark:text-rose-400 ml-1">▼${Math.abs(rankDiff)}</span>`;
-                }
+                const isAMP = team.id === 'AMP';
 
                 const tr = document.createElement('tr');
-                tr.className = isAmnesia
+                tr.className = isAMP
                     ? 'bg-accent/[0.06] dark:bg-accent/[0.08] font-medium'
                     : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors';
 
                 tr.innerHTML = `
                     <td class="py-2.5 pl-4 pr-2 text-center font-mono tabular-nums relative">
-                        ${isAmnesia ? '<span class="absolute left-0 top-1 bottom-1 w-0.5 bg-accent"></span>' : ''}
-                        <span class="font-bold ${rank === 1 ? 'text-accent' : 'text-zinc-700 dark:text-zinc-300'}">${rank}</span>${trendHtml}
+                        ${isAMP ? '<span class="absolute left-0 top-1 bottom-1 w-0.5 bg-accent"></span>' : ''}
+                        <span class="font-bold ${rank === 1 && team.totalPlayed > 0 ? 'text-accent' : 'text-zinc-700 dark:text-zinc-300'}">${rank}</span>
                     </td>
                     <td class="py-2.5 px-3">
                         <div class="flex items-center gap-2">
-                            <span class="${isAmnesia ? 'font-bold text-zinc-900 dark:text-white' : 'font-medium text-zinc-800 dark:text-zinc-200'} truncate max-w-[180px] sm:max-w-[230px]">
+                            <span class="${isAMP ? 'font-bold text-zinc-900 dark:text-white' : 'font-medium text-zinc-800 dark:text-zinc-200'} truncate max-w-[180px] sm:max-w-[240px]">
                                 ${team.name}
                             </span>
                         </div>
                     </td>
                     <td class="py-2.5 px-2 text-center font-mono text-zinc-500 dark:text-zinc-400 tabular-nums">${team.totalPlayed}</td>
-                    <td class="py-2.5 px-2 text-right font-mono tabular-nums">
-                        ${team.addPoints > 0 
-                            ? `<span class="text-emerald-600 dark:text-emerald-400 font-semibold">+${team.addPoints}</span>` 
-                            : `<span class="text-zinc-300 dark:text-zinc-700">0</span>`}
-                    </td>
                     <td class="py-2.5 px-3 text-right font-mono text-zinc-700 dark:text-zinc-300 tabular-nums">${team.totalScore}</td>
                     <td class="py-2.5 px-2.5 text-right font-mono text-zinc-500 dark:text-zinc-400 tabular-nums hidden sm:table-cell">${team.bhz}</td>
                     <td class="py-2.5 px-2.5 text-right font-mono text-zinc-400 dark:text-zinc-500 tabular-nums hidden md:table-cell">${team.fbhz}</td>
-                    <td class="py-2.5 pl-3 pr-4 text-right font-mono font-bold tabular-nums ${isAmnesia ? 'text-accent' : 'text-zinc-900 dark:text-white'}">
+                    <td class="py-2.5 pl-3 pr-4 text-right font-mono font-bold tabular-nums ${isAMP ? 'text-accent' : 'text-zinc-900 dark:text-white'}">
                         ${team.totalPoints}
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            updateAmnesiaDashboard(amnesiaRank, amnesiaData, currentTable);
+            updateAMPDashboard(AMPRank, AMPData, currentTable);
             if (window.lucide) lucide.createIcons();
         }
 
-        function updateAmnesiaDashboard(rank, amnesia, fullTable) {
-            document.getElementById('amnesia-rank-display').innerText = rank;
-            document.getElementById('amnesia-points-display').innerText = amnesia.totalPoints;
-            document.getElementById('amnesia-score-display').innerText = amnesia.totalScore;
+        function updateAMPDashboard(rank, AMP, fullTable) {
+            document.getElementById('AMP-rank-display').innerText = rank;
+            document.getElementById('AMP-points-display').innerText = AMP.totalPoints;
+            document.getElementById('AMP-score-display').innerText = AMP.totalScore;
 
             const rival = rank === 1 ? fullTable[1] : fullTable[0];
-            const gap = amnesia.totalPoints - rival.totalPoints;
+            const gap = AMP.totalPoints - rival.totalPoints;
             const gapDisplay = document.getElementById('gap-to-second');
 
             if (gap > 0) {
@@ -564,40 +559,52 @@
                 gapDisplay.innerText = `${gap} Pkt`;
                 gapDisplay.className = "font-mono text-sm font-bold text-rose-600 dark:text-rose-400 mt-0.5 tabular-nums";
             } else {
-                gapDisplay.innerText = `0 (Tie-Breaker)`;
-                gapDisplay.className = "font-mono text-sm font-bold text-amber-600 dark:text-amber-400 mt-0.5 tabular-nums";
+                gapDisplay.innerText = `0 Pkt`;
+                gapDisplay.className = "font-mono text-sm font-bold text-zinc-700 dark:text-zinc-300 mt-0.5 tabular-nums";
             }
 
-            let amnesiaUnplayed = 0;
+            let AMPUnplayed = 0;
+            let totalSimulatedMatches = 0;
             Object.keys(fixtures).forEach(w => {
                 fixtures[w].forEach(m => {
-                    if ((m.home === 'amnesia' || m.away === 'amnesia') && m.result === 'none') {
-                        amnesiaUnplayed++;
+                    if (m.result !== 'none') totalSimulatedMatches++;
+                    if ((m.home === 'AMP' || m.away === 'AMP') && m.result === 'none') {
+                        AMPUnplayed++;
                     }
                 });
             });
 
-            document.getElementById('remaining-matches').innerText = `${amnesiaUnplayed} ${amnesiaUnplayed === 1 ? 'Spiel' : 'Spiele'}`;
-            document.getElementById('max-possible-points').innerText = `${amnesia.totalPoints + (amnesiaUnplayed * 4)} Pkt`;
+            const maxPossible = AMP.totalPoints + (AMPUnplayed * 4);
+            document.getElementById('remaining-matches').innerText = `${AMPUnplayed} ${AMPUnplayed === 1 ? 'Spiel' : 'Spiele'}`;
+            document.getElementById('max-possible-points').innerText = `${maxPossible} Pkt`;
 
             const statusBadge = document.getElementById('title-status-badge');
             const statusText = document.getElementById('status-message-text');
 
-            if (rank === 1) {
-                // Rechnerischer Titelcheck (Verfolger können max. 28 Pkt erreichen)
-                if (amnesia.totalPoints >= 29 || amnesiaUnplayed === 0) {
-                    statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
-                    statusBadge.innerText = "Meister";
-                    statusText.innerHTML = `<strong>Meisterschaft gesichert:</strong> Mit ${amnesia.totalPoints} Punkten ist Amnesiophobie in diesem Szenario nicht mehr von Platz 1 zu verdrängen.`;
-                } else {
-                    statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-accent/10 text-accent border border-accent/20";
-                    statusBadge.innerText = "Platz 1";
-                    statusText.innerHTML = `Amnesiophobie führt mit <strong>${gap} Punkt(en)</strong> Vorsprung vor ${rival.name}. Ein einziges Remis (2 Pkt) aus den letzten ${amnesiaUnplayed} Spielen genügt aus eigener Kraft zum Titel.`;
-                }
+            // Maximale Punkte, die irgendein Konkurrent noch erreichen kann
+            const maxRivalPoints = fullTable
+                .filter(t => t.id !== 'AMP')
+                .reduce((max, t) => {
+                    const unplayed = 9 - t.totalPlayed;
+                    return Math.max(max, t.totalPoints + unplayed * 4);
+                }, 0);
+
+            if (totalSimulatedMatches === 0) {
+                statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20";
+                statusBadge.innerText = "Saisonstart";
+                statusText.innerHTML = `Alle Teams starten bei <strong>0 Punkten</strong>. Trage rechts Ergebnisse für die 9 Spieltage ein, um die Tabelle live zu berechnen.`;
+            } else if (rank === 1 && AMP.totalPoints > maxRivalPoints) {
+                statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
+                statusBadge.innerText = "Meister";
+                statusText.innerHTML = `<strong>Meisterschaft gesichert:</strong> Mit ${AMP.totalPoints} Punkten ist Amnesiophobie rechnerisch nicht mehr von Platz 1 zu verdrängen.`;
+            } else if (rank === 1) {
+                statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-accent/10 text-accent border border-accent/20";
+                statusBadge.innerText = "Platz 1";
+                statusText.innerHTML = `Amnesiophobie führt die Tabelle nach ${AMP.totalPlayed} ${AMP.totalPlayed === 1 ? 'Spiel' : 'Spielen'} mit <strong>${AMP.totalPoints} Punkten</strong> (${gap > 0 ? `+${gap} vor ${rival.name}` : `punktgleich mit ${rival.name}`}) an.`;
             } else {
-                statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20";
+                statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20";
                 statusBadge.innerText = `Platz ${rank}`;
-                statusText.innerHTML = `<strong>${fullTable[0].name}</strong> liegt aktuell mit ${fullTable[0].totalPoints} Punkten vorne (${Math.abs(gap)} Punkte vor Amnesiophobie).`;
+                statusText.innerHTML = `<strong>${fullTable[0].name}</strong> liegt aktuell mit ${fullTable[0].totalPoints} Punkten auf Platz 1 (${Math.abs(gap)} ${Math.abs(gap) === 1 ? 'Punkt' : 'Punkte'} vor Amnesiophobie).`;
             }
         }
 
@@ -618,10 +625,10 @@
             currentWeekMatches.forEach(m => {
                 const homeTeam = getTeam(m.home);
                 const awayTeam = getTeam(m.away);
-                const isAmnesiaMatch = m.home === 'amnesia' || m.away === 'amnesia';
+                const isAMPMatch = m.home === 'AMP' || m.away === 'AMP';
 
                 const row = document.createElement('div');
-                row.className = `p-4 transition-colors ${isAmnesiaMatch ? 'bg-accent/[0.03] dark:bg-accent/[0.04]' : 'hover:bg-zinc-50/60 dark:hover:bg-zinc-900/30'}`;
+                row.className = `p-4 transition-colors ${isAMPMatch ? 'bg-accent/[0.03] dark:bg-accent/[0.04]' : 'hover:bg-zinc-50/60 dark:hover:bg-zinc-900/30'}`;
 
                 const buttonsHtml = resultOptions.map(opt => {
                     const isActive = m.result === opt.key;
@@ -641,13 +648,13 @@
                     <!-- Teams Zeile -->
                     <div class="flex items-center justify-between gap-2 mb-3">
                         <div class="flex-1 min-w-0">
-                            <span class="text-xs sm:text-[13px] truncate block ${m.home === 'amnesia' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
+                            <span class="text-xs sm:text-[13px] truncate block ${m.home === 'AMP' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
                                 ${homeTeam.name}
                             </span>
                         </div>
                         <span class="text-[11px] font-mono text-zinc-400 px-1.5">vs.</span>
                         <div class="flex-1 min-w-0 text-right">
-                            <span class="text-xs sm:text-[13px] truncate block ${m.away === 'amnesia' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
+                            <span class="text-xs sm:text-[13px] truncate block ${m.away === 'AMP' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
                                 ${awayTeam.name}
                             </span>
                         </div>
@@ -660,7 +667,7 @@
                         </div>
 
                         <!-- Kompakte Score-Eingabe -->
-                        <div class="flex items-center gap-1 pl-2 border-l border-zinc-200 dark:border-zinc-800" title="Zusätzlicher Quiz-Score (optional)">
+                        <div class="flex items-center gap-1 pl-2 border-l border-zinc-200 dark:border-zinc-800" title="Quiz-Score des Spiels (optional)">
                             <input type="number" min="0" placeholder="–" value="${m.homeAddScore || ''}"
                                 onchange="setMatchScore('${activeWeek}', '${m.id}', 'home', this.value)"
                                 class="w-9 h-7 rounded bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center font-mono text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-accent">
@@ -681,6 +688,7 @@
                 match.result = (match.result === resultType) ? 'none' : resultType;
             }
             document.getElementById('preset-select').value = 'custom';
+            renderWeekTabs();
             renderFixtures();
             renderTable();
         }
@@ -702,13 +710,23 @@
         }
 
         function applyPreset(type) {
-            fixtures = JSON.parse(JSON.stringify(initialFixtures));
             const outcomes = ['home_win', 'home_close', 'draw', 'away_close', 'away_win'];
 
             if (type === 'reset') {
+                fixtures = JSON.parse(JSON.stringify(initialFixtures));
                 document.getElementById('preset-select').value = 'custom';
             } 
+            else if (type === 'random-week') {
+                fixtures[activeWeek].forEach(m => {
+                    m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
+                    const scores = generateConsistentScores(m.result);
+                    m.homeAddScore = scores.homeScore;
+                    m.awayAddScore = scores.awayScore;
+                });
+                document.getElementById('preset-select').value = 'custom';
+            }
             else if (type === 'random') {
+                fixtures = JSON.parse(JSON.stringify(initialFixtures));
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
                         m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
@@ -718,45 +736,13 @@
                     });
                 });
             }
-            else if (type === 'amnesia-wins') {
+            else if (type === 'AMP-wins') {
+                fixtures = JSON.parse(JSON.stringify(initialFixtures));
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
-                        if (m.home === 'amnesia') m.result = 'home_win';
-                        else if (m.away === 'amnesia') m.result = 'away_win';
-                        else {
-                            const hTeam = getTeam(m.home);
-                            const aTeam = getTeam(m.away);
-                            m.result = hTeam.score >= aTeam.score ? 'home_close' : 'away_close';
-                        }
-                        const scores = generateConsistentScores(m.result);
-                        m.homeAddScore = scores.homeScore;
-                        m.awayAddScore = scores.awayScore;
-                    });
-                });
-            }
-            else if (type === 'worst-case-meister') {
-                Object.keys(fixtures).forEach(w => {
-                    fixtures[w].forEach(m => {
-                        if (m.home === 'suedwest' || m.home === 'bremer') m.result = 'home_win';
-                        else if (m.away === 'suedwest' || m.away === 'bremer') m.result = 'away_win';
-                        else if (m.id === 'w8_m1') m.result = 'draw'; // 2 Punkte reichen zum Titel (30 Pkt > max. 28 Pkt)
-                        else if (m.id === 'w9_m1') m.result = 'away_win';
-                        else m.result = 'draw';
-                        
-                        const scores = generateConsistentScores(m.result);
-                        m.homeAddScore = scores.homeScore;
-                        m.awayAddScore = scores.awayScore;
-                    });
-                });
-            }
-            else if (type === 'max-chaos') {
-                Object.keys(fixtures).forEach(w => {
-                    fixtures[w].forEach(m => {
-                        if (m.home === 'amnesia') m.result = 'away_win';
-                        else if (m.away === 'amnesia') m.result = 'home_win';
-                        else if (m.home === 'suedwest' || m.home === 'bremer') m.result = 'home_win';
-                        else if (m.away === 'suedwest' || m.away === 'bremer') m.result = 'away_win';
-                        else m.result = 'draw';
+                        if (m.home === 'AMP') m.result = 'home_win';
+                        else if (m.away === 'AMP') m.result = 'away_win';
+                        else m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
 
                         const scores = generateConsistentScores(m.result);
                         m.homeAddScore = scores.homeScore;
@@ -764,28 +750,24 @@
                     });
                 });
             }
-            else if (type === 'amnesia-loses-all') {
+            else if (type === 'all-draws') {
+                fixtures = JSON.parse(JSON.stringify(initialFixtures));
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
-                        if (m.home === 'amnesia') m.result = 'away_win';
-                        else if (m.away === 'amnesia') m.result = 'home_win';
-                        else {
-                            const hTeam = getTeam(m.home);
-                            const aTeam = getTeam(m.away);
-                            m.result = hTeam.initialRank < aTeam.initialRank ? 'home_win' : 'away_win';
-                        }
-                        const scores = generateConsistentScores(m.result);
-                        m.homeAddScore = scores.homeScore;
-                        m.awayAddScore = scores.awayScore;
+                        m.result = 'draw';
+                        m.homeAddScore = 35;
+                        m.awayAddScore = 35;
                     });
                 });
             }
-            else if (type === 'favorites') {
+            else if (type === 'AMP-loses-all') {
+                fixtures = JSON.parse(JSON.stringify(initialFixtures));
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
-                        const hTeam = getTeam(m.home);
-                        const aTeam = getTeam(m.away);
-                        m.result = hTeam.score >= aTeam.score ? 'home_close' : 'away_close';
+                        if (m.home === 'AMP') m.result = 'away_win';
+                        else if (m.away === 'AMP') m.result = 'home_win';
+                        else m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
+
                         const scores = generateConsistentScores(m.result);
                         m.homeAddScore = scores.homeScore;
                         m.awayAddScore = scores.awayScore;
@@ -793,11 +775,13 @@
                 });
             }
 
+            renderWeekTabs();
             renderFixtures();
             renderTable();
         }
 
         window.onload = function() {
+            renderWeekTabs();
             renderFixtures();
             renderTable();
             if (window.lucide) lucide.createIcons();
