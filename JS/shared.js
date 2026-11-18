@@ -10,7 +10,7 @@ function injectSharedComponents() {
         <div class="space-y-3">
             <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                 <i data-lucide="brain" class="w-4 h-4 text-sky-500"></i>
-                <span>Gedächtnisteam</span>
+                <span>Amnesiophobie</span>
             </div>
         </div>
 
