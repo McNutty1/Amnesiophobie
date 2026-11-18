@@ -82,21 +82,14 @@
 
     <!-- Top Navigation Bar -->
     <header class="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#121417]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            
-            <!-- Brand / League Title -->
-            <div class="flex items-center gap-3.5">
-                <div class="w-1.5 h-8 bg-accent rounded-full"></div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[11px] font-bold uppercase tracking-widest text-accent">DQV Online-Liga 2027</span>
-                        <span class="text-zinc-300 dark:text-zinc-700">•</span>
-                        <span class="text-[11px] font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Hauptrunde Gruppe 1</span>
-                    </div>
-                    <h1 class="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
-                        Tabellenrechner
-                    </h1>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex justify-between items-center gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="p-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg border border-slate-200 dark:border-slate-700 shrink-0">
+                    <i data-lucide="trophy" class="w-4 h-4"></i>
                 </div>
+                <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
+                    DQV Online-Liga 2027 — Hauptrunde
+                </h1>
             </div>
 
             <!-- Controls: Szenario-Dropdown + Reset + Theme -->
@@ -108,11 +101,11 @@
                     <select id="preset-select" onchange="handlePresetSelect(this.value)" 
                         class="appearance-none bg-zinc-100 dark:bg-zinc-800/90 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium pl-3 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-accent/40 cursor-pointer transition">
                         <option value="custom" disabled selected>Szenario auswählen...</option>
-                        <option value="AMP-wins">Amnesiophobie gewinnt alle Spiele</option>
+                        <option value="AMP-wins">Amnesiophobie gewinnt  Spiele</option>
                         <option value="random">Komplette Saison zufällig simulieren</option>
                         <option value="random-week">Aktuellen Spieltag zufällig simulieren</option>
                         <option value="all-draws">Nur Unentschieden (Tie-Breaker Test)</option>
-                        <option value="AMP-loses-all">Worst Case (Amnesiophobie verliert alles)</option>
+                        <option value="AMP-loses-all">Worst Case (Amnesiophobie verliert s)</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 pointer-events-none"></i>
                 </div>
@@ -588,11 +581,11 @@
             if (totalSimulatedMatches === 0) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20";
                 statusBadge.innerText = "Saisonstart";
-                statusText.innerHTML = `Alle Teams starten bei <strong>0 Punkten</strong>. Trage rechts Ergebnisse für die 9 Spieltage ein, um die Tabelle live zu berechnen.`;
+                statusText.innerHTML = `Trage rechts Ergebnisse für die 9 Spieltage ein, um die Tabelle live zu berechnen.`;
             } else if (rank === 1 && AMP.totalPoints > maxRivalPoints) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
                 statusBadge.innerText = "Meister";
-                statusText.innerHTML = `<strong>Meisterschaft gesichert:</strong> Mit ${AMP.totalPoints} Punkten ist Amnesiophobie rechnerisch nicht mehr von Platz 1 zu verdrängen.`;
+                statusText.innerHTML = `<strong>Meister!</strong> Mit ${AMP.totalPoints} Punkten ist Amnesiophobie rechnerisch nicht mehr von Platz 1 zu verdrängen.`;
             } else if (rank === 1) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-accent/10 text-accent border border-accent/20";
                 statusBadge.innerText = "Platz 1";
