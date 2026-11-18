@@ -13,6 +13,21 @@
         }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .tabular-nums { font-variant-numeric: tabular-nums; }
@@ -152,7 +167,7 @@
                         <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Nächster Spieltag
                     </span>
                     <span id="next-match-meta" class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
-                        Runde – • –
+                        Spieltag – • –
                     </span>
                 </div>
 
@@ -202,7 +217,7 @@
                 </div>
 
                 <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
-                    <span id="last-match-verdict" class="text-slate-500 dark:text-slate-400">Warte auf Ergebnisse aus Runde 1</span>
+                    <span id="last-match-verdict" class="text-slate-500 dark:text-slate-400">Warte auf Ergebnisse aus Spieltag 1</span>
                     <span id="form-strip" class="flex items-center gap-1 font-mono text-[10px]">
                         <!-- Form-Badges (S/U/N) werden hier eingefügt -->
                     </span>
@@ -223,7 +238,7 @@
             <div class="p-4">
                 <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Punkte & Bilanz</div>
                 <div class="mt-1 flex items-baseline gap-2">
-                    <span id="stat-points" class="text-xl font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">0 Pkt</span>
+                    <span id="stat-points" class="text-xl font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">0 Punkte</span>
                     <span id="stat-record" class="text-xs font-mono text-slate-500 tabular-nums">(0-0-0)</span>
                 </div>
             </div>
@@ -463,7 +478,7 @@
                 tournamentData = await response.json();
 
                 dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
-                const roundInfo = tournamentData.round ? `Runde ${tournamentData.round}` : 'Aktiv';
+                const roundInfo = tournamentData.round ? `Spieltag ${tournamentData.round}` : 'Aktiv';
                 statusText.innerText = ` ${roundInfo}`;
             } catch (err) {
                 console.warn('JSON konnte nicht geladen werden, nutze Basis-Spielplan:', err);
@@ -500,7 +515,7 @@
             // 1. Kennzahlen befüllen
             document.getElementById('stat-rank').innerText = `${ampRank}`;
             document.getElementById('stat-league').innerText = ` von ${standings.length}`;
-            document.getElementById('stat-points').innerText = `${amp.points} Pkt`;
+            document.getElementById('stat-points').innerText = `${amp.points} Punkte`;
             document.getElementById('stat-record').innerText = `(${amp.wins}-${amp.draws}-${amp.losses})`;
             document.getElementById('stat-score').innerText = amp.score;
             const avgScore = amp.played > 0 ? (amp.score / amp.played).toFixed(2) : '0.0';
@@ -511,7 +526,7 @@
             // 2. Nächster Spieltag & Gegner ermitteln
             const currentRound = data.round || 1;
             const dateStr = roundDates[currentRound] || 'Termin offen';
-            document.getElementById('next-match-meta').innerText = `Runde ${currentRound} • ${dateStr}`;
+            document.getElementById('next-match-meta').innerText = `Spieltag ${currentRound} • ${dateStr}`;
 
             let nextMatch = (data.currentPairings || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams));
             if (!nextMatch && fixedSchedule[currentRound]) {
@@ -525,12 +540,12 @@
                 const oppTeam = getTeamObj(oppId);
                 const oppStandingIdx = standings.findIndex(t => t.id === oppId);
                 const oppStats = oppStandingIdx !== -1 ? standings[oppStandingIdx] : null;
-                const avgoppScore = oppStats && oppStats.played > 0 ? (oppStats.score / oppStats.played).toFixed(1) : '0.0';
+                const avgoppScore = oppStats && oppStats.played > 0 ? (oppStats.score / oppStats.played).toFixed(2) : '0.0';
 
                 document.getElementById('next-match-opponent').innerText = oppTeam.name;
                 document.getElementById('next-opponent-rank').innerText = oppStandingIdx !== -1 ? `Platz ${oppStandingIdx + 1}` : '–';
                 document.getElementById('next-opponent-stats').innerText = oppStats && oppStats.played > 0
-                    ? `${oppStats.points} Pkt • Ø ${avgoppScore}`
+                    ? `${oppStats.points} Punkte • Ø ${avgoppScore}`
                     : 'Noch keine Saisonspiele';
 
                 // Form-Badges (letzte 5 Spiele) für den Gegner ermitteln
@@ -548,15 +563,15 @@
                         const ih = item.match.home === oppId;
                         const p = getPointsFromResult(item.match.result);
                         const myP = ih ? p.homeP : p.awayP;
-                        if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Runde ${item.round}: Sieg">S</span>`;
-                        if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Runde ${item.round}: Remis">U</span>`;
-                        return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Runde ${item.round}: Niederlage">N</span>`;
+                        if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Spieltag ${item.round}: Sieg">S</span>`;
+                        if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Spieltag ${item.round}: Remis">U</span>`;
+                        return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Spieltag ${item.round}: Niederlage">N</span>`;
                     }).join('');
                 }
             } else {
                 document.getElementById('next-match-opponent').innerText = currentRound > 9 ? 'Vorrunde abgeschlossen' : 'Wird nach Auslosung ermittelt';
                 document.getElementById('next-opponent-rank').innerText = 'noch offen';
-                document.getElementById('next-opponent-stats').innerText = 'Auslosung erfolgt nach Abschluss der aktuellen Runde';
+                document.getElementById('next-opponent-stats').innerText = 'Auslosung erfolgt nach Abschluss dem aktuellen Spieltag';
                 const oppformStrip = document.getElementById('oppform-strip');
                 if (oppformStrip) oppformStrip.innerHTML = '';
             }
@@ -582,7 +597,7 @@
                 const ampSc = isHome ? m.homeAddScore : m.awayAddScore;
                 const oppSc = isHome ? m.awayAddScore : m.homeAddScore;
 
-                document.getElementById('last-match-meta').innerText = `Runde ${last.round} • ${roundDates[last.round] || ''}`;
+                document.getElementById('last-match-meta').innerText = `Spieltag ${last.round} • ${roundDates[last.round] || ''}`;
                 document.getElementById('last-match-teams').innerText = oppName;
 
                 const resBox = document.getElementById('last-match-result-box');
@@ -594,9 +609,9 @@
                     ampPts === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'
                 }`;
 
-                const verdictText = ampPts === 4 ? (oppPts === 1 ? 'Knapper Sieg (+4 Pkt)' : 'Sieg (+4 Pkt)') :
-                                    ampPts === 2 ? 'Unentschieden (+2 Pkt)' :
-                                    ampPts === 1 ? 'Knappe Niederlage (+1 Pkt)' : 'Niederlage (0 Pkt)';
+                const verdictText = ampPts === 4 ? (oppPts === 1 ? 'Knapper Sieg (+4 Punkte)' : 'Sieg (+4 Punkte)') :
+                                    ampPts === 2 ? 'Unentschieden (+2 Punkte)' :
+                                    ampPts === 1 ? 'Knappe Niederlage (+1 Punkte)' : 'Niederlage (0 Punkte)';
                 document.getElementById('last-match-verdict').innerText = verdictText;
 
                 // Form-Badges (letzte 5 Spiele)
@@ -605,9 +620,9 @@
                     const ih = isTargetTeam(item.match.home, teams);
                     const p = getPointsFromResult(item.match.result);
                     const myP = ih ? p.homeP : p.awayP;
-                    if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Runde ${item.round}: Sieg">S</span>`;
-                    if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Runde ${item.round}: Remis">U</span>`;
-                    return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Runde ${item.round}: Niederlage">N</span>`;
+                    if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Spieltag ${item.round}: Sieg">S</span>`;
+                    if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Spieltag ${item.round}: Remis">U</span>`;
+                    return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Spieltag ${item.round}: Niederlage">N</span>`;
                 }).join('');
             }
 
