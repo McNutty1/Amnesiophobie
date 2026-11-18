@@ -538,44 +538,60 @@ input[type=number] {
             
             state.completedRounds.forEach(r => {
                 r.matches.forEach(m => {
-                    playedHistory[m.home].add(m.away);
-                    playedHistory[m.away].add(m.home);
+                    if (playedHistory[m.home]) playedHistory[m.home].add(m.away);
+                    if (playedHistory[m.away]) playedHistory[m.away].add(m.home);
                 });
             });
+            function findValidPairings(remaining) {
+                if (remaining.length === 0) return [];
+                 const teamA = remaining[0];
+                const rest = remaining.slice(1);
 
-            const unassigned = [...standings];
-            const newPairings = [];
-
-            while (unassigned.length > 0) {
-                const teamA = unassigned.shift();
-                let opponentIndex = -1;
-
-                for (let i = 0; i < unassigned.length; i++) {
-                    const candidate = unassigned[i];
+                for (let i = 0; i < rest.length; i++) {
+                    const candidate = rest[i];
                     if (!playedHistory[teamA.id].has(candidate.id)) {
-                        opponentIndex = i;
-                        break;
+                        const nextRemaining = rest.slice(0, i).concat(rest.slice(i + 1));
+                        const subResult = findValidPairings(nextRemaining);
+                        if (subResult !== null) {
+                            return [[teamA.id, candidate.id], ...subResult];
+                        }
                     }
                 }
+                return null;
+            }
 
-                if (opponentIndex === -1 && unassigned.length > 0) {
-                    opponentIndex = 0;
-                }
+            let pairedIds = findValidPairings(standings);
+									  
+				 
 
-                if (opponentIndex !== -1) {
-                    const teamB = unassigned.splice(opponentIndex, 1)[0];
-                    newPairings.push({
-                        id: `r${state.round}_m${newPairings.length + 1}`,
-                        home: teamA.id,
-                        away: teamB.id,
-                        result: 'none',
-                        homeAddScore: 0,
-                        awayAddScore: 0
-                    });
+            // Fallback nur für den theoretischen Fall von mehr als 19 Runden
+            if (!pairedIds) {
+                pairedIds = [];
+                const unassigned = [...standings];
+                while (unassigned.length >= 2) {
+                    const teamA = unassigned.shift();
+                    let idx = unassigned.findIndex(c => !playedHistory[teamA.id].has(c.id));
+                    if (idx === -1) idx = 0;
+                    const teamB = unassigned.splice(idx, 1)[0];
+									  
+																		 
+                    pairedIds.push([teamA.id, teamB.id]);
+									   
+									   
+										
+									   
+					   
                 }
             }
 
-            state.currentPairings = newPairings;
+            state.currentPairings = pairedIds.map((pair, idx) => ({
+                id: `r${state.round}_m${idx + 1}`,
+                home: pair[0],
+                away: pair[1],
+                result: 'none',
+                homeAddScore: 0,
+                awayAddScore: 0
+            }));
         }
 
         function renderTable() {
@@ -636,7 +652,7 @@ input[type=number] {
                 const isCompleted = state.completedRounds.some(r => r.round === Number(state.round));
                 const isFixed = Number(state.round) <= 3 && Boolean(fixedSchedule[state.round]);
 
-                let badgeText = 'Simuliert';
+                let badgeText = 'Simulation';
                 let badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60';
 
                 if (isCompleted || isFixed) {
@@ -958,7 +974,7 @@ function renderFixtures() {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Schweizer_System.json`;
+            a.download = `Vorrunde.json`;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -999,5 +1015,43 @@ function renderFixtures() {
 <!-- Globaler Footer -->
 <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 mt-auto text-xs text-slate-600 dark:text-slate-400">
 <div id="site-footer"></div>
+			 
+	   
+						
+																																				   
+																								   
+		
+											
+							   
+																						  
+																		
+											
+				  
+			  
+
+															   
+							   
+																															 
+									
+																																				 
+																																					
+															   
+																																					  
+				 
+			  
+
+														   
+							   
+																													
+									
+					
+																																																	
+																											  
+						
+					 
+					
+																																																													  
+																									  
+						
 </footer>
 </html>
