@@ -1,677 +1,165 @@
-  "completedRounds": [
+{
+  "round": 1,
+  "teams": [
     {
-      "round": 1,
-      "matches": [
-        {
-          "id": "r1_m1",
-          "home": "amp",
-          "away": "t2",
-          "result": "home_close",
-          "homeAddScore": 36,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r1_m2",
-          "home": "t3",
-          "away": "t4",
-          "result": "home_close",
-          "homeAddScore": 38,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r1_m3",
-          "home": "t5",
-          "away": "t6",
-          "result": "away_close",
-          "homeAddScore": 43,
-          "awayAddScore": 44
-        },
-        {
-          "id": "r1_m4",
-          "home": "t7",
-          "away": "t8",
-          "result": "away_close",
-          "homeAddScore": 37,
-          "awayAddScore": 38
-        },
-        {
-          "id": "r1_m5",
-          "home": "t9",
-          "away": "t10",
-          "result": "away_win",
-          "homeAddScore": 32,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r1_m6",
-          "home": "t11",
-          "away": "t12",
-          "result": "home_win",
-          "homeAddScore": 43,
-          "awayAddScore": 31
-        },
-        {
-          "id": "r1_m7",
-          "home": "t13",
-          "away": "t14",
-          "result": "away_close",
-          "homeAddScore": 42,
-          "awayAddScore": 44
-        },
-        {
-          "id": "r1_m8",
-          "home": "t15",
-          "away": "t16",
-          "result": "home_win",
-          "homeAddScore": 41,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r1_m9",
-          "home": "t17",
-          "away": "t18",
-          "result": "away_win",
-          "homeAddScore": 27,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r1_m10",
-          "home": "t19",
-          "away": "t20",
-          "result": "home_close",
-          "homeAddScore": 34,
-          "awayAddScore": 33
-        }
-      ]
+      "id": "amp",
+      "name": "Amnesiophobie"
     },
     {
-      "round": 2,
-      "matches": [
-        {
-          "id": "r2_m1",
-          "home": "amp",
-          "away": "t3",
-          "result": "home_close",
-          "homeAddScore": 42,
-          "awayAddScore": 38
-        },
-        {
-          "id": "r2_m2",
-          "home": "t2",
-          "away": "t4",
-          "result": "away_win",
-          "homeAddScore": 35,
-          "awayAddScore": 44
-        },
-        {
-          "id": "r2_m3",
-          "home": "t5",
-          "away": "t7",
-          "result": "away_close",
-          "homeAddScore": 40,
-          "awayAddScore": 42
-        },
-        {
-          "id": "r2_m4",
-          "home": "t6",
-          "away": "t8",
-          "result": "home_close",
-          "homeAddScore": 35,
-          "awayAddScore": 31
-        },
-        {
-          "id": "r2_m5",
-          "home": "t9",
-          "away": "t11",
-          "result": "draw",
-          "homeAddScore": 34,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r2_m6",
-          "home": "t10",
-          "away": "t12",
-          "result": "away_close",
-          "homeAddScore": 38,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r2_m7",
-          "home": "t13",
-          "away": "t15",
-          "result": "away_close",
-          "homeAddScore": 38,
-          "awayAddScore": 42
-        },
-        {
-          "id": "r2_m8",
-          "home": "t14",
-          "away": "t16",
-          "result": "home_close",
-          "homeAddScore": 36,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r2_m9",
-          "home": "t17",
-          "away": "t19",
-          "result": "home_close",
-          "homeAddScore": 36,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r2_m10",
-          "home": "t18",
-          "away": "t20",
-          "result": "home_close",
-          "homeAddScore": 43,
-          "awayAddScore": 41
-        }
-      ]
+      "id": "t2",
+      "name": "Suedwestkurve"
     },
     {
-      "round": 3,
-      "matches": [
-        {
-          "id": "r3_m1",
-          "home": "amp",
-          "away": "t4",
-          "result": "draw",
-          "homeAddScore": 32,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r3_m2",
-          "home": "t2",
-          "away": "t3",
-          "result": "home_win",
-          "homeAddScore": 44,
-          "awayAddScore": 39
-        },
-        {
-          "id": "r3_m3",
-          "home": "t5",
-          "away": "t8",
-          "result": "away_win",
-          "homeAddScore": 34,
-          "awayAddScore": 46
-        },
-        {
-          "id": "r3_m4",
-          "home": "t6",
-          "away": "t7",
-          "result": "home_close",
-          "homeAddScore": 33,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r3_m5",
-          "home": "t9",
-          "away": "t12",
-          "result": "away_win",
-          "homeAddScore": 25,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r3_m6",
-          "home": "t10",
-          "away": "t11",
-          "result": "away_win",
-          "homeAddScore": 32,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r3_m7",
-          "home": "t13",
-          "away": "t16",
-          "result": "home_win",
-          "homeAddScore": 38,
-          "awayAddScore": 29
-        },
-        {
-          "id": "r3_m8",
-          "home": "t14",
-          "away": "t15",
-          "result": "home_close",
-          "homeAddScore": 40,
-          "awayAddScore": 38
-        },
-        {
-          "id": "r3_m9",
-          "home": "t17",
-          "away": "t20",
-          "result": "home_close",
-          "homeAddScore": 41,
-          "awayAddScore": 39
-        },
-        {
-          "id": "r3_m10",
-          "home": "t18",
-          "away": "t19",
-          "result": "away_close",
-          "homeAddScore": 40,
-          "awayAddScore": 43
-        }
-      ]
+      "id": "t3",
+      "name": "Die Bremer Stadtquizzikanten"
     },
     {
-      "round": 4,
-      "matches": [
-        {
-          "id": "r4_m1",
-          "home": "t14",
-          "away": "t6",
-          "result": "home_close",
-          "homeAddScore": 37,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r4_m2",
-          "home": "t11",
-          "away": "amp",
-          "result": "home_close",
-          "homeAddScore": 38,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r4_m3",
-          "home": "t15",
-          "away": "t18",
-          "result": "home_close",
-          "homeAddScore": 40,
-          "awayAddScore": 37
-        },
-        {
-          "id": "r4_m4",
-          "home": "t8",
-          "away": "t19",
-          "result": "home_close",
-          "homeAddScore": 37,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r4_m5",
-          "home": "t12",
-          "away": "t17",
-          "result": "home_close",
-          "homeAddScore": 38,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r4_m6",
-          "home": "t4",
-          "away": "t13",
-          "result": "away_close",
-          "homeAddScore": 37,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r4_m7",
-          "home": "t7",
-          "away": "t3",
-          "result": "away_close",
-          "homeAddScore": 32,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r4_m8",
-          "home": "t2",
-          "away": "t10",
-          "result": "home_close",
-          "homeAddScore": 37,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r4_m9",
-          "home": "t20",
-          "away": "t5",
-          "result": "away_close",
-          "homeAddScore": 38,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r4_m10",
-          "home": "t9",
-          "away": "t16",
-          "result": "away_close",
-          "homeAddScore": 36,
-          "awayAddScore": 40
-        }
-      ]
+      "id": "t4",
+      "name": "Federal Bureau of Inquizication"
     },
     {
-      "round": 5,
-      "matches": [
-        {
-          "id": "r5_m1",
-          "home": "t14",
-          "away": "t11",
-          "result": "home_win",
-          "homeAddScore": 41,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r5_m2",
-          "home": "t15",
-          "away": "t8",
-          "result": "home_win",
-          "homeAddScore": 44,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r5_m3",
-          "home": "t6",
-          "away": "t12",
-          "result": "home_win",
-          "homeAddScore": 36,
-          "awayAddScore": 26
-        },
-        {
-          "id": "r5_m4",
-          "home": "amp",
-          "away": "t13",
-          "result": "away_win",
-          "homeAddScore": 26,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r5_m5",
-          "home": "t18",
-          "away": "t3",
-          "result": "home_win",
-          "homeAddScore": 44,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r5_m6",
-          "home": "t19",
-          "away": "t2",
-          "result": "home_win",
-          "homeAddScore": 39,
-          "awayAddScore": 27
-        },
-        {
-          "id": "r5_m7",
-          "home": "t17",
-          "away": "t4",
-          "result": "home_win",
-          "homeAddScore": 46,
-          "awayAddScore": 37
-        },
-        {
-          "id": "r5_m8",
-          "home": "t7",
-          "away": "t10",
-          "result": "home_win",
-          "homeAddScore": 44,
-          "awayAddScore": 38
-        },
-        {
-          "id": "r5_m9",
-          "home": "t5",
-          "away": "t16",
-          "result": "home_win",
-          "homeAddScore": 39,
-          "awayAddScore": 28
-        },
-        {
-          "id": "r5_m10",
-          "home": "t20",
-          "away": "t9",
-          "result": "home_win",
-          "homeAddScore": 41,
-          "awayAddScore": 32
-        }
-      ]
+      "id": "t5",
+      "name": "AC-Quiz-Grani"
     },
     {
-      "round": 6,
-      "matches": [
-        {
-          "id": "r6_m1",
-          "home": "t14",
-          "away": "t18",
-          "result": "away_close",
-          "homeAddScore": 34,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r6_m2",
-          "home": "t15",
-          "away": "t6",
-          "result": "home_win",
-          "homeAddScore": 38,
-          "awayAddScore": 33
-        },
-        {
-          "id": "r6_m3",
-          "home": "t13",
-          "away": "t11",
-          "result": "home_close",
-          "homeAddScore": 38,
-          "awayAddScore": 35
-        },
-        {
-          "id": "r6_m4",
-          "home": "t19",
-          "away": "t12",
-          "result": "home_close",
-          "homeAddScore": 34,
-          "awayAddScore": 33
-        },
-        {
-          "id": "r6_m5",
-          "home": "t8",
-          "away": "t17",
-          "result": "home_close",
-          "homeAddScore": 39,
-          "awayAddScore": 37
-        },
-        {
-          "id": "r6_m6",
-          "home": "t7",
-          "away": "amp",
-          "result": "home_close",
-          "homeAddScore": 35,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r6_m7",
-          "home": "t5",
-          "away": "t3",
-          "result": "home_close",
-          "homeAddScore": 35,
-          "awayAddScore": 34
-        },
-        {
-          "id": "r6_m8",
-          "home": "t2",
-          "away": "t20",
-          "result": "away_close",
-          "homeAddScore": 41,
-          "awayAddScore": 43
-        },
-        {
-          "id": "r6_m9",
-          "home": "t4",
-          "away": "t10",
-          "result": "home_close",
-          "homeAddScore": 44,
-          "awayAddScore": 42
-        },
-        {
-          "id": "r6_m10",
-          "home": "t16",
-          "away": "t9",
-          "result": "home_close",
-          "homeAddScore": 44,
-          "awayAddScore": 42
-        }
-      ]
+      "id": "t6",
+      "name": "Quizzy McQuizface"
     },
     {
-      "round": 7,
-      "matches": [
-        {
-          "id": "r7_m1",
-          "home": "t15",
-          "away": "t19",
-          "result": "away_close",
-          "homeAddScore": 33,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r7_m2",
-          "home": "t14",
-          "away": "t8",
-          "result": "home_close",
-          "homeAddScore": 38,
-          "awayAddScore": 36
-        },
-        {
-          "id": "r7_m3",
-          "home": "t18",
-          "away": "t13",
-          "result": "home_win",
-          "homeAddScore": 37,
-          "awayAddScore": 26
-        },
-        {
-          "id": "r7_m4",
-          "home": "t6",
-          "away": "t11",
-          "result": "home_win",
-          "homeAddScore": 42,
-          "awayAddScore": 33
-        },
-        {
-          "id": "r7_m5",
-          "home": "t7",
-          "away": "t17",
-          "result": "away_close",
-          "homeAddScore": 39,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r7_m6",
-          "home": "t5",
-          "away": "t12",
-          "result": "home_close",
-          "homeAddScore": 33,
-          "awayAddScore": 32
-        },
-        {
-          "id": "r7_m7",
-          "home": "t20",
-          "away": "t4",
-          "result": "home_close",
-          "homeAddScore": 41,
-          "awayAddScore": 40
-        },
-        {
-          "id": "r7_m8",
-          "home": "amp",
-          "away": "t16",
-          "result": "away_win",
-          "homeAddScore": 31,
-          "awayAddScore": 41
-        },
-        {
-          "id": "r7_m9",
-          "home": "t2",
-          "away": "t9",
-          "result": "draw",
-          "homeAddScore": 30,
-          "awayAddScore": 30
-        },
-        {
-          "id": "r7_m10",
-          "home": "t3",
-          "away": "t10",
-          "result": "draw",
-          "homeAddScore": 40,
-          "awayAddScore": 40
-        }
-      ]
+      "id": "t7",
+      "name": "Schall & Rauch"
+    },
+    {
+      "id": "t8",
+      "name": "Qiss me, Kate"
+    },
+    {
+      "id": "t9",
+      "name": "Ahlenfelders Erben"
+    },
+    {
+      "id": "t10",
+      "name": "Haute Quizine"
+    },
+    {
+      "id": "t11",
+      "name": "Quiz-Club Berlin"
+    },
+    {
+      "id": "t12",
+      "name": "Bavaria Quizzers"
+    },
+    {
+      "id": "t13",
+      "name": "Rhein-Ruhr Besserwisser"
+    },
+    {
+      "id": "t14",
+      "name": "Hanseatische Denker"
+    },
+    {
+      "id": "t15",
+      "name": "Trivia Taktiker"
+    },
+    {
+      "id": "t16",
+      "name": "Kopf-an-Kopf Quizzer"
+    },
+    {
+      "id": "t17",
+      "name": "Grip & Verstand"
+    },
+    {
+      "id": "t18",
+      "name": "Elb-Quizzer"
+    },
+    {
+      "id": "t19",
+      "name": "Könige der Fragen"
+    },
+    {
+      "id": "t20",
+      "name": "Mind-Games e.V."
     }
   ],
+  "completedRounds": [],
   "currentPairings": [
     {
-      "id": "r8_m1",
-      "home": "t14",
-      "away": "t19",
+      "id": "r1_m1",
+      "home": "amp",
+      "away": "t2",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
-      "id": "r8_m2",
-      "home": "t15",
-      "away": "t5",
-      "result": "none",
-      "homeAddScore": 0,
-      "awayAddScore": 0
-    },
-    {
-      "id": "r8_m3",
-      "home": "t18",
-      "away": "t6",
-      "result": "none",
-      "homeAddScore": 0,
-      "awayAddScore": 0
-    },
-    {
-      "id": "r8_m4",
-      "home": "t17",
-      "away": "t13",
-      "result": "none",
-      "homeAddScore": 0,
-      "awayAddScore": 0
-    },
-    {
-      "id": "r8_m5",
-      "home": "t8",
-      "away": "t20",
-      "result": "none",
-      "homeAddScore": 0,
-      "awayAddScore": 0
-    },
-    {
-      "id": "r8_m6",
-      "home": "t7",
-      "away": "t11",
-      "result": "none",
-      "homeAddScore": 0,
-      "awayAddScore": 0
-    },
-    {
-      "id": "r8_m7",
-      "home": "t12",
+      "id": "r1_m2",
+      "home": "t3",
       "away": "t4",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
-      "id": "r8_m8",
-      "home": "t16",
-      "away": "t3",
+      "id": "r1_m3",
+      "home": "t5",
+      "away": "t6",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
-      "id": "r8_m9",
-      "home": "t2",
-      "away": "amp",
+      "id": "r1_m4",
+      "home": "t7",
+      "away": "t8",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
-      "id": "r8_m10",
-      "home": "t10",
-      "away": "t9",
+      "id": "r1_m5",
+      "home": "t9",
+      "away": "t10",
+      "result": "none",
+      "homeAddScore": 0,
+      "awayAddScore": 0
+    },
+    {
+      "id": "r1_m6",
+      "home": "t11",
+      "away": "t12",
+      "result": "none",
+      "homeAddScore": 0,
+      "awayAddScore": 0
+    },
+    {
+      "id": "r1_m7",
+      "home": "t13",
+      "away": "t14",
+      "result": "none",
+      "homeAddScore": 0,
+      "awayAddScore": 0
+    },
+    {
+      "id": "r1_m8",
+      "home": "t15",
+      "away": "t16",
+      "result": "none",
+      "homeAddScore": 0,
+      "awayAddScore": 0
+    },
+    {
+      "id": "r1_m9",
+      "home": "t17",
+      "away": "t18",
+      "result": "none",
+      "homeAddScore": 0,
+      "awayAddScore": 0
+    },
+    {
+      "id": "r1_m10",
+      "home": "t19",
+      "away": "t20",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
