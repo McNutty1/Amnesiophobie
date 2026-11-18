@@ -14,7 +14,6 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="JS/shared.js"></script>  
     <style>
         .tabular-nums { font-variant-numeric: tabular-nums; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -50,10 +49,10 @@
                         <span>Vorrunde</span>
                         <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
                     </a>
-                    <a href="Hauptrunde2027.html" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
+                    <!--a href="Hauptrunde2027.html" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
                         <span>Hauptrunde</span>
                         <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
-                    </a>
+                    </a-->
                 </nav>
 
                 <button onclick="toggleTheme()" class="p-2 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition" title="Design wechseln" aria-label="Design wechseln">
@@ -158,7 +157,6 @@
                 </div>
 
                 <div class="py-1">
-                    <div class="text-xs text-slate-500 dark:text-slate-400 mb-1" id="next-match-venue">Begegnung</div>
                     <div class="flex items-baseline justify-between gap-3">
                         <div id="next-match-opponent" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white truncate">
                             Wird ermittelt...
@@ -169,11 +167,11 @@
                     </div>
                 </div>
 
-                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                    <span id="next-opponent-stats">Gegner-Bilanz: – Pkt • Score –</span>
-                    <a href="Vorrunde2027.html" class="font-medium text-slate-800 dark:text-slate-200 hover:underline flex items-center gap-1">
-                        Zur Vorrunde <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                    </a>
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+                    <span id="next-opponent-stats" class="truncate">Noch keine Saisonspiele</span>
+                    <span id="oppform-strip" class="flex items-center gap-1 font-mono text-[10px] shrink-0">
+                        <!-- Form-Badges (S/U/N) des Gegners -->
+                    </span>
                 </div>
             </div>
 
@@ -191,7 +189,6 @@
                 <div class="py-1">
                     <div class="flex items-center justify-between gap-4">
                         <div class="min-w-0">
-                            <div class="text-xs text-slate-500 dark:text-slate-400 mb-0.5" id="last-match-label">Noch kein Spiel absolviert</div>
                             <div id="last-match-teams" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
                                 Saison startet am 27.01.
                             </div>
@@ -199,9 +196,6 @@
                         <div id="last-match-result-box" class="text-right shrink-0 hidden">
                             <div id="last-match-points" class="text-xl font-mono font-extrabold tabular-nums text-slate-900 dark:text-white">
                                 – : –
-                            </div>
-                            <div id="last-match-score" class="text-[11px] font-mono text-slate-500 tabular-nums">
-                                Score – : –
                             </div>
                         </div>
                     </div>
@@ -217,7 +211,7 @@
 
         </div>
 
-        <!-- Kennzahlen-Leiste (4 kompakte Kennzahlen ohne Kachel-Overkill) -->
+        <!-- Kennzahlen-Leiste -->
         <div class="grid grid-cols-2 sm:grid-cols-4 border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800">
             <div class="p-4">
                 <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Aktueller Tabellenplatz</div>
@@ -234,14 +228,14 @@
                 </div>
             </div>
             <div class="p-4">
-                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Gesamt-Score (Ø)</div>
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Ø-Score </div>
                 <div class="mt-1 flex items-baseline gap-2">
-                    <span id="stat-score" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">0</span>
-                    <span id="stat-avg-score" class="text-xs font-mono text-slate-500 tabular-nums">Ø 0.0</span>
+                    <span id="stat-avg-score" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">Ø 0.0</span>
+                    <span id="stat-score" class="text-xs font-mono text-slate-500 tabular-nums">0</span>
                 </div>
             </div>
             <div class="p-4">
-                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Feinwertung (BHZ / fBHZ)</div>
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">BHZ / fBHZ</div>
                 <div class="mt-1 flex items-baseline gap-2">
                     <span id="stat-bhz" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">0</span>
                     <span id="stat-fbhz" class="text-xs font-mono text-slate-500 tabular-nums">/ 0</span>
@@ -256,10 +250,10 @@
             <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
                 <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                        Tabellenstand (Vorrunde)
+                        Tabellen
                     </h3>
                     <a href="Vorrunde2027.html" class="text-xs font-medium text-sky-600 dark:text-sky-400 hover:underline">
-                        Zur Tabelle →
+                        Zur vollständigen Tabelle →
                     </a>
                 </div>
 
@@ -272,7 +266,7 @@
                                 <th class="py-2 px-2 text-center w-10">Sp.</th>
                                 <th class="py-2 px-3 text-right">Score</th>
                                 <th class="py-2 px-3 text-right hidden sm:table-cell">BHZ</th>
-                                <th class="py-2 px-4 text-right">Pkt.</th>
+                                <th class="py-2 px-4 text-right">Punkte</th>
                             </tr>
                         </thead>
                         <tbody id="mini-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -502,15 +496,14 @@
             const ampIndex = standings.findIndex(t => isTargetTeam(t.id, teams));
             const amp = ampIndex !== -1 ? standings[ampIndex] : standings[0];
             const ampRank = ampIndex !== -1 ? ampIndex + 1 : 1;
-            const leagueNum = Math.floor((ampRank - 1) / 2) + 1;
 
             // 1. Kennzahlen befüllen
-            document.getElementById('stat-rank').innerText = `#${ampRank}`;
-            document.getElementById('stat-league').innerText = `Liga ${leagueNum} • von ${standings.length}`;
+            document.getElementById('stat-rank').innerText = `${ampRank}`;
+            document.getElementById('stat-league').innerText = ` von ${standings.length}`;
             document.getElementById('stat-points').innerText = `${amp.points} Pkt`;
             document.getElementById('stat-record').innerText = `(${amp.wins}-${amp.draws}-${amp.losses})`;
             document.getElementById('stat-score').innerText = amp.score;
-            const avgScore = amp.played > 0 ? (amp.score / amp.played).toFixed(1) : '0.0';
+            const avgScore = amp.played > 0 ? (amp.score / amp.played).toFixed(2) : '0.0';
             document.getElementById('stat-avg-score').innerText = `Ø ${avgScore}`;
             document.getElementById('stat-bhz').innerText = amp.bhz;
             document.getElementById('stat-fbhz').innerText = `/ ${amp.fbhz}`;
@@ -532,18 +525,40 @@
                 const oppTeam = getTeamObj(oppId);
                 const oppStandingIdx = standings.findIndex(t => t.id === oppId);
                 const oppStats = oppStandingIdx !== -1 ? standings[oppStandingIdx] : null;
+                const avgoppScore = oppStats && oppStats.played > 0 ? (oppStats.score / oppStats.played).toFixed(1) : '0.0';
 
-                document.getElementById('next-match-venue').innerText = isHome ? 'gegen' : 'gegen';
                 document.getElementById('next-match-opponent').innerText = oppTeam.name;
                 document.getElementById('next-opponent-rank').innerText = oppStandingIdx !== -1 ? `Platz ${oppStandingIdx + 1}` : '–';
-                document.getElementById('next-opponent-stats').innerText = oppStats
-                    ? `Gegner-Bilanz: ${oppStats.points} Pkt • Score ${oppStats.score}`
+                document.getElementById('next-opponent-stats').innerText = oppStats && oppStats.played > 0
+                    ? `${oppStats.points} Pkt • Ø ${avgoppScore}`
                     : 'Noch keine Saisonspiele';
+
+                // Form-Badges (letzte 5 Spiele) für den Gegner ermitteln
+                const oppHistory = [];
+                (data.completedRounds || []).forEach(r => {
+                    const m = (r.matches || []).find(x => x.home === oppId || x.away === oppId);
+                    if (m && m.result && m.result !== 'none') {
+                        oppHistory.push({ round: r.round, match: m });
+                    }
+                });
+
+                const oppformStrip = document.getElementById('oppform-strip');
+                if (oppformStrip) {
+                    oppformStrip.innerHTML = oppHistory.slice(-5).map(item => {
+                        const ih = item.match.home === oppId;
+                        const p = getPointsFromResult(item.match.result);
+                        const myP = ih ? p.homeP : p.awayP;
+                        if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Runde ${item.round}: Sieg">S</span>`;
+                        if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Runde ${item.round}: Remis">U</span>`;
+                        return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Runde ${item.round}: Niederlage">N</span>`;
+                    }).join('');
+                }
             } else {
-                document.getElementById('next-match-venue').innerText = 'Paarung';
                 document.getElementById('next-match-opponent').innerText = currentRound > 9 ? 'Vorrunde abgeschlossen' : 'Wird nach Auslosung ermittelt';
                 document.getElementById('next-opponent-rank').innerText = 'noch offen';
                 document.getElementById('next-opponent-stats').innerText = 'Auslosung erfolgt nach Abschluss der aktuellen Runde';
+                const oppformStrip = document.getElementById('oppform-strip');
+                if (oppformStrip) oppformStrip.innerHTML = '';
             }
 
             // 3. Letztes Ergebnis & Formkurve
@@ -568,20 +583,18 @@
                 const oppSc = isHome ? m.awayAddScore : m.homeAddScore;
 
                 document.getElementById('last-match-meta').innerText = `Runde ${last.round} • ${roundDates[last.round] || ''}`;
-                document.getElementById('last-match-label').innerText = isHome ? 'vs.' : 'vs.';
                 document.getElementById('last-match-teams').innerText = oppName;
 
                 const resBox = document.getElementById('last-match-result-box');
                 resBox.classList.remove('hidden');
                 const ptsElem = document.getElementById('last-match-points');
-                ptsElem.innerText = `${ampPts} : ${oppPts}`;
+                ptsElem.innerText = `${ampSc} : ${oppSc}`;
                 ptsElem.className = `text-xl font-mono font-extrabold tabular-nums ${
                     ampPts === 4 ? 'text-emerald-600 dark:text-emerald-400' :
                     ampPts === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'
                 }`;
-                document.getElementById('last-match-score').innerText = `Score ${ampSc} : ${oppSc}`;
 
-                const verdictText = ampPts === 4 ? (oppPts === 1 ? 'Knapper Sieg (+4 Pkt)' : 'Klarer Sieg (+4 Pkt)') :
+                const verdictText = ampPts === 4 ? (oppPts === 1 ? 'Knapper Sieg (+4 Pkt)' : 'Sieg (+4 Pkt)') :
                                     ampPts === 2 ? 'Unentschieden (+2 Pkt)' :
                                     ampPts === 1 ? 'Knappe Niederlage (+1 Pkt)' : 'Niederlage (0 Pkt)';
                 document.getElementById('last-match-verdict').innerText = verdictText;
@@ -670,7 +683,7 @@
                 if (matchObj) {
                     const isH = isTargetTeam(matchObj.home, teams);
                     const opp = getTeamObj(isH ? matchObj.away : matchObj.home).name;
-                    const prefix = isH ? 'vs.' : '@';
+                    const prefix = isH ? 'vs.' : 'vs.';
                     oppText = `<span class="text-slate-400 font-mono text-[11px] mr-1">${prefix}</span><span class="font-medium text-slate-800 dark:text-slate-200">${opp}</span>`;
 
                     if (matchObj.result && matchObj.result !== 'none') {
