@@ -273,6 +273,45 @@
           "correct2": 1
         }
       ]
+    },
+    {
+      "round": 8,
+      "date": "19.11.2026",
+      "teamScore": 50,
+      "players": [
+        {
+          "name": "Sebastian",
+          "pos": 1,
+          "cat1": "Geschichte",
+          "correct1": 0,
+          "cat2": "Geschichte",
+          "correct2": 1
+        },
+        {
+          "name": "Leonard",
+          "pos": 2,
+          "cat1": "Literatur & Medien",
+          "correct1": 2,
+          "cat2": "Kunst & Kultur",
+          "correct2": 1
+        },
+        {
+          "name": "Lars",
+          "pos": 3,
+          "cat1": "Lifestyle & Technik",
+          "correct1": 1,
+          "cat2": "Lifestyle & Technik",
+          "correct2": 2
+        },
+        {
+          "name": "Oliver",
+          "pos": 4,
+          "cat1": "Sport & Spiele",
+          "correct1": 2,
+          "cat2": "Sport & Spiele",
+          "correct2": 2
+        }
+      ]
     }
   ]
 }
