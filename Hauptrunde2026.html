@@ -110,7 +110,7 @@
                         <option value="custom" disabled selected>Szenario laden...</option>
                         <option value="amnesia-wins">Amnesiophobie gewinnt alle Spiele</option>
                         <option value="worst-case-meister">Minimal-Anforderung für Titel</option>
-                        <option value="favorites">Favoritensiege (nach aktuellem Score)</option>
+                        <option value="favorites">Favoritensiege ( aktuellem Score)</option>
                         <option value="max-chaos">Enges Finale (Tie-Breaker Test)</option>
                         <option value="random">Zufällige Ergebnisse</option>
                         <option value="amnesia-loses-all">Worst Case (Amnesiophobie verliert alles)</option>
@@ -289,7 +289,7 @@
     <footer class="border-t border-zinc-200 dark:border-zinc-800/80 py-5 mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-500 dark:text-zinc-400">
             <span>DQV Online-Liga 2026 • Hauptrunde Gruppe 2</span>
-            <span>Stand: Nach Spieltag 7</span>
+            <span>Stand: Nach Spieltag 8</span>
         </div>
     </footer>
 
@@ -301,18 +301,18 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        // Ausgangsdaten nach Spieltag 7
+        // Ausgangsdaten nach Spieltag 8
         const initialTeams = [
-            { id: 'amnesia', name: 'Amnesiophobie', p: 28, score: 287, played: 7, initialRank: 1 },
-            { id: 'suedwest', name: 'Suedwestkurve', p: 20, score: 234, played: 7, initialRank: 2 },
-            { id: 'bremer', name: 'Die Bremer Stadtquizzikanten', p: 20, score: 207, played: 7, initialRank: 3 },
-            { id: 'fbi', name: 'Federal Bureau of Inquizication', p: 19, score: 266, played: 7, initialRank: 4 },
-            { id: 'mcquiz', name: 'Quizzy McQuizface', p: 16, score: 193, played: 7, initialRank: 5 },
-            { id: 'grani', name: 'AC-Quiz-Grani', p: 14, score: 221, played: 7, initialRank: 6 },
-            { id: 'kate', name: 'Qiss me, Kate', p: 14, score: 214, played: 7, initialRank: 7 },
-            { id: 'schall', name: 'Schall & Rauch', p: 11, score: 230, played: 7, initialRank: 8 },
-            { id: 'ahlenfelder', name: 'Ahlenfelders Erben', p: 5, score: 207, played: 7, initialRank: 9 },
-            { id: 'haute', name: 'Haute Quizine', p: 3, score: 182, played: 7, initialRank: 10 }
+            { id: 'amnesia', name: 'Amnesiophobie', p: 29, score: 337, played: 8, initialRank: 1 },
+            { id: 'suedwest', name: 'Suedwestkurve', p: 24, score: 276, played: 8, initialRank: 2 },
+            { id: 'bremer', name: 'Die Bremer Stadtquizzikanten', p: 20, score: 233, played: 8, initialRank: 4 },
+            { id: 'fbi', name: 'Federal Bureau of Inquizication', p: 23, score: 316, played: 8, initialRank: 3 },
+            { id: 'mcquiz', name: 'Quizzy McQuizface', p: 20, score: 228, played: 8, initialRank: 5 },
+            { id: 'grani', name: 'AC-Quiz-Grani', p: 18, score: 264, played: 8, initialRank: 6 },
+            { id: 'kate', name: 'Qiss me, Kate', p: 14, score: 242, played: 8, initialRank: 8 },
+            { id: 'schall', name: 'Schall & Rauch', p: 15, score: 272, played: 8, initialRank: 7 },
+            { id: 'ahlenfelder', name: 'Ahlenfelders Erben', p: 5, score: 241, played: 8, initialRank: 10 },
+            { id: 'haute', name: 'Haute Quizine', p: 6, score: 251, played: 8, initialRank: 9 }
         ];
 
         // Vergangene Begegnungen (Spieltage 1–7) für Buchholz-Berechnung
@@ -350,11 +350,11 @@
         // Offene Spieltage 8 & 9
         const initialFixtures = {
             week8: [
-                { id: 'w8_m1', home: 'amnesia', away: 'fbi', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m2', home: 'haute', away: 'schall', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m3', home: 'bremer', away: 'mcquiz', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m4', home: 'kate', away: 'suedwest', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m5', home: 'ahlenfelder', away: 'grani', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+                { id: 'w8_m1', home: 'amnesia', away: 'fbi', result: 'away_close', homeAddScore: 50, awayAddScore: 51 },
+                { id: 'w8_m2', home: 'haute', away: 'schall', result: 'away_close', homeAddScore: 40, awayAddScore: 42 },
+                { id: 'w8_m3', home: 'bremer', away: 'mcquiz', result: 'away_win', homeAddScore: 26, awayAddScore: 35 },
+                { id: 'w8_m4', home: 'kate', away: 'suedwest', result: 'away_win', homeAddScore: 27, awayAddScore: 42 },
+                { id: 'w8_m5', home: 'ahlenfelder', away: 'grani', result: 'away_win', homeAddScore: 34, awayAddScore: 43 }
             ],
             week9: [
                 { id: 'w9_m1', home: 'amnesia', away: 'mcquiz', result: 'none', homeAddScore: 0, awayAddScore: 0 },
