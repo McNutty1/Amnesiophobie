@@ -4,7 +4,7 @@
     {
       "round": 1,
       "date": "5.11.2026",
-      "teamScore": 28,	  
+      "teamScore": 28,
       "players": [
         {
           "name": "Annika",
@@ -43,7 +43,7 @@
     {
       "round": 2,
       "date": "5.11.2026",
-      "teamScore": 24,	  
+      "teamScore": 24,
       "players": [
         {
           "name": "Peter",
@@ -82,7 +82,7 @@
     {
       "round": 3,
       "date": "5.11.2026",
-      "teamScore": 26,	  
+      "teamScore": 26,
       "players": [
         {
           "name": "Wiebke",
@@ -121,7 +121,7 @@
     {
       "round": 4,
       "date": "5.11.2026",
-      "teamScore": 33,	  
+      "teamScore": 33,
       "players": [
         {
           "name": "Jörn",
@@ -160,7 +160,7 @@
     {
       "round": 5,
       "date": "5.11.2026",
-      "teamScore": 28,	  
+      "teamScore": 28,
       "players": [
         {
           "name": "Frauke",
@@ -199,7 +199,7 @@
     {
       "round": 6,
       "date": "5.11.2026",
-      "teamScore": 24,	  
+      "teamScore": 24,
       "players": [
         {
           "name": "Wiebke",
@@ -238,7 +238,7 @@
     {
       "round": 7,
       "date": "5.11.2026",
-      "teamScore": 37,	  
+      "teamScore": 37,
       "players": [
         {
           "name": "Wiebke",
@@ -270,6 +270,45 @@
           "cat1": "Musik",
           "correct1": 0,
           "cat2": "Politik & Wirtschaft",
+          "correct2": 1
+        }
+      ]
+    },
+    {
+      "round": 8,
+      "date": "19.11.2026",
+      "teamScore": 35,
+      "players": [
+        {
+          "name": "Frauke",
+          "pos": 1,
+          "cat1": "Lifestyle & Technik",
+          "correct1": 0,
+          "cat2": "Lifestyle & Technik",
+          "correct2": 1
+        },
+        {
+          "name": "Jörn",
+          "pos": 2,
+          "cat1": "Geschichte",
+          "correct1": 1,
+          "cat2": "Politik & Wirtschaft",
+          "correct2": 1
+        },
+        {
+          "name": "Peter",
+          "pos": 3,
+          "cat1": "Kunst & Kultur",
+          "correct1": 2,
+          "cat2": "Kunst & Kultur",
+          "correct2": 1
+        },
+        {
+          "name": "Benjamin",
+          "pos": 4,
+          "cat1": "Musik",
+          "correct1": 1,
+          "cat2": "Musik",
           "correct2": 1
         }
       ]
