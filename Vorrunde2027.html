@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DQV Online Liga 2027 Tabelle - Vorrunde</title>
+    <title>DQV Online-Liga 2027 — Amnesiophobie Dashboard</title>
     <!-- Theme Initialization -->
     <script>
         if (localStorage.getItem('theme') === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
@@ -13,8 +13,6 @@
         }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-	<script src="JS/shared.js"></script>	
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -30,214 +28,214 @@
             }
         }
     </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="JS/shared.js"></script>
     <style>
+        .tabular-nums { font-variant-numeric: tabular-nums; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 3px; }
         .dark ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.6); }
-		input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none; 
-    margin: 0; 
-}
-/* Für Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
     </style>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">	
+ <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">    
 </head>
 <body class="min-h-full flex flex-col font-sans bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
 
-    <!-- Header -->
+    <!-- Header (Identisch zur Vorrunden-Seite) -->
     <header class="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex justify-between items-center gap-3">
             <div class="flex items-center gap-2.5 min-w-0">
                 <div class="p-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg border border-slate-200 dark:border-slate-700 shrink-0">
                     <i data-lucide="trophy" class="w-4 h-4"></i>
                 </div>
-                <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
-                    DQV Online-Liga 2027 — Vorrunde
-                </h1>
+                <div class="flex items-center gap-2 min-w-0">
+                    <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
+                        DQV Online-Liga 2027 — Amnesiophobie
+                    </h1>
+                    <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-[11px] text-slate-500 dark:text-slate-400 shrink-0">
+                        <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                        <span id="sync-status-text">Lade...</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <!-- Dezente Schnellzugriffe auf die Rechner -->
+                <nav class="hidden md:flex items-center gap-1 mr-1">
+                    <a href="Vorrunde2027.html" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
+                        <span>Vorrunde</span>
+                        <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
+                    </a>
+                    <!--a href="Hauptrunde2027.html" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1">
+                        <span>Hauptrunde</span>
+                        <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
+                    </a-->
+                </nav>
+
                 <button onclick="toggleTheme()" class="p-2 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition" title="Design wechseln" aria-label="Design wechseln">
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
                     <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-slate-600"></i>
                 </button>
 
-                <button onclick="toggleMobileMenu(true)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5" aria-label="Menü öffnen">
+                <button onclick="toggleMenu(true)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5" aria-label="Menü öffnen">
                     <i data-lucide="menu" class="w-4 h-4"></i>
                     <span class="text-xs font-medium hidden sm:inline">Menü</span>
                 </button>
             </div>
         </div>
     </header>
+<div id="site-drawer"></div>
+ 
+    <!-- Main Dashboard Content -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
 
-    <!-- Ausklappbare Hamburger-Navigation (Slide-Over Drawer) -->
-    <div id="nav-backdrop" onclick="toggleMobileMenu(false)" class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-40 hidden opacity-0 transition-opacity duration-200"></div>
-    <aside id="nav-drawer" class="fixed top-0 right-0 h-full w-72 max-w-[85vw] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 z-50 transform translate-x-full transition-transform duration-200 ease-out flex flex-col shadow-2xl">
-        <div class="px-4 h-14 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <div class="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                <i data-lucide="brain" class="w-4 h-4 text-sky-500"></i>
-                <span>Amnesiophobie</span>
-            </div>
-            <button onclick="toggleMobileMenu(false)" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="Menü schließen">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
-
-        <div class="flex-1 overflow-y-auto p-4 space-y-6 text-xs">
-            <!-- Seiten & Tools -->
-            <div class="space-y-1.5">
-                <div class="px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Seiten & Tools</div>
-                <a href="index.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-slate-400"></i>
-                        Startseite
-
-                </a>
-                <a href="Vorrunde2027.html" class="flex items-center justify-between px-2.5 py-2.5 rounded-lg bg-sky-50 dark:bg-sky-950/50 text-sky-900 dark:text-sky-200 font-semibold border border-sky-200/70 dark:border-sky-800/60">
-                    <span class="flex items-center gap-2.5">
-					<i data-lucide="list-ordered" class="w-4 h-4 text-sky-600 dark:text-sky-400"></i>
-                    Vorrunde
+        <!-- Fokus-Zeile: Nächstes Spiel & Letztes Ergebnis (Split-Ticker im Sport-Stil) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-slate-200 dark:divide-slate-800">
+            
+            <!-- Links: Nächster Spieltag -->
+            <div class="p-5 flex flex-col justify-between gap-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Nächster Spieltag
                     </span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>					
-                </a>
-                <a href="Hauptrunde2027.html" class="flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
-                    <i data-lucide="trophy" class="w-4 h-4 text-slate-400"></i>
-                    Hauptrunde
-                </a>
-            </div>
-
-            <!-- Turnier-Verwaltung -->
-            <div class="space-y-1.5 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <div class="px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Turnier-Aktionen</div>
-                <button onclick="toggleMobileMenu(false); openTeamManager()" class="w-full flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition text-left">
-                    <i data-lucide="users" class="w-4 h-4 text-slate-400"></i>
-                    Teams bearbeiten
-                </button>
-                <button onclick="toggleMobileMenu(false); exportState()" class="w-full flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition text-left">
-                    <i data-lucide="download" class="w-4 h-4 text-slate-400"></i>
-                    Exportieren
-                </button>
-                <button onclick="toggleMobileMenu(false); importStatePrompt()" class="w-full flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition text-left">
-                    <i data-lucide="upload" class="w-4 h-4 text-slate-400"></i>
-                    Importieren
-                </button>
-                <button onclick="toggleMobileMenu(false); resetTournament()" class="w-full flex items-center gap-2.5 px-2.5 py-2.5 rounded-lg text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 font-medium transition text-left">
-                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                    Zurücksetzen
-                </button>
-            </div>
-
-            <!-- Externe Links -->
-            <div class="space-y-1.5 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <div class="px-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">Externe Links</div>
-                <a href="https://results.quiznations.com/gerix" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-slate-400"></i>
-                        QuizNations Tabelle
+                    <span id="next-match-meta" class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
+                        Spieltag – • –
                     </span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
-                </a>
-                <a href="https://drive.google.com/drive/folders/1G6lD1a31IvCIhSxtoDvyEQSxyDYKhWyU?usp=drive_link" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="folder" class="w-4 h-4 text-slate-400"></i>
-                        Dateiablage (Drive)
-                    </span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
-                </a>
-                <a href="https://us05web.zoom.us/j/5511865993?pwd=SGV3WTJENFIrdk8zSi8wRjExVkFXUT09" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-2.5 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition">
-                    <span class="flex items-center gap-2.5">
-                        <i data-lucide="video" class="w-4 h-4 text-slate-400"></i>
-                        Vorbesprechung in Zoom starten
-                    </span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
-                </a>				
-            </div>
-        </div>
-    </aside>
+                </div>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- LEFT COLUMN: Live Standings Table (7 cols) -->
-        <div class="lg:col-span-7 flex flex-col gap-6">
-
-            <!-- Standings Card -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
-                <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="trophy" class="w-4 h-4 text-amber-500"></i>
-                        <h3 class="font-semibold text-sm text-slate-900 dark:text-white">Tabelle</h3>
+                <div class="py-1">
+                    <div class="flex items-baseline justify-between gap-3">
+                        <div id="next-match-opponent" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white truncate">
+                            Wird ermittelt...
+                        </div>
+                        <span id="next-opponent-rank" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white truncate">
+                            Platz –
+                        </span>
                     </div>
-                    <span id="round-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60">
-                        Runde 1
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+                    <span id="next-opponent-stats" class="truncate">Noch keine Saisonspiele</span>
+                    <span id="oppform-strip" class="flex items-center gap-1 font-mono text-[10px] shrink-0">
+                        <!-- Form-Badges (S/U/N) des Gegners -->
                     </span>
+                </div>
+
+                <!-- Gegneranalyse: Häufigste & Seltenste Kategorien -->
+                <div id="next-opponent-scouting"></div>
+            </div>
+
+            <!-- Rechts: Letztes Ergebnis -->
+            <div class="p-5 flex flex-col justify-between gap-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                        <i data-lucide="check-square" class="w-3.5 h-3.5"></i> Letztes Ergebnis
+                    </span>
+                    <span id="last-match-meta" class="text-xs font-mono text-slate-500 dark:text-slate-400">
+                        –
+                    </span>
+                </div>
+
+                <div class="py-1">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="min-w-0">
+                            <div id="last-match-teams" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
+                                Saison startet am 27.01.
+                            </div>
+                        </div>
+                        <div id="last-match-result-box" class="text-right shrink-0 hidden">
+                            <div id="last-match-points" class="text-xl font-mono font-extrabold tabular-nums text-slate-900 dark:text-white">
+                                – : –
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+                    <span id="last-match-verdict" class="text-slate-500 dark:text-slate-400">Warte auf Ergebnisse aus Spieltag 1</span>
+                    <span id="form-strip" class="flex items-center gap-1 font-mono text-[10px]">
+                        <!-- Form-Badges (S/U/N) werden hier eingefügt -->
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Kennzahlen-Leiste -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800">
+            <div class="p-4">
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Aktueller Tabellenplatz</div>
+                <div class="mt-1 flex items-baseline gap-2">
+                    <span id="stat-rank" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">–</span>
+                    <span id="stat-league" class="text-xs font-mono text-slate-400">von 20</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Punkte & Bilanz</div>
+                <div class="mt-1 flex items-baseline gap-2">
+                    <span id="stat-points" class="text-xl font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">0 Punkte</span>
+                    <span id="stat-record" class="text-xs font-mono text-slate-500 tabular-nums">(0-0-0)</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Ø-Score </div>
+                <div class="mt-1 flex items-baseline gap-2">
+                    <span id="stat-avg-score" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">Ø 0.0</span>
+                    <span id="stat-score" class="text-xs font-mono text-slate-500 tabular-nums">0</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="text-[11px] font-medium text-slate-500 dark:text-slate-400">BHZ / fBHZ</div>
+                <div class="mt-1 flex items-baseline gap-2">
+                    <span id="stat-bhz" class="text-xl font-mono font-bold text-slate-900 dark:text-white tabular-nums">0</span>
+                    <span id="stat-fbhz" class="text-xs font-mono text-slate-500 tabular-nums">/ 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unterer Bereich: Kompakte Tabellensituation & Saison-Fahrplan -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- Links (7 Spalten): Tabellenausschnitt / Top-Tabelle -->
+            <div class="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Tabellen
+                    </h3>
+                    <a href="Vorrunde2027.html" class="text-xs font-medium text-sky-600 dark:text-sky-400 hover:underline">
+                        Zur vollständigen Tabelle →
+                    </a>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                        <thead class="bg-slate-50 dark:bg-slate-950/50 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 text-[10px]">
                             <tr>
-                                <th class="py-2.5 px-3 text-center w-12">#</th>
-                                <th class="py-2.5 px-3">Team</th>
-                                <th class="py-2.5 px-2 text-center w-10" title="Spieltage">Sp.</th>
-                                <th class="py-2.5 px-3 text-right">Score</th>
-                                <th class="py-2.5 px-3 text-right" title="Buchholz-Zahl">BHZ</th>
-                                <th class="py-2.5 px-3 text-right" title="Feine Buchholz-Zahl">fBHZ</th>
-                                <th class="py-2.5 px-4 text-right">Punkte</th>
+                                <th class="py-2 px-3 text-center w-12">#</th>
+                                <th class="py-2 px-3">Team</th>
+                                <th class="py-2 px-2 text-center w-10">Sp.</th>
+                                <th class="py-2 px-3 text-right">Score</th>
+                                <th class="py-2 px-3 text-right hidden sm:table-cell">BHZ</th>
+                                <th class="py-2 px-4 text-right">Punkte</th>
                             </tr>
                         </thead>
-                        <tbody id="league-table-body">
-                            <!-- Live table rows -->
+                        <tbody id="mini-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/60">
+                            <!-- Dynamisch befüllt -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- History Log -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
-                <h4 class="font-semibold text-xs text-slate-900 dark:text-white mb-3 flex items-center gap-2 uppercase tracking-wider text-slate-500">
-                    <i data-lucide="history" class="w-3.5 h-3.5"></i> Abgeschlossene Matches
-                </h4>
-                <div id="rounds-history-container" class="space-y-2 text-xs">
-                    <p class="text-slate-400 italic">Noch kein Match abgeschlossen.</p>
+            <!-- Rechts (5 Spalten): Spielplan & Termine Amnesiophobie -->
+            <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                        Spielplan Amnesiophobie
+                    </h3>
                 </div>
-            </div>
 
-        </div>
-
-<div class="lg:col-span-5 flex flex-col gap-6">
-
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm flex flex-col overflow-hidden">
-        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
-            <div class="flex flex-wrap items-center gap-2">
-                <i data-lucide="swords" class="w-4 h-4 text-slate-500"></i>
-                <h3 class="font-semibold text-sm text-slate-900 dark:text-white" id="current-round-title">Paarungen Runde 1</h3>
-                <span id="current-round-date" class="inline-flex items-center text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60">27. Jan.</span>
-                <span id="pairing-mode-badge" class="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">Fester Spieltag</span>
-            </div>
-            <div class="relative flex items-center">
-                <select id="round-preset-select" onchange="applyRoundPreset(this.value)"
-                    class="appearance-none text-xs pl-2.5 pr-7 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-sky-500 cursor-pointer transition">
-                    <option value="" disabled selected>Simulieren...</option>
-                    <option value="random">Zufall</option>
-                    <option value="favorites">Favoritensiege</option>
-                    <option value="worst-case">Worst Case</option>
-                </select>
-                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-500 absolute right-2 pointer-events-none"></i>
-            </div>
-        </div>
-        <div id="current-fixtures-container" class="divide-y divide-slate-100 dark:divide-slate-800/80">
-            <!-- Dynamic pairings inserted here -->
-        </div>
-
-                <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
-<button onclick="finishCurrentRound()" class="px-3.5 py-2 rounded-lg bg-slate-600 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-semibold text-xs transition flex items-center gap-1.5">
-<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Runde abschließen</button>
+                <div id="schedule-list" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
+                    <!-- 9 Spieltage werden hier aufgelistet -->
                 </div>
             </div>
 
@@ -245,44 +243,34 @@ input[type=number] {
 
     </main>
 
-    <!-- Modal: Team Manager -->
-    <div id="team-modal" class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-md w-full p-5 shadow-xl flex flex-col max-h-[85vh]">
-            <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-200 dark:border-slate-800">
-                <h3 class="font-semibold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                    <i data-lucide="users" class="w-4 h-4 text-slate-500"></i> Teams bearbeiten (20)
-                </h3>
-                <button onclick="closeTeamManager()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div id="team-list-inputs" class="overflow-y-auto space-y-2 pr-1 flex-1 my-1">
-                <!-- Inputs generated dynamically -->
-            </div>
-
-            <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
-                <button onclick="closeTeamManager()" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300">Abbrechen</button>
-                <button onclick="saveTeamsFromManager()" class="px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 text-xs font-medium">Speichern</button>
-            </div>
+    <!-- Globaler Footer (Identisch zur Vorrunden-Seite) -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 mt-auto text-xs text-slate-600 dark:text-slate-400">
+<div id="site-footer"></div>
         </div>
-    </div>
-
-    <!-- Modal: Custom Confirm & Alert Dialog -->
-    <div id="confirm-modal" class="fixed inset-0 bg-slate-950/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-sm w-full p-5 shadow-xl flex flex-col gap-3">
-            <h3 id="confirm-title" class="font-semibold text-sm text-slate-900 dark:text-white">Bestätigung</h3>
-            <p id="confirm-message" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"></p>
-            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2">
-                <button id="confirm-cancel-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 transition">Abbrechen</button>
-                <button id="confirm-ok-btn" class="px-3 py-1.5 rounded-lg bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 text-xs font-medium transition">Bestätigen</button>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <script>
-        // Default 20 Teams
-        const defaultTeams = [
+        const GITHUB_JSON_URL = 'https://raw.githubusercontent.com/McNutty1/Amnesiophobie/refs/heads/main/data/Vorrunde.json';
+
+        const roundDates = {
+            1: '27. Jan.',
+            2: '10. Feb.',
+            3: '24. Feb.',
+            4: '17. März',
+            5: '07. Apr.',
+            6: '21. Apr.',
+            7: '05. Mai',
+            8: '26. Mai',
+            9: '09. Juni'
+        };
+
+        const fixedSchedule = {
+            1: [['amp', 't2'], ['t3', 't4'], ['t5', 't6'], ['t7', 't8'], ['t9', 't10'], ['t11', 't12'], ['t13', 't14'], ['t15', 't16'], ['t17', 't18'], ['t19', 't20']],
+            2: [['amp', 't3'], ['t2', 't4'], ['t5', 't7'], ['t6', 't8'], ['t9', 't11'], ['t10', 't12'], ['t13', 't15'], ['t14', 't16'], ['t17', 't19'], ['t18', 't20']],
+            3: [['amp', 't4'], ['t2', 't3'], ['t5', 't8'], ['t6', 't7'], ['t9', 't12'], ['t10', 't11'], ['t13', 't16'], ['t14', 't15'], ['t17', 't20'], ['t18', 't19']]
+        };
+
+        const fallbackTeams = [
             { id: 'amp', name: 'Amnesiophobie' },
             { id: 't2', name: 'Suedwestkurve' },
             { id: 't3', name: 'Die Bremer Stadtquizzikanten' },
@@ -305,154 +293,10 @@ input[type=number] {
             { id: 't20', name: 'Mind-Games e.V.' }
         ];
 
-        const fixedSchedule = {
-            1: [
-                ['amp', 't2'], ['t3', 't4'], ['t5', 't6'], ['t7', 't8'], ['t9', 't10'],
-                ['t11', 't12'], ['t13', 't14'], ['t15', 't16'], ['t17', 't18'], ['t19', 't20']
-            ],
-            2: [
-                ['amp', 't3'], ['t2', 't4'], ['t5', 't7'], ['t6', 't8'], ['t9', 't11'],
-                ['t10', 't12'], ['t13', 't15'], ['t14', 't16'], ['t17', 't19'], ['t18', 't20']
-            ],
-            3: [
-                ['amp', 't4'], ['t2', 't3'], ['t5', 't8'], ['t6', 't7'], ['t9', 't12'],
-                ['t10', 't11'], ['t13', 't16'], ['t14', 't15'], ['t17', 't20'], ['t18', 't19']
-            ]
-        };
-
-        const roundDates = {
-            1: '27. Jan.',
-            2: '10. Feb.',
-            3: '24. Feb.',
-            4: '17. März',
-            5: '07. Apr.',
-            6: '21. Apr.',
-            7: '05. Mai',
-            8: '26. Mai',
-            9: '09. Juni'
-        };
-
-        let state = {
-            round: 1,
-            teams: [],
-            completedRounds: [],
-            currentPairings: []
-        };
-
-        const GITHUB_JSON_URL = 'https://raw.githubusercontent.com/McNutty1/Amnesiophobie/refs/heads/main/data/Vorrunde.json';
-
-        function showConfirm(title, message, onConfirm, isAlertOnly = false) {
-            document.getElementById('confirm-title').innerText = title;
-            document.getElementById('confirm-message').innerText = message;
-            const modal = document.getElementById('confirm-modal');
-            modal.classList.remove('hidden');
-
-            const okBtn = document.getElementById('confirm-ok-btn');
-            const cancelBtn = document.getElementById('confirm-cancel-btn');
-
-            const newOkBtn = okBtn.cloneNode(true);
-            const newCancelBtn = cancelBtn.cloneNode(true);
-            okBtn.parentNode.replaceChild(newOkBtn, okBtn);
-            cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-
-            if (isAlertOnly) {
-                newCancelBtn.classList.add('hidden');
-                newOkBtn.innerText = 'OK';
-            } else {
-                newCancelBtn.classList.remove('hidden');
-                newOkBtn.innerText = 'Bestätigen';
-            }
-
-            newOkBtn.onclick = function() {
-                modal.classList.add('hidden');
-                if (onConfirm) onConfirm();
-            };
-            newCancelBtn.onclick = function() {
-                modal.classList.add('hidden');
-            };
-        }
-
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             if (window.lucide) lucide.createIcons();
-        }
-
-        function toggleMobileMenu(open) {
-            const drawer = document.getElementById('nav-drawer');
-            const backdrop = document.getElementById('nav-backdrop');
-            if (!drawer || !backdrop) return;
-
-            if (open) {
-                backdrop.classList.remove('hidden');
-                requestAnimationFrame(() => {
-                    backdrop.classList.remove('opacity-0');
-                    drawer.classList.remove('translate-x-full');
-                });
-                document.body.style.overflow = 'hidden';
-            } else {
-                backdrop.classList.add('opacity-0');
-                drawer.classList.add('translate-x-full');
-                setTimeout(() => {
-                    backdrop.classList.add('hidden');
-                }, 200);
-                document.body.style.overflow = '';
-            }
-        }
-
-        async function initTournament() {
-            try {
-                const response = await fetch(GITHUB_JSON_URL + '?t=' + Date.now());
-                if (response.ok) {
-                    const fetchedState = await response.json();
-                    if (fetchedState.teams && fetchedState.completedRounds) {
-                        state = fetchedState;
-                        saveStateToStorage();
-                        renderAll();
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.warn('Lokalmodus aktiv:', err);
-            }
-
-            const saved = localStorage.getItem('swiss_tournament_state');
-            if (saved) {
-                try {
-                    state = JSON.parse(saved);
-                } catch(e) {
-                    setupDefaultState();
-                }
-            } else {
-                setupDefaultState();
-            }
-            renderAll();
-        }
-
-        function setupDefaultState() {
-            state = {
-                round: 1,
-                teams: JSON.parse(JSON.stringify(defaultTeams)),
-                completedRounds: [],
-                currentPairings: []
-            };
-            generatePairingsForCurrentRound();
-            saveStateToStorage();
-        }
-
-        function saveStateToStorage() {
-            localStorage.setItem('swiss_tournament_state', JSON.stringify(state));
-        }
-
-        function resetTournament() {
-            showConfirm(
-                "Turnier zurücksetzen",
-                "Möchtest du das gesamte Turnier wirklich zurücksetzen? Alle bisherigen Ergebnisse gehen verloren.",
-                function() {
-                    setupDefaultState();
-                    renderAll();
-                }
-            );
         }
 
         function getPointsFromResult(result) {
@@ -466,12 +310,24 @@ input[type=number] {
             }
         }
 
-        function calculateStandings() {
+        function isTargetTeam(id, teams) {
+            if (id === 'amp') return true;
+            const t = teams.find(x => x.id === id);
+            return t ? t.name.toLowerCase().includes('amnesiophob') : false;
+        }
+
+        // Tabelle exakt wie in Vorrunde2027.html berechnen
+        function computeStandings(data) {
+            const teams = data.teams && data.teams.length ? data.teams : fallbackTeams;
             const map = {};
-            state.teams.forEach(t => {
+
+            teams.forEach(t => {
                 map[t.id] = {
                     ...t,
                     played: 0,
+                    wins: 0,
+                    draws: 0,
+                    losses: 0,
                     points: 0,
                     score: 0,
                     opponents: [],
@@ -480,9 +336,9 @@ input[type=number] {
                 };
             });
 
-            state.completedRounds.forEach(r => {
-                r.matches.forEach(m => {
-                    if (m.result !== 'none') {
+            (data.completedRounds || []).forEach(r => {
+                (r.matches || []).forEach(m => {
+                    if (m.result && m.result !== 'none' && map[m.home] && map[m.away]) {
                         const { homeP, awayP } = getPointsFromResult(m.result);
                         map[m.home].points += homeP;
                         map[m.away].points += awayP;
@@ -492,6 +348,10 @@ input[type=number] {
                         map[m.away].played += 1;
                         map[m.home].opponents.push(m.away);
                         map[m.away].opponents.push(m.home);
+
+                        if (homeP === 4) { map[m.home].wins++; map[m.away].losses++; }
+                        else if (awayP === 4) { map[m.away].wins++; map[m.home].losses++; }
+                        else if (homeP === 2) { map[m.home].draws++; map[m.away].draws++; }
                     }
                 });
             });
@@ -499,14 +359,12 @@ input[type=number] {
             Object.keys(map).forEach(id => {
                 map[id].bhz = map[id].opponents.reduce((sum, oppId) => sum + (map[oppId] ? map[oppId].points : 0), 0);
             });
-
             Object.keys(map).forEach(id => {
                 map[id].fbhz = map[id].opponents.reduce((sum, oppId) => sum + (map[oppId] ? map[oppId].bhz : 0), 0);
             });
 
-            const standings = Object.values(map);
-
-            standings.sort((a, b) => {
+            const list = Object.values(map);
+            list.sort((a, b) => {
                 if (b.points !== a.points) return b.points - a.points;
                 if (b.score !== a.score) return b.score - a.score;
                 if (b.bhz !== a.bhz) return b.bhz - a.bhz;
@@ -514,506 +372,441 @@ input[type=number] {
                 return a.name.localeCompare(b.name);
             });
 
-            return standings;
+            return list;
         }
 
-        function generatePairingsForCurrentRound() {
-            if (fixedSchedule[state.round]) {
-                state.currentPairings = fixedSchedule[state.round].map((pair, idx) => ({
-                    id: `r${state.round}_m${idx + 1}`,
-                    home: pair[0],
-                    away: pair[1],
-                    result: 'none',
-                    homeAddScore: 0,
-                    awayAddScore: 0
-                }));
-            } else {
-                generateSwissPairings();
+        async function loadDashboardData(manualRefresh = false) {
+            const dot = document.getElementById('sync-dot');
+            const statusText = document.getElementById('sync-status-text');
+
+            if (manualRefresh && statusText) {
+                statusText.innerText = 'Aktualisiere Daten...';
+                dot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-pulse';
             }
+
+            let tournamentData = null;
+
+            try {
+                // Ausschließlich von GitHub laden (ohne localStorage-Abhängigkeit)
+                const response = await fetch(GITHUB_JSON_URL + '?t=' + Date.now(), { cache: 'no-store' });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                tournamentData = await response.json();
+
+                dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+                const roundInfo = tournamentData.round ? `Spieltag ${tournamentData.round}` : 'Aktiv';
+                statusText.innerText = ` ${roundInfo}`;
+            } catch (err) {
+                console.warn('JSON konnte nicht geladen werden, nutze Basis-Spielplan:', err);
+                dot.className = 'w-2 h-2 rounded-full bg-rose-500';
+                statusText.innerText = 'Offline / Basis-Spielplan aktiv';
+                tournamentData = {
+                    round: 1,
+                    teams: fallbackTeams,
+                    completedRounds: [],
+                    currentPairings: fixedSchedule[1].map((p, idx) => ({
+                        id: `r1_m${idx + 1}`,
+                        home: p[0],
+                        away: p[1],
+                        result: 'none',
+                        homeAddScore: 0,
+                        awayAddScore: 0
+                    }))
+                };
+            }
+
+            renderDashboard(tournamentData);
         }
-        function generateSwissPairings() {
-            const standings = calculateStandings();
-            const playedHistory = {};
-            state.teams.forEach(t => playedHistory[t.id] = new Set());
-            
-            state.completedRounds.forEach(r => {
-                r.matches.forEach(m => {
-                    if (playedHistory[m.home]) playedHistory[m.home].add(m.away);
-                    if (playedHistory[m.away]) playedHistory[m.away].add(m.home);
+
+        function renderDashboard(data) {
+            const teams = data.teams && data.teams.length ? data.teams : fallbackTeams;
+            const standings = computeStandings(data);
+            const getTeamObj = (id) => teams.find(t => t.id === id) || { id, name: id };
+
+            // Amnesiophobie-Daten finden
+            const ampIndex = standings.findIndex(t => isTargetTeam(t.id, teams));
+            const amp = ampIndex !== -1 ? standings[ampIndex] : standings[0];
+            const ampRank = ampIndex !== -1 ? ampIndex + 1 : 1;
+
+            // 1. Kennzahlen befüllen
+            document.getElementById('stat-rank').innerText = `${ampRank}`;
+            document.getElementById('stat-league').innerText = ` von ${standings.length}`;
+            document.getElementById('stat-points').innerText = `${amp.points} Punkte`;
+            document.getElementById('stat-record').innerText = `(${amp.wins}-${amp.draws}-${amp.losses})`;
+            document.getElementById('stat-score').innerText = amp.score;
+            const avgScore = amp.played > 0 ? (amp.score / amp.played).toFixed(2) : '0.0';
+            document.getElementById('stat-avg-score').innerText = `Ø ${avgScore}`;
+            document.getElementById('stat-bhz').innerText = amp.bhz;
+            document.getElementById('stat-fbhz').innerText = `/ ${amp.fbhz}`;
+
+            // 2. Nächster Spieltag & Gegner ermitteln
+            const currentRound = data.round || 1;
+            const dateStr = roundDates[currentRound] || 'Termin offen';
+            document.getElementById('next-match-meta').innerText = `Spieltag ${currentRound} • ${dateStr}`;
+
+            let nextMatch = (data.currentPairings || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams));
+            if (!nextMatch && fixedSchedule[currentRound]) {
+                const pair = fixedSchedule[currentRound].find(p => isTargetTeam(p[0], teams) || isTargetTeam(p[1], teams));
+                if (pair) nextMatch = { home: pair[0], away: pair[1] };
+            }
+
+            if (nextMatch) {
+                const isHome = isTargetTeam(nextMatch.home, teams);
+                const oppId = isHome ? nextMatch.away : nextMatch.home;
+                const oppTeam = getTeamObj(oppId);
+                const oppStandingIdx = standings.findIndex(t => t.id === oppId);
+                const oppStats = oppStandingIdx !== -1 ? standings[oppStandingIdx] : null;
+                const avgoppScore = oppStats && oppStats.played > 0 ? (oppStats.score / oppStats.played).toFixed(2) : '0.0';
+
+                document.getElementById('next-match-opponent').innerText = oppTeam.name;
+                document.getElementById('next-opponent-rank').innerText = oppStandingIdx !== -1 ? `Platz ${oppStandingIdx + 1}` : '–';
+                document.getElementById('next-opponent-stats').innerText = oppStats && oppStats.played > 0
+                    ? `${oppStats.points} Punkte • Ø ${avgoppScore}`
+                    : 'Noch keine Saisonspiele';
+
+                // Gegneranalyse für den nächsten Gegner laden
+                loadOpponentCategoryScouting(oppTeam);
+
+                // Form-Badges (letzte 5 Spiele) für den Gegner ermitteln
+                const oppHistory = [];
+                (data.completedRounds || []).forEach(r => {
+                    const m = (r.matches || []).find(x => x.home === oppId || x.away === oppId);
+                    if (m && m.result && m.result !== 'none') {
+                        oppHistory.push({ round: r.round, match: m });
+                    }
                 });
-            });
-            function findValidPairings(remaining) {
-                if (remaining.length === 0) return [];
-                 const teamA = remaining[0];
-                const rest = remaining.slice(1);
 
-                for (let i = 0; i < rest.length; i++) {
-                    const candidate = rest[i];
-                    if (!playedHistory[teamA.id].has(candidate.id)) {
-                        const nextRemaining = rest.slice(0, i).concat(rest.slice(i + 1));
-                        const subResult = findValidPairings(nextRemaining);
-                        if (subResult !== null) {
-                            return [[teamA.id, candidate.id], ...subResult];
-                        }
-                    }
+                const oppformStrip = document.getElementById('oppform-strip');
+                if (oppformStrip) {
+                    oppformStrip.innerHTML = oppHistory.slice(-5).map(item => {
+                        const ih = item.match.home === oppId;
+                        const p = getPointsFromResult(item.match.result);
+                        const myP = ih ? p.homeP : p.awayP;
+                        if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Spieltag ${item.round}: Sieg">S</span>`;
+                        if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Spieltag ${item.round}: Remis">U</span>`;
+                        return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Spieltag ${item.round}: Niederlage">N</span>`;
+                    }).join('');
                 }
-                return null;
+            } else {
+                document.getElementById('next-match-opponent').innerText = currentRound > 9 ? 'Vorrunde abgeschlossen' : 'Wird nach Auslosung ermittelt';
+                document.getElementById('next-opponent-rank').innerText = 'noch offen';
+                document.getElementById('next-opponent-stats').innerText = 'Auslosung erfolgt nach Abschluss dem aktuellen Spieltag';
+                const oppformStrip = document.getElementById('oppform-strip');
+                if (oppformStrip) oppformStrip.innerHTML = '';
+                const scoutingBox = document.getElementById('next-opponent-scouting');
+                if (scoutingBox) scoutingBox.innerHTML = '';
             }
 
-            let pairedIds = findValidPairings(standings);
-									  
-				 
-
-            // Fallback nur für den theoretischen Fall von mehr als 19 Runden
-            if (!pairedIds) {
-                pairedIds = [];
-                const unassigned = [...standings];
-                while (unassigned.length >= 2) {
-                    const teamA = unassigned.shift();
-                    let idx = unassigned.findIndex(c => !playedHistory[teamA.id].has(c.id));
-                    if (idx === -1) idx = 0;
-                    const teamB = unassigned.splice(idx, 1)[0];
-									  
-																		 
-                    pairedIds.push([teamA.id, teamB.id]);
-									   
-									   
-										
-									   
-					   
+            // 3. Letztes Ergebnis & Formkurve
+            const completed = data.completedRounds || [];
+            const ampHistory = [];
+            completed.forEach(r => {
+                const m = (r.matches || []).find(x => isTargetTeam(x.home, teams) || isTargetTeam(x.away, teams));
+                if (m && m.result && m.result !== 'none') {
+                    ampHistory.push({ round: r.round, match: m });
                 }
-            }
-
-            state.currentPairings = pairedIds.map((pair, idx) => ({
-                id: `r${state.round}_m${idx + 1}`,
-                home: pair[0],
-                away: pair[1],
-                result: 'none',
-                homeAddScore: 0,
-                awayAddScore: 0
-            }));
-        }
-
-        function renderTable() {
-            const standings = calculateStandings();
-            const tbody = document.getElementById('league-table-body');
-            tbody.innerHTML = '';
-
-            standings.forEach((team, idx) => {
-                const rank = idx + 1;
-                const leagueNumber = Math.floor(idx / 2) + 1;
-                const isGroupEnd = rank % 2 === 0 && rank < standings.length;
-
-                const borderClass = isGroupEnd 
-                    ? 'border-b-2 border-slate-400 dark:border-slate-600' 
-                    : 'border-b border-slate-100 dark:border-slate-800/60';
-
-                // Hervorhebung für das Team Amnesiophobie
-                const isHighlighted = team.id === 'amp' || team.name.toLowerCase().includes('amnesiophobie');
-                const rowBgClass = isHighlighted
-                    ? 'bg-sky-50/90 dark:bg-sky-950/50 hover:bg-sky-100/80 dark:hover:bg-sky-900/50'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50';
-                const tr = document.createElement('tr');
-                tr.className = `${borderClass} ${rowBgClass} transition text-slate-700 dark:text-slate-300`;
-                tr.innerHTML = `
-                    <td class="py-2.5 px-3 text-center font-semibold text-xs">
-                        <div class="flex items-center justify-center gap-1.5">
-                            <span class="${rank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${rank}</span>
-                            <span class="text-[10px] text-slate-400 font-normal">L${leagueNumber}</span>
-                        </div>
-                    </td>					 
-                    <td class="py-2.5 px-3 ${isHighlighted ? 'font-bold text-sky-900 dark:text-sky-200' : 'font-medium text-slate-900 dark:text-white'}">${team.name}</td>
-                    <td class="py-2.5 px-2 text-center font-mono text-slate-600 dark:text-slate-400">${team.played}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400">${team.score}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.bhz}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.fbhz}</td>
-                    <td class="py-2.5 px-4 text-right font-bold font-mono text-sky-600 dark:text-sky-400 text-sm">${team.points}</td>
-                `;
-                tbody.appendChild(tr);
             });
 
-            document.getElementById('round-badge').innerText = `Runde ${state.round}`;
-            document.getElementById('current-round-title').innerText = `Paarungen Runde ${state.round}`;
-            
-            const dateBadge = document.getElementById('current-round-date');
-            if (dateBadge) {
-                const dateStr = roundDates[state.round];
-                if (dateStr) {
-                    dateBadge.innerText = dateStr;
-                    dateBadge.classList.remove('hidden');
-                } else {
-                    dateBadge.classList.add('hidden');
-                }
-            }
+            if (ampHistory.length > 0) {
+                const last = ampHistory[ampHistory.length - 1];
+                const m = last.match;
+                const isHome = isTargetTeam(m.home, teams);
+                const oppName = getTeamObj(isHome ? m.away : m.home).name;
+                const pts = getPointsFromResult(m.result);
+                const ampPts = isHome ? pts.homeP : pts.awayP;
+                const oppPts = isHome ? pts.awayP : pts.homeP;
+                const ampSc = isHome ? m.homeAddScore : m.awayAddScore;
+                const oppSc = isHome ? m.awayAddScore : m.homeAddScore;
 
-            const modeBadge = document.getElementById('pairing-mode-badge');
-            if (modeBadge) {
-                // Prüfen, ob die Runde bereits fest in den absolvierten Runden liegt oder fix im Schedule steht
-                const isCompleted = state.completedRounds.some(r => r.round === Number(state.round));
-                const isFixed = Number(state.round) <= 3 && Boolean(fixedSchedule[state.round]);
+                document.getElementById('last-match-meta').innerText = `Spieltag ${last.round} • ${roundDates[last.round] || ''}`;
+                document.getElementById('last-match-teams').innerText = oppName;
 
-                let badgeText = 'Simulation';
-                let badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60';
+                const resBox = document.getElementById('last-match-result-box');
+                resBox.classList.remove('hidden');
+                const ptsElem = document.getElementById('last-match-points');
+                ptsElem.innerText = `${ampSc} : ${oppSc}`;
+                ptsElem.className = `text-xl font-mono font-extrabold tabular-nums ${
+                    ampPts === 4 ? 'text-emerald-600 dark:text-emerald-400' :
+                    ampPts === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'
+                }`;
 
-                if (isCompleted || isFixed) {
-                    if (Number(state.round) <= 3) {
-                        badgeText = 'Fester Spieltag';
-                        badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700';
-                    } else {
-                        badgeText = 'Schweizer System';
-                        badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60';
-                    }
-                }
+                const verdictText = ampPts === 4 ? (oppPts === 1 ? 'Knapper Sieg (+4 Punkte)' : 'Sieg (+4 Punkte)') :
+                                    ampPts === 2 ? 'Unentschieden (+2 Punkte)' :
+                                    ampPts === 1 ? 'Knappe Niederlage (+1 Punkte)' : 'Niederlage (0 Punkte)';
+                document.getElementById('last-match-verdict').innerText = verdictText;
 
-                modeBadge.innerText = badgeText;
-                modeBadge.className = badgeClass;
-            }			 
-        }
-
-function renderFixtures() {
-            const container = document.getElementById('current-fixtures-container');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const isTargetTeam = (teamId) => {
-                if (teamId === 'amp') return true;
-                const t = state.teams.find(team => team.id === teamId);
-                return t ? t.name.toLowerCase().includes('amnesiophob') : false;
-            };
-
-            const resultOptions = [
-                { key: 'home_win', label: '4:0' },
-                { key: 'home_close', label: '4:1' },
-                { key: 'draw', label: '2:2' },
-                { key: 'away_close', label: '1:4' },
-                { key: 'away_win', label: '0:4' }
-            ];
-
-            // Paarung mit Amnesiophobie immer nach oben sortieren
-            const sortedPairings = [...state.currentPairings].sort((a, b) => {
-                const aHasTarget = isTargetTeam(a.home) || isTargetTeam(a.away);
-                const bHasTarget = isTargetTeam(b.home) || isTargetTeam(b.away);
-                if (aHasTarget && !bHasTarget) return -1;
-                if (!aHasTarget && bHasTarget) return 1;
-                return 0;
-            });
-
-            sortedPairings.forEach(m => {
-                const homeTeam = state.teams.find(t => t.id === m.home) || { name: m.home || 'Unbekannt' };
-                const awayTeam = state.teams.find(t => t.id === m.away) || { name: m.away || 'Unbekannt' };
-                const isTargetMatch = isTargetTeam(m.home) || isTargetTeam(m.away);
-
-                const row = document.createElement('div');
-                row.className = `p-4 transition-colors ${isTargetMatch ? 'bg-sky-50/90 dark:bg-sky-950/50 hover:bg-sky-100/80 dark:hover:bg-sky-900/50' : 'hover:bg-slate-50/60 dark:hover:bg-slate-800/30'}`;
-
-                const buttonsHtml = resultOptions.map(opt => {
-                    const isActive = m.result === opt.key;
-                    const activeClass = isActive
-                        ? 'bg-slate-600 dark:bg-slate-100 text-white dark:text-slate-900 font-bold border-slate-600 dark:border-slate-100 shadow-xs'
-                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200';
-                    
-                    return `
-                        <button type="button" onclick="setMatchResult('${m.id}', '${opt.key}')"
-                            class="py-1.5 rounded text-[11px] font-mono border transition-all cursor-pointer ${activeClass}">
-                            ${opt.label}
-                        </button>
-                    `;
+                // Form-Badges (letzte 5 Spiele)
+                const formStrip = document.getElementById('form-strip');
+                formStrip.innerHTML = ampHistory.slice(-5).map(item => {
+                    const ih = isTargetTeam(item.match.home, teams);
+                    const p = getPointsFromResult(item.match.result);
+                    const myP = ih ? p.homeP : p.awayP;
+                    if (myP === 4) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Spieltag ${item.round}: Sieg">S</span>`;
+                    if (myP === 2) return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Spieltag ${item.round}: Remis">U</span>`;
+                    return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Spieltag ${item.round}: Niederlage">N</span>`;
                 }).join('');
+            }
+
+            // 4. Mini-Tabelle (Top 6 + Amnesiophobie falls außerhalb der Top 6)
+            const miniBody = document.getElementById('mini-table-body');
+            miniBody.innerHTML = '';
+
+            let rowsToShow = standings.slice(0, 6);
+            if (ampIndex >= 6) {
+                rowsToShow.push({ isDivider: true });
+                rowsToShow.push(standings[ampIndex]);
+            }
+
+            rowsToShow.forEach(team => {
+                if (team.isDivider) {
+                    const divTr = document.createElement('tr');
+                    divTr.innerHTML = `<td colspan="6" class="py-1 text-center text-[10px] font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/30">•••</td>`;
+                    miniBody.appendChild(divTr);
+                    return;
+                }
+
+                const actualRank = standings.findIndex(x => x.id === team.id) + 1;
+                const lNum = Math.floor((actualRank - 1) / 2) + 1;
+                const isAmp = isTargetTeam(team.id, teams);
+
+                const tr = document.createElement('tr');
+                tr.className = isAmp
+                    ? 'bg-sky-50/90 dark:bg-sky-950/50 font-medium'
+                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/40 transition';
+
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 text-center font-mono text-xs tabular-nums">
+                        <span class="${actualRank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${actualRank}</span>
+                        <span class="text-[10px] text-slate-400 ml-0.5">L${lNum}</span>
+                    </td>
+                    <td class="py-2.5 px-3 truncate max-w-[170px] sm:max-w-[220px] ${isAmp ? 'font-bold text-sky-900 dark:text-sky-200' : 'text-slate-800 dark:text-slate-200'}">
+                        ${team.name}
+                    </td>
+                    <td class="py-2.5 px-2 text-center font-mono text-slate-500 tabular-nums">${team.played}</td>
+                    <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400 tabular-nums">${team.score}</td>
+                    <td class="py-2.5 px-3 text-right font-mono text-slate-400 tabular-nums hidden sm:table-cell">${team.bhz}</td>
+                    <td class="py-2.5 px-4 text-right font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">${team.points}</td>
+                `;
+                miniBody.appendChild(tr);
+            });
+
+            // 5. Alle 9 Spieltage für Amnesiophobie auflisten
+            const scheduleContainer = document.getElementById('schedule-list');
+            scheduleContainer.innerHTML = '';
+
+            for (let r = 1; r <= 9; r++) {
+                const date = roundDates[r] || '–';
+                const compRound = completed.find(x => x.round === r);
+                let matchObj = compRound ? (compRound.matches || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams)) : null;
+
+                if (!matchObj && r === currentRound) {
+                    matchObj = (data.currentPairings || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams));
+                }
+                if (!matchObj && fixedSchedule[r]) {
+                    const pair = fixedSchedule[r].find(p => isTargetTeam(p[0], teams) || isTargetTeam(p[1], teams));
+                    if (pair) matchObj = { home: pair[0], away: pair[1], result: 'none' };
+                }
+
+                const isCurrent = r === currentRound;
+                const row = document.createElement('div');
+                row.className = `px-4 py-2.5 flex items-center justify-between gap-2 ${
+                    isCurrent ? 'bg-sky-50/70 dark:bg-sky-950/40' : ''
+                }`;
+
+                let oppText = '<span class="text-slate-400 italic">noch offen</span>';
+                let rightBadge = `<span class="text-[11px] font-mono text-slate-400"></span>`;
+
+                if (matchObj) {
+                    const isH = isTargetTeam(matchObj.home, teams);
+                    const opp = getTeamObj(isH ? matchObj.away : matchObj.home).name;
+                    const prefix = isH ? 'vs.' : 'vs.';
+                    oppText = `<span class="text-slate-400 font-mono text-[11px] mr-1">${prefix}</span><span class="font-medium text-slate-800 dark:text-slate-200">${opp}</span>`;
+
+                    if (matchObj.result && matchObj.result !== 'none') {
+                        const p = getPointsFromResult(matchObj.result);
+                        const myP = isH ? p.homeP : p.awayP;
+                        const opP = isH ? p.awayP : p.homeP;
+                        const color = myP === 4 ? 'text-emerald-600 dark:text-emerald-400' : myP === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400';
+                        rightBadge = `<span class="font-mono font-bold ${color} tabular-nums">${myP}:${opP}</span>`;
+                    } else if (isCurrent) {
+                        rightBadge = `<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300">Nächstes</span>`;
+                    }
+                }
 
                 row.innerHTML = `
-                    <!-- Teams Zeile -->
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <div class="flex-1 min-w-0">
-                            <span class="text-xs sm:text-[13px] truncate block ${isTargetTeam(m.home) ? 'font-bold text-sky-900 dark:text-sky-200' : 'font-semibold text-slate-800 dark:text-slate-200'}">
-                                ${homeTeam.name}
-                            </span>
-                        </div>
-                        <span class="text-[11px] font-mono text-slate-400 px-1.5">vs.</span>
-                        <div class="flex-1 min-w-0 text-right">
-                            <span class="text-xs sm:text-[13px] truncate block ${isTargetTeam(m.away) ? 'font-bold text-sky-900 dark:text-sky-200' : 'font-semibold text-slate-800 dark:text-slate-200'}">
-                                ${awayTeam.name}
-                            </span>
-                        </div>
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="font-mono text-[11px] text-slate-400 w-14 shrink-0">${date}</span>
+                        <div class="truncate">${oppText}</div>
                     </div>
-
-                    <!-- Segmented Result Selector + Score Inputs nebeneinander -->
-                    <div class="flex items-center gap-3">
-                        <div class="grid grid-cols-5 gap-1 flex-1">
-                            ${buttonsHtml}
-                        </div>
-
-                        <!-- Kompakte Score-Eingabe rechts -->
-                        <div class="flex items-center gap-1 pl-2 border-l border-slate-200 dark:border-slate-800" title="Zusätzlicher Quiz-Score (optional)">
-                            <input type="number" min="0" placeholder="–" value="${m.homeAddScore || ''}"
-                                onchange="setMatchScore('${m.id}', 'home', this.value)"
-                                class="w-9 h-7 rounded bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center font-mono text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:border-sky-500">
-                            <span class="text-slate-400 text-xs">:</span>
-                            <input type="number" min="0" placeholder="–" value="${m.awayAddScore || ''}"
-                                onchange="setMatchScore('${m.id}', 'away', this.value)"
-                                class="w-9 h-7 rounded bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center font-mono text-xs font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:border-sky-500">
-                        </div>
-                    </div>
+                    <div class="shrink-0">${rightBadge}</div>
                 `;
-                container.appendChild(row);
-            });
-        }
-
-        function renderHistory() {
-            const container = document.getElementById('rounds-history-container');
-            if (state.completedRounds.length === 0) {
-                container.innerHTML = '<p class="text-slate-400 italic">Noch keine absolvierten Runden vorhanden.</p>';
-                return;
+                scheduleContainer.appendChild(row);
             }
 
-            container.innerHTML = '';
-            state.completedRounds.slice().reverse().forEach(r => {
-                const details = document.createElement('details');
-                details.className = "bg-slate-50/50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5";
-                
-                let matchesHtml = r.matches.map(m => {
-                    const h = (state.teams.find(t => t.id === m.home) || { name: m.home }).name;
-                    const a = (state.teams.find(t => t.id === m.away) || { name: m.away }).name;
-                    const pts = getPointsFromResult(m.result);
-                    return `<div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/40 last:border-0 text-slate-600 dark:text-slate-400"><span>${h} vs ${a}</span><span class="font-mono font-medium text-slate-800 dark:text-slate-200">${pts.homeP}:${pts.awayP} <span class="text-slate-400 text-[10px]">(${m.homeAddScore}:${m.awayAddScore})</span></span></div>`;
-                }).join('');
-
-                const rDate = roundDates[r.round] ? ` <span class="text-slate-400 font-normal font-mono text-[11px] ml-1">(${roundDates[r.round]})</span>` : '';
-                details.innerHTML = `<summary class="font-medium cursor-pointer text-slate-700 dark:text-slate-300">Runde ${r.round}${rDate}</summary><div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-0.5">${matchesHtml}</div>`;
-                container.appendChild(details);
-            });
-        }
-
-        function renderAll() {
-            renderTable();
-            renderFixtures();
-            renderHistory();
             if (window.lucide) lucide.createIcons();
         }
 
-        function setMatchResult(matchId, type) {
-            const m = state.currentPairings.find(x => x.id === matchId);
-            if (m) {
-                m.result = m.result === type ? 'none' : type;
-            }
-            const select = document.getElementById('round-preset-select');
-            if (select) select.value = '';
-            renderFixtures();
-            saveStateToStorage();
-        }
+        // Mapping von Teamnamen/IDs auf mögliche Datei-Kürzel im Ordner data/
+        const opponentScoutingKeys = {
+            'amp': ['AMP', 'Amnesiophobie'],
+            'amnesiophobie': ['AMP', 'Amnesiophobie'],
+            'suedwestkurve': ['SWK', 'Suedwestkurve'],
+            'die bremer stadtquizzikanten': ['BSQ', 'Bremer', 'Die Bremer Stadtquizzikanten'],
+            'federal bureau of inquizication': ['FBI', 'Federal Bureau of Inquizication'],
+            'ac-quiz-grani': ['ACG', 'AC-Quiz-Grani'],
+            'quizzy mcquizface': ['QMQ', 'Quizzy McQuizface'],
+            'schall & rauch': ['SR', 'Schall & Rauch'],
+            'qiss me, kate': ['QMK', 'Qiss me, Kate'],
+            'ahlenfelders erben': ['AE', 'Ahlenfelders Erben'],
+            'haute quizine': ['HQ', 'Haute Quizine']
+        };
 
-        function setMatchScore(matchId, side, val) {
-            const m = state.currentPairings.find(x => x.id === matchId);
-            if (m) {
-                const num = parseInt(val) || 0;
-                if (side === 'home') m.homeAddScore = num;
-                if (side === 'away') m.awayAddScore = num;
-            }
-            saveStateToStorage();
-        }
+        async function loadOpponentCategoryScouting(oppTeam) {
+            const container = document.getElementById('next-opponent-scouting');
+            if (!container || !oppTeam) return;
 
-        function applyRoundPreset(mode) {
-            if (!mode) return;
+            const nameKey = (oppTeam.name || '').toLowerCase().trim();
+            const idKey = (oppTeam.id || '').toLowerCase().trim();
+            const candidates = Array.from(new Set([
+                ...(opponentScoutingKeys[nameKey] || []),
+                ...(opponentScoutingKeys[idKey] || []),
+                oppTeam.name,
+                oppTeam.id?.toUpperCase()
+            ].filter(Boolean)));
 
-            const standings = calculateStandings();
-            const statsMap = {};
-            standings.forEach((t, idx) => {
-                statsMap[t.id] = { score: t.score, points: t.points, rank: idx + 1 };
-            });
-
-            const isTarget = (id) => {
-                if (id === 'amp') return true;
-                const t = state.teams.find(x => x.id === id);
-                return t ? t.name.toLowerCase().includes('amnesiophob') : false;
-            };
-
-            const ampEntry = standings.find(t => isTarget(t.id));
-            const ampRank = ampEntry ? statsMap[ampEntry.id].rank : 1;
-
-            // Hilfsfunktion zur realistischen Score-Generierung passend zum Ergebnis
-            const assignConsistentScores = (m) => {
-                if (m.result === 'draw') {
-                    const s = Math.floor(Math.random() * 14) + 28;
-                    m.homeAddScore = s;
-                    m.awayAddScore = s;
-                } else if (m.result === 'home_close') {
-                    m.homeAddScore = Math.floor(Math.random() * 12) + 33;
-                    m.awayAddScore = m.homeAddScore - (Math.floor(Math.random() * 4) + 1);
-                } else if (m.result === 'home_win') {
-                    m.homeAddScore = Math.floor(Math.random() * 12) + 35;
-                    m.awayAddScore = Math.max(12, m.homeAddScore - (Math.floor(Math.random() * 8) + 5));
-                } else if (m.result === 'away_close') {
-                    m.awayAddScore = Math.floor(Math.random() * 12) + 33;
-                    m.homeAddScore = m.awayAddScore - (Math.floor(Math.random() * 4) + 1);
-                } else if (m.result === 'away_win') {
-                    m.awayAddScore = Math.floor(Math.random() * 12) + 35;
-                    m.homeAddScore = Math.max(12, m.awayAddScore - (Math.floor(Math.random() * 8) + 5));
+            let data = null;
+            let resolvedKey = candidates[0] || oppTeam.name;
+            for (const key of candidates) {
+                const encodedFile = encodeURIComponent(`Gegneranalyse_${key} HR 2026.json`);
+                try {
+                    const res = await fetch(`data/${encodedFile}?t=${Date.now()}`, { cache: 'no-store' });
+																																										  
+                    if (res.ok) {
+                        data = await res.json();
+                        resolvedKey = key;
+                        break;
+                    }
+                } catch (e) {
+                    // Nächstes Kandidaten-Kürzel testen
                 }
-            };
-
-            if (mode === 'random') {
-                const results = ['home_win', 'home_close', 'draw', 'away_close', 'away_win'];
-                state.currentPairings.forEach(m => {
-                    m.result = results[Math.floor(Math.random() * results.length)];
-                    assignConsistentScores(m);
-                });
-            } else if (mode === 'favorites') {
-                // Durchschnittlicher Score pro Runde als Maßstab für knappen vs. deutlichen Sieg
-                const roundsPlayed = Math.max(1, state.completedRounds.length);
-                state.currentPairings.forEach(m => {
-                    const hScore = statsMap[m.home]?.score || 0;
-                    const aScore = statsMap[m.away]?.score || 0;
-                    const avgDiff = Math.abs(hScore - aScore) / roundsPlayed;
-
-                    if (hScore === aScore) {
-                        m.result = 'draw';
-                    } else if (hScore > aScore) {
-                        m.result = avgDiff >= 4 ? 'home_win' : 'home_close';
-                    } else {
-                        m.result = avgDiff >= 4 ? 'away_win' : 'away_close';
-                    }
-                    assignConsistentScores(m);
-                });
-            } else if (mode === 'worst-case') {
-                // Amnesiophobie verliert hoch (0 Punkte), direkte Tabellennachbarn gewinnen
-                state.currentPairings.forEach(m => {
-                    const hIsAmp = isTarget(m.home);
-                    const aIsAmp = isTarget(m.away);
-
-                    if (hIsAmp) {
-                        m.result = 'away_win';
-                    } else if (aIsAmp) {
-                        m.result = 'home_win';
-                    } else {
-                        const hRank = statsMap[m.home]?.rank || 99;
-                        const aRank = statsMap[m.away]?.rank || 99;
-                        const hNearAmp = Math.abs(hRank - ampRank) <= 4;
-                        const aNearAmp = Math.abs(aRank - ampRank) <= 4;
-
-                        if (hNearAmp && !aNearAmp) {
-                            m.result = 'home_win';
-                        } else if (aNearAmp && !hNearAmp) {
-                            m.result = 'away_win';
-                        } else {
-                            // Wenn beide oder keiner in direkter Nähe: Besser platziertes Team gewinnt
-                            m.result = hRank <= aRank ? 'home_win' : 'away_win';
-                        }
-                    }
-                    assignConsistentScores(m);
-                });
             }
 
-            renderFixtures();
-            saveStateToStorage();
-        }
+            const detailHref = `Gegner.html?gegner=${encodeURIComponent(resolvedKey)}&name=${encodeURIComponent(oppTeam.name)}`;
 
-        function finishCurrentRound() {
-            const advanceRound = () => {
-                state.completedRounds.push({
-                    round: state.round,
-                    matches: JSON.parse(JSON.stringify(state.currentPairings))
-                });
-
-                state.round += 1;
-                generatePairingsForCurrentRound();
-                const select = document.getElementById('round-preset-select');
-                if (select) select.value = '';
-                saveStateToStorage();
-                renderAll();
-            };
-
-            const unplayed = state.currentPairings.some(m => m.result === 'none');																				  
-            if (unplayed) {
-                showConfirm(
-                    "Runde unvollständig",
-                    "Einige Duelle haben noch kein Ergebnis. Trotzdem die Runde abschließen (unvollständige Spiele werden 0:0 gewertet)?",
-                    advanceRound
-                );
-                return;
-							   
-            }
-
-            advanceRound();					   
-        }
-
-        function openTeamManager() {
-            const container = document.getElementById('team-list-inputs');
-            container.innerHTML = '';
-            state.teams.forEach((t, i) => {
-                const div = document.createElement('div');
-                div.className = "flex items-center gap-2";
-                div.innerHTML = `
-                    <span class="text-xs font-mono text-slate-400 w-6">${i+1}.</span>
-                    <input type="text" data-id="${t.id}" value="${t.name}" class="team-name-input flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1 text-xs font-medium text-slate-800 dark:text-slate-100">
+            if (!data || !Array.isArray(data.matches) || data.matches.length === 0) {
+                container.innerHTML = `
+                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+                        <span class="text-[11px] text-slate-400">Keine Scouting-Daten hinterlegt</span>
+                        <a href="${detailHref}" class="inline-flex items-center gap-1 text-xs font-medium text-sky-600 dark:text-sky-400 hover:underline">
+                            <span>Gegneranalyse öffnen</span>
+                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
                 `;
-                container.appendChild(div);
-            });
-            document.getElementById('team-modal').classList.remove('hidden');
-        }
+                if (window.lucide) lucide.createIcons();
+                return;
+            }
 
-        function closeTeamManager() {
-            document.getElementById('team-modal').classList.add('hidden');
-        }
+            const stats = new Map();
+            for (const match of data.matches) {
+                for (const p of (match.players || [])) {
+                    const picks = [
+                        { cat: p.cat1, ok: Number(p.correct1) || 0 },
+                        { cat: p.cat2, ok: Number(p.correct2) || 0 }
+                    ];
 
-        function saveTeamsFromManager() {
-            const inputs = document.querySelectorAll('.team-name-input');
-            inputs.forEach(input => {
-                const id = input.getAttribute('data-id');
-                const t = state.teams.find(x => x.id === id);
-                if (t && input.value.trim() !== '') {
-                    t.name = input.value.trim();
-                }
-            });
-            saveStateToStorage();
-            closeTeamManager();
-            renderAll();
-        }
+                    for (const pick of picks) {
+                        if (!pick.cat || !pick.cat.trim()) continue;
+                        const catName = pick.cat.trim();
 
-        function exportState() {
-            const jsonStr = JSON.stringify(state, null, 2);
-            const blob = new Blob([jsonStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Vorrunde.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function importStatePrompt() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'application/json';
-            input.onchange = e => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = event => {
-                        try {
-                            const imported = JSON.parse(event.target.result);
-                            if (imported.teams && imported.completedRounds) {
-                                state = imported;
-                                saveStateToStorage();
-                                renderAll();
-                            } else {
-                                showConfirm("Fehler beim Import", "Ungültiges Dateiformat!", null, true);
-                            }
-                        } catch(err) {
-                            showConfirm("Fehler beim Import", "Fehler beim Lesen der Datei!", null, true);
+                        if (!stats.has(catName)) {
+                            stats.set(catName, { count: 0, players: new Map(), correct: 0 });
                         }
-                    };
-                    reader.readAsText(file);
+                        const entry = stats.get(catName);
+                        entry.count += 1;
+                        entry.correct += pick.ok;
+
+                        if (p.name) {
+                            const pName = p.name.trim();
+                            entry.players.set(pName, (entry.players.get(pName) || 0) + 1);
+                        }
+                    }
                 }
+            }
+
+            if (stats.size === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const sorted = Array.from(stats.entries()).sort((a, b) => {
+                if (b[1].count !== a[1].count) return b[1].count - a[1].count;
+                return a[0].localeCompare(b[0], 'de');
+            });
+
+            const maxCount = sorted[0][1].count;
+            const minCount = sorted[sorted.length - 1][1].count;
+
+            const mostCommon = sorted.filter(([, v]) => v.count === maxCount);
+            const leastCommon = sorted.filter(([, v]) => v.count === minCount);
+
+            const formatPlayerList = (playerMap) => {
+                return Array.from(playerMap.entries())
+                    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de'))
+                    .map(([name, cnt]) => `${name} (${cnt}×)`)
+                    .join(', ');
             };
-            input.click();
+
+            const renderRows = (items) => items.map(([catName, info]) => {
+                const who = formatPlayerList(info.players) || '–';
+                return `
+                    <div class="flex items-baseline justify-between gap-2 py-1">
+                        <div class="min-w-0">
+                            <span class="font-semibold text-slate-900 dark:text-white">${catName}</span>
+                            <span class="block text-[11px] text-slate-500 dark:text-slate-400 truncate" title="${who}">${who}</span>
+                        </div>
+                        <span class="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300 shrink-0">${info.count}×</span>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <a href="${detailHref}" class="block group pt-3 border-t border-slate-100 dark:border-slate-800/80 rounded-lg hover:bg-slate-50/80 dark:hover:bg-slate-800/40 -mx-2 px-2 pb-1.5 transition" title="Vollständige Gegneranalyse für ${oppTeam.name} öffnen">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">
+                            Kategorie-Scouting (${data.matches.length} Spiele)
+                        </span>
+                        <span class="inline-flex items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400">
+                            <span>Details</span>
+                            <i data-lucide="arrow-up-right" class="w-3 h-3 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                Häufigste Kategorie
+                            </div>
+                            <div class="divide-y divide-slate-100 dark:divide-slate-800/60">
+                                ${renderRows(mostCommon)}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                                Seltenste Kategorie
+                            </div>
+                            <div class="divide-y divide-slate-100 dark:divide-slate-800/60">
+                                ${renderRows(leastCommon)}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+            if (window.lucide) lucide.createIcons();
         }
 
         window.onload = function() {
-            initTournament();
+            loadDashboardData();
+            if (window.lucide) lucide.createIcons();
         };
     </script>
 </body>
-<!-- Globaler Footer -->
-<footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 mt-auto text-xs text-slate-600 dark:text-slate-400">
-<div id="site-footer"></div>
-</footer>
 </html>
