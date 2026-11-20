@@ -101,22 +101,14 @@
                     <select id="preset-select" onchange="handlePresetSelect(this.value)" 
                         class="appearance-none bg-zinc-100 dark:bg-zinc-800/90 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium pl-3 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-accent/40 cursor-pointer transition">
                         <option value="custom" disabled selected>Szenario auswählen...</option>
-                        <option value="AMP-wins">Amnesiophobie gewinnt  Spiele</option>
+                        <option value="AMP-wins">Amnesiophobie gewinnt alle Matches</option>
                         <option value="random">Komplette Saison zufällig simulieren</option>
                         <option value="random-week">Aktuellen Spieltag zufällig simulieren</option>
-                        <option value="all-draws">Nur Unentschieden (Tie-Breaker Test)</option>
-                        <option value="AMP-loses-all">Worst Case (Amnesiophobie verliert s)</option>
+                        <option value="all-draws">Nur Unentschieden</option>
+                        <option value="AMP-loses-all">Amnesiophobie verliert alles</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 pointer-events-none"></i>
                 </div>
-
-                <!-- Reset Button -->
-                <button onclick="applyPreset('reset')" 
-                    class="px-3 py-2 rounded-md bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-medium border border-zinc-200 dark:border-zinc-700 transition flex items-center gap-1.5"
-                    title="Alle Eingaben zurücksetzen">
-                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                    <span class="hidden sm:inline">Zurücksetzen</span>
-                </button>
 
                 <!-- Theme Toggle -->
                 <button onclick="toggleTheme()" 
@@ -125,9 +117,15 @@
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
                 </button>
+				<button onclick="toggleMenu(true)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5" aria-label="Menü öffnen">
+                    <i data-lucide="menu" class="w-4 h-4"></i>
+                    <span class="text-xs font-medium hidden sm:inline">Menü</span>
+                </button>
             </div>
         </div>
     </header>
+	
+ <div id="site-drawer"></div>
 
     <!-- Main Layout -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -198,8 +196,8 @@
                 <!-- Tabelle -->
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     <div class="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Live-Tabelle</h3>
-                        <span class="text-[11px] text-zinc-500 dark:text-zinc-400">Sortierung: Pkt › Score › BHZ › fBHZ</span>
+                        <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Tabelle</h3>
+                        <span class="text-[11px] text-zinc-500 dark:text-zinc-400"></span>
                     </div>
 
                     <div class="overflow-x-auto">
