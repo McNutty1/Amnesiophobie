@@ -820,86 +820,118 @@
             }
         }
 
-        function renderPlayerScouting() {
-            const container = document.getElementById('player-scout-container');
-            container.innerHTML = '';
+function renderPlayerScouting() {
+    const container = document.getElementById('player-scout-container');
+    container.innerHTML = '';
 
-            const playerMap = {};
+    const playerMap = {};
 
-            appData.matches.forEach(m => {
-                m.players.forEach(p => {
-                    if (!p.name) return;
-                    const name = p.name.trim();
-                    if (!playerMap[name]) {
-                        playerMap[name] = {
-                            name,
-                            matches: 0,
-                            correct: 0,
-                            total: 0,
-                            positions: {},
-                            cats: {}
-                        };
-                    }
-                    const entry = playerMap[name];
-                    entry.matches += 1;
-                    const c1 = Number(p.correct1) || 0;
-                    const c2 = Number(p.correct2) || 0;
-                    entry.correct += c1 + c2;
-                    entry.total += 4;
-
-                    if (p.pos) {
-                        entry.positions[p.pos] = (entry.positions[p.pos] || 0) + 1;
-                    }
-                    if (p.cat1) {
-                        entry.cats[p.cat1] = (entry.cats[p.cat1] || 0) + 1;
-                    }
-                    if (p.cat2) {
-                        entry.cats[p.cat2] = (entry.cats[p.cat2] || 0) + 1;
-                    }
-                });
-            });
-
-            const players = Object.values(playerMap).sort((a, b) => b.matches - a.matches || b.correct - a.correct);
-
-            if (players.length === 0) {
-                container.innerHTML = '<p class="text-xs text-zinc-400 py-2">Noch keine Spielerdaten vorhanden.</p>';
-                return;
+    appData.matches.forEach(m => {
+        m.players.forEach(p => {
+            if (!p.name) return;
+            const name = p.name.trim();
+            if (!playerMap[name]) {
+                playerMap[name] = {
+                    name,
+                    matches: 0,
+                    correct: 0,
+                    total: 0,
+                    positions: {},
+                    cats: {}
+                };
             }
+            const entry = playerMap[name];
+            entry.matches += 1;
+            const c1 = Number(p.correct1) || 0;
+            const c2 = Number(p.correct2) || 0;
+            entry.correct += c1 + c2;
+            entry.total += 4;
 
-            players.forEach(pl => {
-                const pct = pl.total > 0 ? Math.round((pl.correct / pl.total) * 100) : 0;
-                const posBadges = Object.entries(pl.positions)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([pos, cnt]) => `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">Pos. ${pos} (${cnt}×)</span>`)
-                    .join(' ');
+            if (p.pos) {
+                entry.positions[p.pos] = (entry.positions[p.pos] || 0) + 1;
+            }
+            if (p.cat1) {
+                entry.cats[p.cat1] = (entry.cats[p.cat1] || 0) + 1;
+            }
+            if (p.cat2) {
+                entry.cats[p.cat2] = (entry.cats[p.cat2] || 0) + 1;
+            }
+        });
+    });
 
-                const topCats = Object.entries(pl.cats)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 3)
-                    .map(([cat, cnt]) => `${cat} (${cnt}×)`)
-                    .join(', ');
+    // Ermittelt die häufigste Position eines Spielers (1, 2, 3 oder 4)
+    const getMainPosition = (positions) => {
+        const entries = Object.entries(positions);
+        if (entries.length === 0) return { pos: 999, count: 0 }; // ohne Position ganz nach unten
 
-                const row = document.createElement('div');
-                row.className = "py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
-                row.innerHTML = `
-                    <div class="min-w-0 space-y-1">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="font-semibold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100">${pl.name}</span>
-                            <span class="text-[11px] font-mono text-zinc-500 tabular-nums">${pl.matches} ${pl.matches === 1 ? 'Spiel' : 'Spiele'}</span>
-                            ${posBadges}
-                        </div>
-                        <div class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
-                            Kategorien: <span class="text-zinc-700 dark:text-zinc-300">${topCats || '–'}</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2.5 shrink-0 tabular-nums">
-                        <span class="text-xs font-mono text-zinc-500">${pl.correct}/${pl.total}</span>
-                        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">${pct}%</span>
-                    </div>
-                `;
-                container.appendChild(row);
-            });
+        entries.sort((a, b) => {
+            if (b[1] !== a[1]) return b[1] - a[1]; // 1. Häufigste Position zuerst
+            return Number(a[0]) - Number(b[0]);     // 2. Bei Gleichstand: niedrigere Positionsnummer (1 vor 2)
+        });
+
+        return {
+            pos: Number(entries[0][0]),
+            count: entries[0][1]
+        };
+    };
+
+    const players = Object.values(playerMap).sort((a, b) => {
+        const mainA = getMainPosition(a.positions);
+        const mainB = getMainPosition(b.positions);
+
+        // 1. Nach Stammposition sortieren: Pos. 1 → Pos. 2 → Pos. 3 → Pos. 4
+        if (mainA.pos !== mainB.pos) {
+            return mainA.pos - mainB.pos;
         }
+
+        // 2. Innerhalb derselben Stammposition: wer öfter dort gespielt hat zuerst
+        if (mainB.count !== mainA.count) {
+            return mainB.count - mainA.count;
+        }
+
+        // 3. Tie-Breaker: richtige Antworten insgesamt
+        return b.correct - a.correct;
+    });
+
+    if (players.length === 0) {
+        container.innerHTML = '<p class="text-xs text-zinc-400 py-2">Noch keine Spielerdaten vorhanden.</p>';
+        return;
+    }
+
+    players.forEach(pl => {
+        const pct = pl.total > 0 ? Math.round((pl.correct / pl.total) * 100) : 0;
+        const posBadges = Object.entries(pl.positions)
+            .sort((a, b) => b[1] - a[1])
+            .map(([pos, cnt]) => `<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">Pos. ${pos} (${cnt}×)</span>`)
+            .join(' ');
+
+        const topCats = Object.entries(pl.cats)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3)
+            .map(([cat, cnt]) => `${cat} (${cnt}×)`)
+            .join(', ');
+
+        const row = document.createElement('div');
+        row.className = "py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2";
+        row.innerHTML = `
+            <div class="min-w-0 space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="font-semibold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100">${pl.name}</span>
+                    <span class="text-[11px] font-mono text-zinc-500 tabular-nums">${pl.matches} ${pl.matches === 1 ? 'Spiel' : 'Spiele'}</span>
+                    ${posBadges}
+                </div>
+                <div class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+                    Kategorien: <span class="text-zinc-700 dark:text-zinc-300">${topCats || '–'}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2.5 shrink-0 tabular-nums">
+                <span class="text-xs font-mono text-zinc-500">${pl.correct}/${pl.total}</span>
+                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">${pct}%</span>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+}
 
         // Category Analysis List (The 12 Categories stacked vertically)
         function renderCategoryGrid() {
