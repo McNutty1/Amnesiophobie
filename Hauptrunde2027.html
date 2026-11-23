@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DQV Online Liga 2027 – Tabellenrechner</title>
+    <title>DQV Online Liga – Tabellenrechner</title>
     
     <!-- Theme Initialization -->
     <script>
@@ -18,7 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -41,7 +42,7 @@
             }
         }
     </script>
-	<script src="JS/shared.js"></script>	
+    <script src="JS/shared.js"></script>	
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -87,37 +88,41 @@
                 <div class="p-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg border border-slate-200 dark:border-slate-700 shrink-0">
                     <i data-lucide="trophy" class="w-4 h-4"></i>
                 </div>
-                <h1 class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
+                <h1 id="league-title" class="text-sm sm:text-base font-bold tracking-tight text-slate-900 dark:text-white truncate">
                     DQV Online-Liga 2027 — Hauptrunde
                 </h1>
             </div>
 
-            <!-- Controls: Szenario-Dropdown + Reset + Theme -->
+            <!-- Controls: Datenquelle-Button + Szenario-Dropdown + Theme + Menü -->
             <div class="flex items-center gap-2">
                 
-                <!-- Szenario Auswahl -->
+                <!-- Szenario Auswahl (inkl. Zurücksetzen) -->
                 <div class="relative flex items-center">
                     <label for="preset-select" class="sr-only">Szenario wählen</label>
                     <select id="preset-select" onchange="handlePresetSelect(this.value)" 
-                        class="appearance-none bg-zinc-100 dark:bg-zinc-800/90 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium pl-3 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-accent/40 cursor-pointer transition">
+                        class="appearance-none bg-zinc-100 dark:bg-zinc-800/90 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium pl-3 pr-8 py-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-accent/40 cursor-pointer transition max-w-[165px] sm:max-w-none truncate">
                         <option value="custom" disabled selected>Szenario auswählen...</option>
-                        <option value="AMP-wins">Amnesiophobie gewinnt alle Matches</option>
-                        <option value="random">Komplette Saison zufällig simulieren</option>
+                        <option value="reset">↺ Zurücksetzen</option>
+                        <option disabled>──────────────────────────</option>
+                        <option id="opt-focus-wins" value="FOCUS-wins">Fokus-Team gewinnt alle offenen Spiele</option>
+                        <option value="random">Offene Saison zufällig simulieren</option>
                         <option value="random-week">Aktuellen Spieltag zufällig simulieren</option>
-                        <option value="all-draws">Nur Unentschieden</option>
-                        <option value="AMP-loses-all">Amnesiophobie verliert alles</option>
+                        <option value="all-draws">Nur Unentschieden (offene Spiele)</option>
+                        <option id="opt-focus-loses" value="FOCUS-loses-all">Fokus-Team verliert alle offenen Spiele</option>
                     </select>
                     <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 pointer-events-none"></i>
                 </div>
 
                 <!-- Theme Toggle -->
-                <button onclick="toggleTheme()" 
-                    class="p-2 rounded-md bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 transition" 
+                <button type="button" onclick="toggleTheme()" 
+                    class="p-2 rounded-md bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700 transition cursor-pointer" 
                     title="Erscheinungsbild wechseln">
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
                 </button>
-				<button onclick="toggleMenu(true)" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5" aria-label="Menü öffnen">
+                <button type="button" onclick="if(typeof toggleMenu === 'function') toggleMenu(true)" 
+                    class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5 cursor-pointer" 
+                    aria-label="Menü öffnen">
                     <i data-lucide="menu" class="w-4 h-4"></i>
                     <span class="text-xs font-medium hidden sm:inline">Menü</span>
                 </button>
@@ -125,7 +130,89 @@
         </div>
     </header>
 	
- <div id="site-drawer"></div>
+    <div id="site-drawer"></div>
+
+    <!-- Modal: GitHub JSON / Liga-Auswahl -->
+    <div id="data-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+        <div class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-xl max-w-lg w-full shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div class="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="github" class="w-4 h-4 text-accent"></i>
+                    <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Daten laden</h3>
+                </div>
+                <button type="button" onclick="toggleDataModal(false)" class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 p-1 rounded cursor-pointer">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+
+            <div class="p-5 space-y-4 text-xs">
+                <!-- Vordefinierte Ligen (optional konfigurierbar) -->
+                <div>
+                    <label for="preset-league-select" class="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">Saisons & Ligen aus deinem Repository</label>
+                    <select id="preset-league-select" onchange="selectPresetLeague(this.value)"
+                        class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md px-3 py-2 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-accent">
+																																				   
+																		   
+                    </select>
+                </div>
+
+                <!-- Direkte GitHub Raw JSON URL -->
+                <div>
+                    <label for="github-json-url" class="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">GitHub Raw JSON URL</label>
+                    <div class="flex gap-2">
+                        <input type="url" id="github-json-url" placeholder="https://raw.githubusercontent.com/user/repo/main/hauptrunde2027.json"
+                            class="flex-1 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md px-3 py-2 font-mono text-[11px] text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-accent">
+                        <button type="button" onclick="loadLeagueFromUrl()"
+                            class="px-3.5 py-2 rounded-md bg-accent hover:bg-accent-hover text-white font-semibold transition cursor-pointer shrink-0">
+                            Laden
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1.5">
+                        Tipp: Du kannst die JSON-URL auch direkt per URL-Parameter übergeben: <code class="font-mono bg-zinc-100 dark:bg-zinc-800 px-1 rounded">?data=URL</code>
+                    </p>
+                </div>
+
+                <!-- Status-Anzeige im Modal -->
+                <div id="modal-status-msg" class="hidden p-2.5 rounded-md text-[11px] font-medium"></div>
+
+                <!-- JSON Struktur-Beispiel (ausklappbar) -->
+                <details class="border border-zinc-200 dark:border-zinc-800 rounded-md bg-zinc-50/60 dark:bg-zinc-900/40">
+                    <summary class="px-3 py-2 font-semibold text-zinc-700 dark:text-zinc-300 cursor-pointer select-none">
+                        Erwartetes JSON-Schema anzeigen / kopieren
+                    </summary>
+                    <div class="p-3 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
+                        <pre id="json-schema-example" class="font-mono text-[10px] leading-relaxed text-zinc-600 dark:text-zinc-400 overflow-x-auto">{
+  "title": "DQV Online-Liga 2027 — Hauptrunde",
+  "focusTeamId": "AMP",
+  "teams": [
+    { "id": "AMP", "name": "Amnesiophobie" },
+    { "id": "RWB", "name": "Ratwurstbude" }
+  ],
+  "fixtures": {
+    "week1": [
+      {
+        "id": "w1_m1",
+        "home": "AMP",
+        "away": "RWB",
+        "result": "home_win",
+        "homeAddScore": 42,
+        "awayAddScore": 31,
+        "locked": true
+      }
+    ]
+  }
+}</pre>
+                        <button type="button" onclick="copyCurrentStateAsJson()"
+                            class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-zinc-200/80 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-[11px] font-medium transition cursor-pointer">
+                            <i data-lucide="copy" class="w-3 h-3"></i>
+                            Aktuellen Stand als JSON in Zwischenablage kopieren
+                        </button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Layout -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -134,7 +221,7 @@
             <!-- LINKE SPALTE: Fokus-Team & Live-Tabelle (7 Spalten) -->
             <div class="lg:col-span-7 flex flex-col gap-6">
 
-                <!-- Fokus-Panel: Amnesiophobie -->
+                <!-- Fokus-Panel -->
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     <!-- Top Bar des Fokus-Panels -->
                     <div class="px-5 py-4 border-b border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
@@ -143,8 +230,15 @@
                                 #<span id="AMP-rank-display">1</span>
                             </div>
                             <div>
-                                <div class="flex items-center gap-2.5">
-                                    <h2 class="text-base font-bold text-zinc-900 dark:text-white tracking-tight">Amnesiophobie</h2>
+                                <div class="flex items-center gap-2.5 flex-wrap">
+                                    <!-- Fokus-Team Auswahl (falls mehrere Teams in der Liga sind) -->
+                                    <div class="relative inline-flex items-center">
+                                        <select id="focus-team-select" onchange="changeFocusTeam(this.value)"
+                                            class="appearance-none bg-transparent pr-5 text-base font-bold text-zinc-900 dark:text-white tracking-tight cursor-pointer focus:outline-none hover:text-accent transition"
+                                            title="Fokus-Team wechseln">
+                                        </select>
+                                        <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5 text-zinc-400 absolute right-0 pointer-events-none"></i>
+                                    </div>
                                     <span id="title-status-badge" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20">
                                         Saisonstart
                                     </span>
@@ -197,7 +291,7 @@
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     <div class="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
                         <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Tabelle</h3>
-                        <span class="text-[11px] text-zinc-500 dark:text-zinc-400"></span>
+                        <span id="table-source-badge" class="text-[11px] text-zinc-500 dark:text-zinc-400"></span>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -226,15 +320,30 @@
             <div class="lg:col-span-5">
                 <section class="bg-white dark:bg-[#121417] border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
                     
-                    <!-- Spieltag-Header mit Segmented Control -->
-                    <div class="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div>
-                            <h3 class="text-sm font-bold text-zinc-900 dark:text-white">Spieltag <span id="active-week-title">1</span></h3>
+                    <!-- Spieltag-Header mit kompakter, fester 9-Spieltage-Navigation -->
+                    <div class="px-4 sm:px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex flex-col gap-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-bold text-zinc-900 dark:text-white whitespace-nowrap">Spieltag <span id="active-week-title">1</span></h3>
+                                <span id="week-locked-indicator" class="hidden px-1.5 py-0.5 text-[10px] font-semibold rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                                    Beendet
+                                </span>
+                            </div>
+
+                            <!-- Ganzen Spieltag fixieren / entsperren -->
+                            <button type="button" id="toggle-week-lock-btn" onclick="toggleWeekLock()"
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium border transition cursor-pointer bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0"
+                                title="Alle eingetragenen Spiele dieses Spieltags vor Szenario-Änderungen schützen">
+                                <i data-lucide="lock" class="w-3 h-3"></i>
+                                <span>Spieltag abschließen</span>
+                            </button>
                         </div>
 
-                        <!-- Tab Switcher (Spieltage 1 bis 9) -->
-                        <div id="week-tabs-container" class="inline-flex flex-wrap rounded-md bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800">
-                            <!-- Wird dynamisch gerendert -->
+                        <!-- Kompakte einzeilige Pill-Leiste für exakt 9 Spieltage -->
+                        <div class="flex items-center justify-between">
+                            <div id="week-tabs-container" class="inline-flex items-center gap-0.5 rounded-md bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800 w-fit shrink-0">
+                                <!-- Wird für Spieltage 1–9 gerendert -->
+                            </div>
                         </div>
                     </div>
 
@@ -242,12 +351,28 @@
                     <div id="fixtures-container" class="divide-y divide-zinc-100 dark:divide-zinc-800/80">
                         <!-- Wird dynamisch gefüllt -->
                     </div>
+																		 
+																					
+											
+																						
+																					
+						   
+																			   
+																				  
+							 
+																						 
+																			  
+																		  
+			 
+		  
+
 
                     <!-- Legende am unteren Rand -->
                     <div class="px-5 py-3 bg-zinc-50/70 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-500 dark:text-zinc-400">
-                        <span><strong>4:0</strong> = Sieg (≥5 Diff.)</span>
-                        <span><strong>4:1</strong> = Knapper Sieg (1–4 Diff.)</span>
+                        <span><strong>4:0</strong> = Sieg (≥5)</span>
+                        <span><strong>4:1</strong> = Knapp (1–4)</span>
                         <span><strong>2:2</strong> = Remis</span>
+                        <span class="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400"><i data-lucide="lock" class="w-3 h-3"></i> = Fixiert</span>
                     </div>
 
                 </section>
@@ -258,140 +383,403 @@
 
     <!-- Minimalistischer Footer -->
     <footer class="border-t border-zinc-200 dark:border-zinc-800/80 py-5 mt-8">
-<div id="site-footer"></div>
+        <div id="site-footer"></div>
     </footer>
 
     <!-- LOGIK -->
     <script>
+        const DEFAULT_GITHUB_REPO_CONFIG = {
+            owner: 'McNutty1', // Hier deinen GitHub-Benutzernamen eintragen
+            repo: 'Amnesiophobie',        // Hier deinen Repository-Namen eintragen
+            branch: 'main',
+            defaultFile: 'data/Hauptrunde2027.json', // Standard-Datei im Repository
+            // Weitere Saisons/Ligen im selben Repository (erscheinen im Dropdown)
+            availableFiles: [
+                { file: 'hauptrunde2027.json', label: '2027 – Hauptrunde (Standard)' },
+                { file: 'hauptrunde2026.json', label: '2026 – Hauptrunde' },
+                { file: 'liga2_2027.json',     label: '2027 – 2. Liga' }
+            ]
+        };
+
+        function buildRepoRawUrl(fileName) {
+            const { owner, repo, branch } = DEFAULT_GITHUB_REPO_CONFIG;
+            return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${fileName}`;
+        }
+																 
+																																								   
+						  
+
+        function isRepoConfigured() {
+            return DEFAULT_GITHUB_REPO_CONFIG.owner !== 'DEIN-GITHUB-USERNAME' &&
+                   DEFAULT_GITHUB_REPO_CONFIG.repo !== 'DEIN-REPO-NAME' &&
+                   Boolean(DEFAULT_GITHUB_REPO_CONFIG.owner) &&
+                   Boolean(DEFAULT_GITHUB_REPO_CONFIG.repo);
+        }	
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             if (window.lucide) lucide.createIcons();
         }
 
-        // Ausgangsdaten: Alle Teams starten bei 0
-        const initialTeams = [
-            { id: 'AMP', name: 'Amnesiophobie' },
-            { id: 'JuS', name: 'Jäger und Sammler' },
-            { id: 'QVR', name: 'Quiz van der Rohe' },
-            { id: 'BOB', name: 'Best of Breitensport' },
-            { id: 'GEP', name: 'Gemischtes Pack' },
-            { id: 'DQV', name: 'Die Quizverzager' },
-            { id: 'SVK', name: 'Senat und Volk von Köln' },
-            { id: 'QFL', name: 'Quiztenflosser' },
-            { id: 'fue', name: 'fiffig & entelligent' },
-            { id: 'RWB', name: 'Ratwurstbude' }
-        ];
-
-        // Sauberer Dummy-Spielplan für alle 9 Spieltage (Jeder gegen jeden, eindeutige Match-IDs)
-        const initialFixtures = {
-            week1: [
-                { id: 'w1_m1', home: 'AMP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w1_m2', home: 'JuS', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w1_m3', home: 'QVR', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w1_m4', home: 'BOB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w1_m5', home: 'GEP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 }
+        // Standard-Fallback-Daten (falls keine externe JSON geladen wird)
+        const defaultLeagueData = {
+            title: "DQV Online-Liga 2027 — Hauptrunde",
+            focusTeamId: "AMP",
+            teams: [
+                { id: 'AMP', name: 'Amnesiophobie' },
+                { id: 'JuS', name: 'Jäger und Sammler' },
+                { id: 'QVR', name: 'Quiz van der Rohe' },
+                { id: 'BOB', name: 'Best of Breitensport' },
+                { id: 'GEP', name: 'Gemischtes Pack' },
+                { id: 'DQV', name: 'Die Quizverzager' },
+                { id: 'SVK', name: 'Senat und Volk von Köln' },
+                { id: 'QFL', name: 'Quiztenflosser' },
+                { id: 'fue', name: 'fiffig & entelligent' },
+                { id: 'RWB', name: 'Ratwurstbude' }
             ],
-            week2: [
-                { id: 'w2_m1', home: 'RWB', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w2_m2', home: 'SVK', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w2_m3', home: 'QFL', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w2_m4', home: 'fue', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w2_m5', home: 'AMP', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week3: [
-                { id: 'w3_m1', home: 'JuS', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w3_m2', home: 'QVR', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w3_m3', home: 'BOB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w3_m4', home: 'GEP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w3_m5', home: 'DQV', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week4: [
-                { id: 'w4_m1', home: 'RWB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w4_m2', home: 'QFL', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w4_m3', home: 'fue', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w4_m4', home: 'AMP', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w4_m5', home: 'JuS', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week5: [
-                { id: 'w5_m1', home: 'QVR', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w5_m2', home: 'BOB', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w5_m3', home: 'GEP', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w5_m4', home: 'DQV', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w5_m5', home: 'SVK', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week6: [
-                { id: 'w6_m1', home: 'RWB', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w6_m2', home: 'fue', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w6_m3', home: 'AMP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w6_m4', home: 'JuS', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w6_m5', home: 'QVR', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week7: [
-                { id: 'w7_m1', home: 'BOB', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w7_m2', home: 'GEP', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w7_m3', home: 'DQV', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w7_m4', home: 'SVK', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w7_m5', home: 'QFL', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week8: [
-                { id: 'w8_m1', home: 'RWB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m2', home: 'AMP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m3', home: 'JuS', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m4', home: 'QVR', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w8_m5', home: 'BOB', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ],
-            week9: [
-                { id: 'w9_m1', home: 'GEP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m2', home: 'DQV', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m3', home: 'SVK', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m4', home: 'QFL', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0 },
-                { id: 'w9_m5', home: 'fue', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0 }
-            ]
+            fixtures: {
+                week1: [
+                    { id: 'w1_m1', home: 'AMP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w1_m2', home: 'JuS', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w1_m3', home: 'QVR', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w1_m4', home: 'BOB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w1_m5', home: 'GEP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week2: [
+                    { id: 'w2_m1', home: 'RWB', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w2_m2', home: 'SVK', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w2_m3', home: 'QFL', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w2_m4', home: 'fue', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w2_m5', home: 'AMP', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week3: [
+                    { id: 'w3_m1', home: 'JuS', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w3_m2', home: 'QVR', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w3_m3', home: 'BOB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w3_m4', home: 'GEP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w3_m5', home: 'DQV', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week4: [
+                    { id: 'w4_m1', home: 'RWB', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w4_m2', home: 'QFL', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w4_m3', home: 'fue', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w4_m4', home: 'AMP', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w4_m5', home: 'JuS', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week5: [
+                    { id: 'w5_m1', home: 'QVR', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w5_m2', home: 'BOB', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w5_m3', home: 'GEP', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w5_m4', home: 'DQV', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w5_m5', home: 'SVK', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week6: [
+                    { id: 'w6_m1', home: 'RWB', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w6_m2', home: 'fue', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w6_m3', home: 'AMP', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w6_m4', home: 'JuS', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w6_m5', home: 'QVR', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week7: [
+                    { id: 'w7_m1', home: 'BOB', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w7_m2', home: 'GEP', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w7_m3', home: 'DQV', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w7_m4', home: 'SVK', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w7_m5', home: 'QFL', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week8: [
+                    { id: 'w8_m1', home: 'RWB', away: 'fue', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w8_m2', home: 'AMP', away: 'QFL', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w8_m3', home: 'JuS', away: 'SVK', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w8_m4', home: 'QVR', away: 'DQV', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w8_m5', home: 'BOB', away: 'GEP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ],
+                week9: [
+                    { id: 'w9_m1', home: 'GEP', away: 'RWB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w9_m2', home: 'DQV', away: 'BOB', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w9_m3', home: 'SVK', away: 'QVR', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w9_m4', home: 'QFL', away: 'JuS', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false },
+                    { id: 'w9_m5', home: 'fue', away: 'AMP', result: 'none', homeAddScore: 0, awayAddScore: 0, locked: false }
+                ]
+            }
         };
 
-        let fixtures = JSON.parse(JSON.stringify(initialFixtures));
+        // Optional: Hier kannst du weitere GitHub-Raw-Links für verschiedene Ligen/Saisons eintragen
+        const PRESET_LEAGUES = {
+            // Beispiel:
+             "data/Hauptrunde2027.json": { label: "2027 – Liga 1", url: "https://raw.githubusercontent.com/McNutty1/Amnesiophobie/refs/heads/main/data/Hauptrunde2027.json" },
+             "data/Hauptrunde2026.json": { label: "2026 – Liga 2", url: "https://raw.githubusercontent.com/McNutty1/Amnesiophobie/refs/heads/main/data/Hauptrunde2026.json" }
+        };
+
+        // Laufzeit-State
+        let leagueTitle = defaultLeagueData.title;
+        let teams = JSON.parse(JSON.stringify(defaultLeagueData.teams));
+        let focusTeamId = defaultLeagueData.focusTeamId;
+        let baselineFixtures = JSON.parse(JSON.stringify(defaultLeagueData.fixtures)); // Geladener Ausgangsstand (inkl. echter Ergebnisse)
+        let fixtures = JSON.parse(JSON.stringify(defaultLeagueData.fixtures));
         let activeWeek = 'week1';
 
         function getTeam(id) {
-            return initialTeams.find(t => t.id === id);
+            return teams.find(t => t.id === id) || { id, name: id };
         }
+
+        function getWeekKeys() {
+            return Object.keys(fixtures).sort((a, b) => {
+                const numA = parseInt(a.replace(/\D/g, '')) || 0;
+                const numB = parseInt(b.replace(/\D/g, '')) || 0;
+                return numA - numB;
+            });
+        }
+
+        // Initialisiert oder aktualisiert die komplette Liga-Struktur (z. B. nach JSON-Load)
+        function initializeLeagueState(data, sourceLabel = 'Lokal') {
+            leagueTitle = data.title || 'DQV Online-Liga — Tabellenrechner';
+            document.getElementById('league-title').innerText = leagueTitle;
+            document.title = `${leagueTitle} – Tabellenrechner`;
+
+            const sourceBadge = document.getElementById('table-source-badge');
+            if (sourceBadge) sourceBadge.innerText = sourceLabel;
+
+            teams = Array.isArray(data.teams) && data.teams.length > 0
+                ? JSON.parse(JSON.stringify(data.teams))
+                : JSON.parse(JSON.stringify(defaultLeagueData.teams));
+
+            // Fokus-Team validieren
+            if (data.focusTeamId && teams.some(t => t.id === data.focusTeamId)) {
+                focusTeamId = data.focusTeamId;
+            } else {
+                focusTeamId = teams[0].id;
+            }
+
+            // Fixtures normalisieren (locked-Flag sicherstellen: wenn aus JSON bereits ein Ergebnis kommt, standardmäßig fixieren, falls nicht explizit false)
+            const normalized = {};
+            const rawFixtures = data.fixtures || {};
+            Object.keys(rawFixtures).forEach(wKey => {
+                normalized[wKey] = rawFixtures[wKey].map((m, idx) => {
+																	  
+                    const res = m.result || 'none';
+                    const isLocked = typeof m.locked === 'boolean' ? m.locked : (res !== 'none');
+                    return {
+                        id: m.id || `${wKey}_m${idx + 1}`,
+                        home: m.home,
+                        away: m.away,
+                        result: res,
+                        homeAddScore: parseInt(m.homeAddScore) || 0,
+                        awayAddScore: parseInt(m.awayAddScore) || 0,
+                        locked: isLocked
+                    };
+                });
+            });
+
+            baselineFixtures = JSON.parse(JSON.stringify(normalized));
+            fixtures = JSON.parse(JSON.stringify(normalized));
+
+            // Ersten Spieltag mit offenen Spielen automatisch auswählen (oder Spieltag 1)
+            const weekKeys = getWeekKeys();
+            const firstOpenWeek = weekKeys.find(w => fixtures[w].some(m => m.result === 'none'));
+            activeWeek = firstOpenWeek || weekKeys[0] || 'week1';
+
+            populateFocusTeamDropdown();
+            updatePresetLabels();
+
+            const weekNum = activeWeek.replace(/\D/g, '') || '1';
+            document.getElementById('active-week-title').innerText = weekNum;
+            document.getElementById('preset-select').value = 'custom';
+
+            renderWeekTabs();
+            renderFixtures();
+            renderTable();
+        }
+		
+        function populateFocusTeamDropdown() {
+            const select = document.getElementById('focus-team-select');
+            if (!select) return;
+            select.innerHTML = '';
+            teams.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = t.name;
+                opt.className = "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white text-sm font-medium";
+                if (t.id === focusTeamId) opt.selected = true;
+                select.appendChild(opt);
+            });
+        }
+
+        function updatePresetLabels() {
+            const focusTeam = getTeam(focusTeamId);
+            const winOpt = document.getElementById('opt-focus-wins');
+            const loseOpt = document.getElementById('opt-focus-loses');
+            if (winOpt) winOpt.textContent = `${focusTeam.name} gewinnt alle offenen Spiele`;
+            if (loseOpt) loseOpt.textContent = `${focusTeam.name} verliert alle offenen Spiele`;
+        }
+
+        function changeFocusTeam(newTeamId) {
+            focusTeamId = newTeamId;
+            updatePresetLabels();
+            renderFixtures();
+            renderTable();
+        }
+
+        // GitHub URL automatisch in Raw-URL umwandeln, falls jemand den normalen Blob-Link einfügt
+        function normalizeGitHubUrl(url) {
+            let clean = url.trim();
+            if (clean.includes('github.com') && clean.includes('/blob/')) {
+                clean = clean.replace('https://github.com/', 'https://raw.githubusercontent.com/').replace('/blob/', '/');
+            }
+            return clean;
+        }
+
+        async function loadLeagueFromUrl(customUrl = null, silentFallback = false) {
+            const inputEl = document.getElementById('github-json-url');
+            const rawUrl = normalizeGitHubUrl(customUrl || (inputEl ? inputEl.value : ''));
+            const msgBox = document.getElementById('modal-status-msg');
+
+            if (!rawUrl) {
+                if (!silentFallback) showModalMessage('Bitte eine gültige GitHub JSON-URL eingeben.', 'error');
+                return false;
+            }
+
+            if (inputEl) inputEl.value = rawUrl;
+            if (!silentFallback) showModalMessage('Lade Spieltagsdaten aus GitHub...', 'loading');
+
+            try {
+                // Cache-Buster anhängen, damit GitHub-Updates sofort sichtbar sind
+                const fetchUrl = rawUrl + (rawUrl.includes('?') ? '&' : '?') + '_t=' + Date.now();
+                const response = await fetch(fetchUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} (${response.statusText})`);
+                }
+                const jsonData = await response.json();
+
+                if (!jsonData.teams || !jsonData.fixtures) {
+                    throw new Error('Ungültiges JSON-Format: "teams" oder "fixtures" fehlt.');
+                }
+
+                // URL merken
+                localStorage.setItem('dqv_last_json_url', rawUrl);
+                initializeLeagueState(jsonData, 'GitHub JSON');
+               if (!silentFallback) {
+                    showModalMessage('Liga-Daten erfolgreich geladen!', 'success');
+
+                    setTimeout(() => {
+                        toggleDataModal(false);
+                        if (msgBox) msgBox.classList.add('hidden');
+                    }, 600);
+                }
+                return true;
+            } catch (err) {
+                console.error('Fehler beim Laden der JSON-Datei:', err);
+                if (!silentFallback) {
+                    showModalMessage(`Fehler beim Laden: ${err.message}`, 'error');
+                }
+                return false;
+            }
+        }
+
+        function showModalMessage(text, type) {
+            const msgBox = document.getElementById('modal-status-msg');
+            if (!msgBox) return;
+            msgBox.classList.remove('hidden', 'bg-emerald-500/10', 'text-emerald-600', 'dark:text-emerald-400', 'bg-rose-500/10', 'text-rose-600', 'dark:text-rose-400', 'bg-zinc-500/10', 'text-zinc-600', 'dark:text-zinc-300');
+            
+            if (type === 'success') {
+                msgBox.classList.add('bg-emerald-500/10', 'text-emerald-600', 'dark:text-emerald-400');
+            } else if (type === 'error') {
+                msgBox.classList.add('bg-rose-500/10', 'text-rose-600', 'dark:text-rose-400');
+            } else {
+                msgBox.classList.add('bg-zinc-500/10', 'text-zinc-600', 'dark:text-zinc-300');
+            }
+            msgBox.textContent = text;
+        }
+
+        function toggleDataModal(show) {
+            const modal = document.getElementById('data-modal');
+            if (!modal) return;
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                if (window.lucide) lucide.createIcons();
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function selectPresetLeague(val) {
+            if (!val) return;
+            if (val === 'builtin_fallback') {
+                localStorage.removeItem('dqv_last_json_url');
+                const defaultUrl = buildRepoRawUrl(DEFAULT_GITHUB_REPO_CONFIG.defaultFile);
+                document.getElementById('github-json-url').value = defaultUrl;
+                initializeLeagueState(defaultLeagueData, 'Lokal (Fallback)');
+                toggleDataModal(false);
+            } else {
+                const targetUrl = buildRepoRawUrl(val);
+                document.getElementById('github-json-url').value = targetUrl;
+                loadLeagueFromUrl(targetUrl);
+            }
+        }
+
+        function copyCurrentStateAsJson() {
+            const exportObj = {
+                title: leagueTitle,
+                focusTeamId: focusTeamId,
+                teams: teams,
+                fixtures: fixtures
+            };
+            const jsonStr = JSON.stringify(exportObj, null, 2);
+            navigator.clipboard.writeText(jsonStr).then(() => {
+                showModalMessage('Aktueller Spielstand als JSON in die Zwischenablage kopiert!', 'success');
+            }).catch(() => {
+                showModalMessage('Kopieren fehlgeschlagen (Browser-Berechtigung).', 'error');
+            });
+        }
+
 
         function renderWeekTabs() {
             const container = document.getElementById('week-tabs-container');
             if (!container) return;
             container.innerHTML = '';
 
-            for (let i = 1; i <= 9; i++) {
-                const weekKey = `week${i}`;
+            const weekKeys = getWeekKeys();
+            weekKeys.forEach((weekKey, idx) => {
+                const weekLabel = weekKey.replace(/\D/g, '') || (idx + 1);
                 const isActive = activeWeek === weekKey;
-                // Prüfen, ob an diesem Spieltag schon mindestens ein Ergebnis eingetragen wurde
-                const hasResults = fixtures[weekKey].some(m => m.result !== 'none');
+                const matches = fixtures[weekKey] || [];
+                const hasResults = matches.some(m => m.result !== 'none');
+                const allLocked = matches.length > 0 && matches.every(m => m.locked);
 
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.onclick = () => switchTab(weekKey);
                 btn.className = isActive
-                    ? "relative px-2.5 py-1 rounded text-xs font-semibold transition bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs"
-                    : "relative px-2.5 py-1 rounded text-xs font-medium transition text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200";
+                    ? "relative px-2.5 py-1 rounded text-xs font-semibold transition bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs cursor-pointer"
+                    : "relative px-2.5 py-1 rounded text-xs font-medium transition text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer";
                 
-                btn.innerHTML = `
-                    ${i}
-                    ${hasResults ? '<span class="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-accent"></span>' : ''}
-                `;
+                // Punkt-Indikator: Gelb/Amber wenn komplett fixiert, Akzentfarbe wenn Ergebnisse eingetragen
+                let dotHtml = '';
+                if (allLocked) {
+                    dotHtml = '<span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-amber-500" title="Spieltag fixiert"></span>';
+                } else if (hasResults) {
+                    dotHtml = '<span class="absolute top-0.5 right-0.5 w-1 h-1 rounded-full bg-accent"></span>';
+                }
+
+                btn.innerHTML = `${weekLabel}${dotHtml}`;
                 container.appendChild(btn);
-            }
+            });
         }
 
         function switchTab(week) {
             activeWeek = week;
-            const weekNum = week.replace('week', '');
+            const weekNum = week.replace(/\D/g, '') || '1';
             const titleEl = document.getElementById('active-week-title');
             if (titleEl) titleEl.innerText = weekNum;
             
             renderWeekTabs();
             renderFixtures();
         }
+				
+					
+	
 
         function getPointsFromResult(result) {
             switch(result) {
@@ -435,7 +823,7 @@
 
         function calculateTable() {
             const tableMap = {};
-            initialTeams.forEach(t => {
+            teams.forEach(t => {
                 tableMap[t.id] = {
                     ...t,
                     totalPoints: 0,
@@ -447,7 +835,7 @@
 
             Object.keys(fixtures).forEach(w => {
                 fixtures[w].forEach(m => {
-                    if (m.result !== 'none') {
+                    if (m.result !== 'none' && tableMap[m.home] && tableMap[m.away]) {
                         const { homeP, awayP } = getPointsFromResult(m.result);
                         tableMap[m.home].totalPoints += homeP;
                         tableMap[m.away].totalPoints += awayP;
@@ -458,6 +846,7 @@
                         tableMap[m.home].opponents.push(m.away);
                         tableMap[m.away].opponents.push(m.home);
                     }
+		
                 });
             });
 
@@ -491,26 +880,26 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const AMPData = currentTable.find(t => t.id === 'AMP');
-            const AMPRank = currentTable.findIndex(t => t.id === 'AMP') + 1;
+            const focusData = currentTable.find(t => t.id === focusTeamId) || currentTable[0];
+            const focusRank = currentTable.findIndex(t => t.id === focusData.id) + 1;
 
             currentTable.forEach((team, index) => {
                 const rank = index + 1;
-                const isAMP = team.id === 'AMP';
+                const isFocus = team.id === focusData.id;
 
                 const tr = document.createElement('tr');
-                tr.className = isAMP
+                tr.className = isFocus
                     ? 'bg-accent/[0.06] dark:bg-accent/[0.08] font-medium'
                     : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors';
 
                 tr.innerHTML = `
                     <td class="py-2.5 pl-4 pr-2 text-center font-mono tabular-nums relative">
-                        ${isAMP ? '<span class="absolute left-0 top-1 bottom-1 w-0.5 bg-accent"></span>' : ''}
+                        ${isFocus ? '<span class="absolute left-0 top-1 bottom-1 w-0.5 bg-accent"></span>' : ''}
                         <span class="font-bold ${rank === 1 && team.totalPlayed > 0 ? 'text-accent' : 'text-zinc-700 dark:text-zinc-300'}">${rank}</span>
                     </td>
                     <td class="py-2.5 px-3">
                         <div class="flex items-center gap-2">
-                            <span class="${isAMP ? 'font-bold text-zinc-900 dark:text-white' : 'font-medium text-zinc-800 dark:text-zinc-200'} truncate max-w-[180px] sm:max-w-[240px]">
+                            <span class="${isFocus ? 'font-bold text-zinc-900 dark:text-white' : 'font-medium text-zinc-800 dark:text-zinc-200'} truncate max-w-[180px] sm:max-w-[240px]">
                                 ${team.name}
                             </span>
                         </div>
@@ -519,24 +908,24 @@
                     <td class="py-2.5 px-3 text-right font-mono text-zinc-700 dark:text-zinc-300 tabular-nums">${team.totalScore}</td>
                     <td class="py-2.5 px-2.5 text-right font-mono text-zinc-500 dark:text-zinc-400 tabular-nums hidden sm:table-cell">${team.bhz}</td>
                     <td class="py-2.5 px-2.5 text-right font-mono text-zinc-400 dark:text-zinc-500 tabular-nums hidden md:table-cell">${team.fbhz}</td>
-                    <td class="py-2.5 pl-3 pr-4 text-right font-mono font-bold tabular-nums ${isAMP ? 'text-accent' : 'text-zinc-900 dark:text-white'}">
+                    <td class="py-2.5 pl-3 pr-4 text-right font-mono font-bold tabular-nums ${isFocus ? 'text-accent' : 'text-zinc-900 dark:text-white'}">
                         ${team.totalPoints}
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
 
-            updateAMPDashboard(AMPRank, AMPData, currentTable);
+            updateFocusDashboard(focusRank, focusData, currentTable);
             if (window.lucide) lucide.createIcons();
         }
 
-        function updateAMPDashboard(rank, AMP, fullTable) {
+        function updateFocusDashboard(rank, focusTeam, fullTable) {
             document.getElementById('AMP-rank-display').innerText = rank;
-            document.getElementById('AMP-points-display').innerText = AMP.totalPoints;
-            document.getElementById('AMP-score-display').innerText = AMP.totalScore;
+            document.getElementById('AMP-points-display').innerText = focusTeam.totalPoints;
+            document.getElementById('AMP-score-display').innerText = focusTeam.totalScore;
 
-            const rival = rank === 1 ? fullTable[1] : fullTable[0];
-            const gap = AMP.totalPoints - rival.totalPoints;
+            const rival = rank === 1 ? (fullTable[1] || focusTeam) : fullTable[0];
+            const gap = focusTeam.totalPoints - rival.totalPoints;
             const gapDisplay = document.getElementById('gap-to-second');
 
             if (gap > 0) {
@@ -550,19 +939,22 @@
                 gapDisplay.className = "font-mono text-sm font-bold text-zinc-700 dark:text-zinc-300 mt-0.5 tabular-nums";
             }
 
-            let AMPUnplayed = 0;
+            let focusUnplayed = 0;
+            let focusTotalMatches = 0;
             let totalSimulatedMatches = 0;
+
             Object.keys(fixtures).forEach(w => {
                 fixtures[w].forEach(m => {
                     if (m.result !== 'none') totalSimulatedMatches++;
-                    if ((m.home === 'AMP' || m.away === 'AMP') && m.result === 'none') {
-                        AMPUnplayed++;
+                    if (m.home === focusTeam.id || m.away === focusTeam.id) {
+                        focusTotalMatches++;
+                        if (m.result === 'none') focusUnplayed++;
                     }
                 });
             });
 
-            const maxPossible = AMP.totalPoints + (AMPUnplayed * 4);
-            document.getElementById('remaining-matches').innerText = `${AMPUnplayed} ${AMPUnplayed === 1 ? 'Spiel' : 'Spiele'}`;
+            const maxPossible = focusTeam.totalPoints + (focusUnplayed * 4);
+            document.getElementById('remaining-matches').innerText = `${focusUnplayed} ${focusUnplayed === 1 ? 'Spiel' : 'Spiele'}`;
             document.getElementById('max-possible-points').innerText = `${maxPossible} Pkt`;
 
             const statusBadge = document.getElementById('title-status-badge');
@@ -570,28 +962,56 @@
 
             // Maximale Punkte, die irgendein Konkurrent noch erreichen kann
             const maxRivalPoints = fullTable
-                .filter(t => t.id !== 'AMP')
+                .filter(t => t.id !== focusTeam.id)
                 .reduce((max, t) => {
-                    const unplayed = 9 - t.totalPlayed;
+                    let teamTotalMatches = 0;
+                    Object.keys(fixtures).forEach(w => {
+                        fixtures[w].forEach(m => {
+                            if (m.home === t.id || m.away === t.id) teamTotalMatches++;
+                        });
+                    });
+                    const unplayed = Math.max(0, teamTotalMatches - t.totalPlayed);
                     return Math.max(max, t.totalPoints + unplayed * 4);
                 }, 0);
 
             if (totalSimulatedMatches === 0) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20";
                 statusBadge.innerText = "Saisonstart";
-                statusText.innerHTML = `Trage rechts Ergebnisse für die 9 Spieltage ein, um die Tabelle live zu berechnen.`;
-            } else if (rank === 1 && AMP.totalPoints > maxRivalPoints) {
+                statusText.innerHTML = `Trage rechts Ergebnisse für die Spieltage ein, um die Tabelle live zu berechnen.`;
+            } else if (rank === 1 && focusTeam.totalPoints > maxRivalPoints) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
                 statusBadge.innerText = "Meister";
-                statusText.innerHTML = `<strong>Meister!</strong> Mit ${AMP.totalPoints} Punkten ist Amnesiophobie rechnerisch nicht mehr von Platz 1 zu verdrängen.`;
+                statusText.innerHTML = `<strong>Meister!</strong> Mit ${focusTeam.totalPoints} Punkten ist ${focusTeam.name} rechnerisch nicht mehr von Platz 1 zu verdrängen.`;
             } else if (rank === 1) {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-accent/10 text-accent border border-accent/20";
                 statusBadge.innerText = "Platz 1";
-                statusText.innerHTML = `Amnesiophobie führt die Tabelle nach ${AMP.totalPlayed} ${AMP.totalPlayed === 1 ? 'Spiel' : 'Spielen'} mit <strong>${AMP.totalPoints} Punkten</strong> (${gap > 0 ? `+${gap} vor ${rival.name}` : `punktgleich mit ${rival.name}`}) an.`;
+                statusText.innerHTML = `${focusTeam.name} führt die Tabelle nach ${focusTeam.totalPlayed} ${focusTeam.totalPlayed === 1 ? 'Spiel' : 'Spielen'} mit <strong>${focusTeam.totalPoints} Punkten</strong> (${gap > 0 ? `+${gap} vor ${rival.name}` : `punktgleich mit ${rival.name}`}) an.`;
             } else {
                 statusBadge.className = "px-2 py-0.5 text-[11px] font-semibold rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20";
                 statusBadge.innerText = `Platz ${rank}`;
-                statusText.innerHTML = `<strong>${fullTable[0].name}</strong> liegt aktuell mit ${fullTable[0].totalPoints} Punkten auf Platz 1 (${Math.abs(gap)} ${Math.abs(gap) === 1 ? 'Punkt' : 'Punkte'} vor Amnesiophobie).`;
+                statusText.innerHTML = `<strong>${fullTable[0].name}</strong> liegt aktuell mit ${fullTable[0].totalPoints} Punkten auf Platz 1 (${Math.abs(gap)} ${Math.abs(gap) === 1 ? 'Punkt' : 'Punkte'} vor ${focusTeam.name}).`;
+            }
+        }
+
+        function updateWeekLockHeaderUI() {
+            const matches = fixtures[activeWeek] || [];
+            const allLocked = matches.length > 0 && matches.every(m => m.locked);
+            const btn = document.getElementById('toggle-week-lock-btn');
+            const indicator = document.getElementById('week-locked-indicator');
+
+            if (indicator) {
+                if (allLocked) indicator.classList.remove('hidden');
+                else indicator.classList.add('hidden');
+            }
+
+            if (btn) {
+                if (allLocked) {
+                    btn.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-semibold border transition cursor-pointer bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30 hover:bg-amber-500/25";
+                    btn.innerHTML = `<i data-lucide="unlock" class="w-3 h-3"></i><span>Spieltag entsperren</span>`;
+                } else {
+                    btn.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium border transition cursor-pointer bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800";
+                    btn.innerHTML = `<i data-lucide="lock" class="w-3 h-3"></i><span>Spieltag fixieren</span>`;
+                }
             }
         }
 
@@ -600,7 +1020,9 @@
             if (!container) return;
             container.innerHTML = '';
 
-            const currentWeekMatches = fixtures[activeWeek];
+            updateWeekLockHeaderUI();
+
+            const currentWeekMatches = fixtures[activeWeek] || [];
             const resultOptions = [
                 { key: 'home_win', label: '4:0' },
                 { key: 'home_close', label: '4:1' },
@@ -612,39 +1034,60 @@
             currentWeekMatches.forEach(m => {
                 const homeTeam = getTeam(m.home);
                 const awayTeam = getTeam(m.away);
-                const isAMPMatch = m.home === 'AMP' || m.away === 'AMP';
+                const isFocusMatch = m.home === focusTeamId || m.away === focusTeamId;
+                const isLocked = Boolean(m.locked);
 
                 const row = document.createElement('div');
-                row.className = `p-4 transition-colors ${isAMPMatch ? 'bg-accent/[0.03] dark:bg-accent/[0.04]' : 'hover:bg-zinc-50/60 dark:hover:bg-zinc-900/30'}`;
+                row.className = `p-4 transition-colors ${
+                    isLocked 
+                        ? 'bg-amber-500/[0.04] dark:bg-amber-500/[0.05]' 
+                        : (isFocusMatch ? 'bg-accent/[0.03] dark:bg-accent/[0.04]' : 'hover:bg-zinc-50/60 dark:hover:bg-zinc-900/30')
+                }`;
 
                 const buttonsHtml = resultOptions.map(opt => {
                     const isActive = m.result === opt.key;
-                    const activeClass = isActive
-                        ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold border-zinc-900 dark:border-white shadow-xs'
-                        : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-200';
+                    let btnStyle = '';
+                    if (isActive) {
+                        btnStyle = isLocked
+                            ? 'bg-amber-600 dark:bg-amber-500 text-white dark:text-zinc-950 font-bold border-amber-600 dark:border-amber-500 shadow-xs'
+                            : 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold border-zinc-900 dark:border-white shadow-xs';
+                    } else {
+                        btnStyle = isLocked
+                            ? 'bg-zinc-100/70 dark:bg-zinc-900/50 text-zinc-400 dark:text-zinc-600 border-zinc-200/70 dark:border-zinc-800/70 cursor-not-allowed'
+                            : 'bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer';
+                    }
                     
                     return `
-                        <button type="button" onclick="setMatchResult('${activeWeek}', '${m.id}', '${opt.key}')"
-                            class="py-1.5 rounded text-[11px] font-mono border transition-all cursor-pointer ${activeClass}">
+                        <button type="button" ${isLocked ? 'disabled' : `onclick="setMatchResult('${activeWeek}', '${m.id}', '${opt.key}')"`}
+                            class="py-1.5 rounded text-[11px] font-mono border transition-all ${btnStyle}">
                             ${opt.label}
                         </button>
                     `;
                 }).join('');
 
+                const lockBtnClass = isLocked
+                    ? 'p-1.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:bg-amber-500/25 transition cursor-pointer'
+                    : 'p-1.5 rounded bg-zinc-100 dark:bg-zinc-800/80 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 border border-transparent hover:border-zinc-300 dark:hover:border-zinc-700 transition cursor-pointer';
+
                 row.innerHTML = `
-                    <!-- Teams Zeile -->
+                    <!-- Teams Zeile + Schloss-Button -->
                     <div class="flex items-center justify-between gap-2 mb-3">
                         <div class="flex-1 min-w-0">
-                            <span class="text-xs sm:text-[13px] truncate block ${m.home === 'AMP' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
+                            <span class="text-xs sm:text-[13px] truncate block ${m.home === focusTeamId ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
                                 ${homeTeam.name}
                             </span>
                         </div>
-                        <span class="text-[11px] font-mono text-zinc-400 px-1.5">vs.</span>
+                        <span class="text-[11px] font-mono text-zinc-400 px-1">vs.</span>
                         <div class="flex-1 min-w-0 text-right">
-                            <span class="text-xs sm:text-[13px] truncate block ${m.away === 'AMP' ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
+                            <span class="text-xs sm:text-[13px] truncate block ${m.away === focusTeamId ? 'font-bold text-accent' : 'font-semibold text-zinc-800 dark:text-zinc-200'}">
                                 ${awayTeam.name}
                             </span>
                         </div>
+                        <button type="button" onclick="toggleMatchLock('${activeWeek}', '${m.id}')"
+                            class="${lockBtnClass} ml-1.5 shrink-0"
+                            title="${isLocked ? 'Ergebnis entsperren' : 'Ergebnis fixieren (vor Szenarien schützen)'}">
+                            <i data-lucide="${isLocked ? 'lock' : 'unlock'}" class="w-3.5 h-3.5"></i>
+                        </button>
                     </div>
 
                     <!-- Segmented Result Selector + Score Inputs -->
@@ -655,25 +1098,26 @@
 
                         <!-- Kompakte Score-Eingabe -->
                         <div class="flex items-center gap-1 pl-2 border-l border-zinc-200 dark:border-zinc-800" title="Quiz-Score des Spiels (optional)">
-                            <input type="number" min="0" placeholder="–" value="${m.homeAddScore || ''}"
+                            <input type="number" min="0" placeholder="–" value="${m.homeAddScore || ''}" ${isLocked ? 'disabled' : ''}
                                 onchange="setMatchScore('${activeWeek}', '${m.id}', 'home', this.value)"
-                                class="w-9 h-7 rounded bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center font-mono text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-accent">
+                                class="w-9 h-7 rounded border text-center font-mono text-xs font-medium focus:outline-none ${isLocked ? 'bg-zinc-100 dark:bg-zinc-900/50 border-zinc-200/70 dark:border-zinc-800/70 text-zinc-400 cursor-not-allowed' : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:border-accent'}">
                             <span class="text-zinc-400 text-xs">:</span>
-                            <input type="number" min="0" placeholder="–" value="${m.awayAddScore || ''}"
+                            <input type="number" min="0" placeholder="–" value="${m.awayAddScore || ''}" ${isLocked ? 'disabled' : ''}
                                 onchange="setMatchScore('${activeWeek}', '${m.id}', 'away', this.value)"
-                                class="w-9 h-7 rounded bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center font-mono text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-accent">
+                                class="w-9 h-7 rounded border text-center font-mono text-xs font-medium focus:outline-none ${isLocked ? 'bg-zinc-100 dark:bg-zinc-900/50 border-zinc-200/70 dark:border-zinc-800/70 text-zinc-400 cursor-not-allowed' : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:border-accent'}">
                         </div>
                     </div>
                 `;
                 container.appendChild(row);
             });
+
+            if (window.lucide) lucide.createIcons();
         }
 
         function setMatchResult(week, matchId, resultType) {
             const match = fixtures[week].find(m => m.id === matchId);
-            if (match) {
-                match.result = (match.result === resultType) ? 'none' : resultType;
-            }
+            if (!match || match.locked) return;
+            match.result = (match.result === resultType) ? 'none' : resultType;
             document.getElementById('preset-select').value = 'custom';
             renderWeekTabs();
             renderFixtures();
@@ -682,12 +1126,60 @@
 
         function setMatchScore(week, matchId, teamType, val) {
             const match = fixtures[week].find(m => m.id === matchId);
-            if (match) {
-                const parsed = parseInt(val) || 0;
-                if (teamType === 'home') match.homeAddScore = parsed;
-                if (teamType === 'away') match.awayAddScore = parsed;
-            }
+            if (!match || match.locked) return;
+            const parsed = parseInt(val) || 0;
+            if (teamType === 'home') match.homeAddScore = parsed;
+            if (teamType === 'away') match.awayAddScore = parsed;
             renderTable();
+        }
+
+        // Einzelnes Spiel fixieren / entsperren
+        function toggleMatchLock(week, matchId) {
+            const match = fixtures[week].find(m => m.id === matchId);
+            if (!match) return;
+            match.locked = !match.locked;
+
+            // Wenn ein Spiel manuell fixiert wird, übernehmen wir diesen Zustand auch in den Baseline-Reset-Stand
+            const baseMatch = baselineFixtures[week]?.find(m => m.id === matchId);
+            if (baseMatch) {
+                if (match.locked) {
+                    baseMatch.result = match.result;
+                    baseMatch.homeAddScore = match.homeAddScore;
+                    baseMatch.awayAddScore = match.awayAddScore;
+                    baseMatch.locked = true;
+                } else {
+                    baseMatch.locked = false;
+                }
+            }
+
+            renderWeekTabs();
+            renderFixtures();
+        }
+
+        // Ganzen Spieltag fixieren / entsperren
+        function toggleWeekLock() {
+            const matches = fixtures[activeWeek] || [];
+            if (matches.length === 0) return;
+            const allLocked = matches.every(m => m.locked);
+            const targetState = !allLocked;
+
+            matches.forEach(m => {
+                m.locked = targetState;
+                const baseMatch = baselineFixtures[activeWeek]?.find(bm => bm.id === m.id);
+                if (baseMatch) {
+                    if (targetState) {
+                        baseMatch.result = m.result;
+                        baseMatch.homeAddScore = m.homeAddScore;
+                        baseMatch.awayAddScore = m.awayAddScore;
+                        baseMatch.locked = true;
+                    } else {
+                        baseMatch.locked = false;
+                    }
+                }
+            });
+
+            renderWeekTabs();
+            renderFixtures();
         }
 
         function handlePresetSelect(val) {
@@ -696,15 +1188,35 @@
             }
         }
 
+        // Hilfsfunktion: Setzt alle nicht-fixierten Spiele auf den geladenen Ausgangsstand zurück, behält aber alle aktuell fixierten Spiele bei
+        function resetUnlockedToBaseline() {
+            Object.keys(fixtures).forEach(w => {
+                fixtures[w].forEach(m => {
+                    if (m.locked) return; // Fixierte Spiele niemals überschreiben
+                    const base = baselineFixtures[w]?.find(bm => bm.id === m.id);
+                    if (base && !base.locked) {
+                        m.result = base.result;
+                        m.homeAddScore = base.homeAddScore;
+                        m.awayAddScore = base.awayAddScore;
+                    } else {
+                        m.result = 'none';
+                        m.homeAddScore = 0;
+                        m.awayAddScore = 0;
+                    }
+                });
+            });
+        }
+
         function applyPreset(type) {
             const outcomes = ['home_win', 'home_close', 'draw', 'away_close', 'away_win'];
 
             if (type === 'reset') {
-                fixtures = JSON.parse(JSON.stringify(initialFixtures));
+                resetUnlockedToBaseline();
                 document.getElementById('preset-select').value = 'custom';
             } 
             else if (type === 'random-week') {
                 fixtures[activeWeek].forEach(m => {
+                    if (m.locked) return;
                     m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
                     const scores = generateConsistentScores(m.result);
                     m.homeAddScore = scores.homeScore;
@@ -713,9 +1225,10 @@
                 document.getElementById('preset-select').value = 'custom';
             }
             else if (type === 'random') {
-                fixtures = JSON.parse(JSON.stringify(initialFixtures));
+                resetUnlockedToBaseline();
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
+                        if (m.locked) return;
                         m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
                         const scores = generateConsistentScores(m.result);
                         m.homeAddScore = scores.homeScore;
@@ -723,12 +1236,13 @@
                     });
                 });
             }
-            else if (type === 'AMP-wins') {
-                fixtures = JSON.parse(JSON.stringify(initialFixtures));
+            else if (type === 'FOCUS-wins') {
+                resetUnlockedToBaseline();
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
-                        if (m.home === 'AMP') m.result = 'home_win';
-                        else if (m.away === 'AMP') m.result = 'away_win';
+                        if (m.locked) return;
+                        if (m.home === focusTeamId) m.result = 'home_win';
+                        else if (m.away === focusTeamId) m.result = 'away_win';
                         else m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
 
                         const scores = generateConsistentScores(m.result);
@@ -738,21 +1252,23 @@
                 });
             }
             else if (type === 'all-draws') {
-                fixtures = JSON.parse(JSON.stringify(initialFixtures));
+                resetUnlockedToBaseline();
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
+                        if (m.locked) return;
                         m.result = 'draw';
                         m.homeAddScore = 35;
                         m.awayAddScore = 35;
                     });
                 });
             }
-            else if (type === 'AMP-loses-all') {
-                fixtures = JSON.parse(JSON.stringify(initialFixtures));
+            else if (type === 'FOCUS-loses-all') {
+                resetUnlockedToBaseline();
                 Object.keys(fixtures).forEach(w => {
                     fixtures[w].forEach(m => {
-                        if (m.home === 'AMP') m.result = 'away_win';
-                        else if (m.away === 'AMP') m.result = 'home_win';
+                        if (m.locked) return;
+                        if (m.home === focusTeamId) m.result = 'away_win';
+                        else if (m.away === focusTeamId) m.result = 'home_win';
                         else m.result = outcomes[Math.floor(Math.random() * outcomes.length)];
 
                         const scores = generateConsistentScores(m.result);
@@ -767,10 +1283,44 @@
             renderTable();
         }
 
-        window.onload = function() {
-            renderWeekTabs();
-            renderFixtures();
-            renderTable();
+        window.onload = async function() {
+            // Vorkonfigurierte Ligen ins Modal-Dropdown laden
+            const presetSelect = document.getElementById('preset-league-select');
+            if (presetSelect) {
+                Object.keys(PRESET_LEAGUES).forEach(key => {
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.textContent = PRESET_LEAGUES[key].label;
+                    presetSelect.appendChild(opt);
+                });
+            }
+
+            const defaultRepoUrl = buildRepoRawUrl(DEFAULT_GITHUB_REPO_CONFIG.defaultFile);
+
+            // Prüfen, ob ?data=<URL> in der Adresszeile übergeben wurde oder eine URL gespeichert ist
+            const inputEl = document.getElementById('github-json-url');
+            if (inputEl) {
+                inputEl.value = defaultRepoUrl;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const queryJsonUrl = urlParams.get('data');
+            const savedJsonUrl = localStorage.getItem('dqv_last_json_url');
+
+            let loaded = false;
+            if (queryJsonUrl) {
+                loaded = await loadLeagueFromUrl(queryJsonUrl, false);
+            } else if (savedJsonUrl) {
+                if (inputEl) inputEl.value = savedJsonUrl;
+                loaded = await loadLeagueFromUrl(savedJsonUrl, true);
+            } else if (isRepoConfigured()) {
+                loaded = await loadLeagueFromUrl(defaultRepoUrl, true);
+            }
+
+            if (!loaded) {
+                initializeLeagueState(defaultLeagueData, isRepoConfigured() ? 'Lokal (Offline-Fallback)' : 'Standard (Lokal)');
+            }
+
             if (window.lucide) lucide.createIcons();
         };
     </script>
