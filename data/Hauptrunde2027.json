@@ -8,7 +8,7 @@
     },
     {
       "id": "JuS",
-      "name": "Jäger und Stammler"
+      "name": "Jäger und Sammler"
     },
     {
       "id": "QVR",
@@ -49,9 +49,9 @@
         "id": "w1_m1",
         "home": "AMP",
         "away": "RWB",
-        "result": "away_close",
+        "result": "home_close",
         "homeAddScore": 40,
-        "awayAddScore": 44,
+        "awayAddScore": 40,
         "locked": true
       },
       {
