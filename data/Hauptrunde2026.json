@@ -1,0 +1,81 @@
+{
+  "title": "DQV Online-Liga – Hauptrunde",
+  "focusTeamId": "AMP",
+  "teams": [
+    { "id": "AMP", "name": "Amnesiophobie" },
+    { "id": "FBI", "name": "Federal Bureau of Inquizication" },
+    { "id": "KATE", "name": "Qiss me, Kate" },
+    { "id": "HAUTE", "name": "Haute Quizine" },
+    { "id": "MCQUIZ", "name": "Quizzy McQuizface" },
+    { "id": "AHLEN", "name": "Ahlenfelders Erben" },
+    { "id": "SCHALL", "name": "Schall & Rauch" },
+    { "id": "SUED", "name": "Südwestkurve" },
+    { "id": "GRANI", "name": "AC-Quiz-Grani" },
+    { "id": "BREMER", "name": "Die Bremer Stadtquizzikanten" }
+  ],
+  "fixtures": {
+    "week1": [
+      { "id": "w1_m1", "home": "FBI", "away": "KATE", "result": "away_close", "homeAddScore": 44, "awayAddScore": 46, "locked": true },
+      { "id": "w1_m2", "home": "HAUTE", "away": "MCQUIZ", "result": "away_close", "homeAddScore": 24, "awayAddScore": 28, "locked": true },
+      { "id": "w1_m3", "home": "AHLEN", "away": "SCHALL", "result": "away_win", "homeAddScore": 33, "awayAddScore": 38, "locked": true },
+      { "id": "w1_m4", "home": "AMP", "away": "SUED", "result": "home_win", "homeAddScore": 52, "awayAddScore": 30, "locked": true },
+      { "id": "w1_m5", "home": "GRANI", "away": "BREMER", "result": "away_close", "homeAddScore": 30, "awayAddScore": 31, "locked": true }
+    ],
+    "week2": [
+      { "id": "w2_m1", "home": "GRANI", "away": "HAUTE", "result": "home_win", "homeAddScore": 31, "awayAddScore": 16, "locked": true },
+      { "id": "w2_m2", "home": "AMP", "away": "SCHALL", "result": "home_win", "homeAddScore": 33, "awayAddScore": 27, "locked": true },
+      { "id": "w2_m3", "home": "BREMER", "away": "KATE", "result": "home_win", "homeAddScore": 36, "awayAddScore": 22, "locked": true },
+      { "id": "w2_m4", "home": "AHLEN", "away": "SUED", "result": "away_win", "homeAddScore": 24, "awayAddScore": 36, "locked": true },
+      { "id": "w2_m5", "home": "FBI", "away": "MCQUIZ", "result": "home_win", "homeAddScore": 33, "awayAddScore": 24, "locked": true }
+    ],
+    "week3": [
+      { "id": "w3_m1", "home": "AHLEN", "away": "FBI", "result": "home_win", "homeAddScore": 50, "awayAddScore": 45, "locked": true },
+      { "id": "w3_m2", "home": "AMP", "away": "BREMER", "result": "home_win", "homeAddScore": 52, "awayAddScore": 30, "locked": true },
+      { "id": "w3_m3", "home": "HAUTE", "away": "SUED", "result": "away_close", "homeAddScore": 42, "awayAddScore": 46, "locked": true },
+      { "id": "w3_m4", "home": "MCQUIZ", "away": "SCHALL", "result": "away_win", "homeAddScore": 26, "awayAddScore": 41, "locked": true },
+      { "id": "w3_m5", "home": "GRANI", "away": "KATE", "result": "home_win", "homeAddScore": 45, "awayAddScore": 33, "locked": true }
+    ],
+    "week4": [
+      { "id": "w4_m1", "home": "GRANI", "away": "SCHALL", "result": "home_win", "homeAddScore": 34, "awayAddScore": 25, "locked": true },
+      { "id": "w4_m2", "home": "AHLEN", "away": "MCQUIZ", "result": "away_win", "homeAddScore": 21, "awayAddScore": 33, "locked": true },
+      { "id": "w4_m3", "home": "BREMER", "away": "SUED", "result": "away_win", "homeAddScore": 21, "awayAddScore": 38, "locked": true },
+      { "id": "w4_m4", "home": "AMP", "away": "KATE", "result": "home_win", "homeAddScore": 43, "awayAddScore": 29, "locked": true },
+      { "id": "w4_m5", "home": "FBI", "away": "HAUTE", "result": "home_close", "homeAddScore": 39, "awayAddScore": 37, "locked": true }
+    ],
+    "week5": [
+      { "id": "w5_m1", "home": "FBI", "away": "SCHALL", "result": "draw", "homeAddScore": 46, "awayAddScore": 46, "locked": true },
+      { "id": "w5_m2", "home": "AHLEN", "away": "KATE", "result": "away_close", "homeAddScore": 36, "awayAddScore": 37, "locked": true },
+      { "id": "w5_m3", "home": "BREMER", "away": "HAUTE", "result": "home_close", "homeAddScore": 40, "awayAddScore": 38, "locked": true },
+      { "id": "w5_m4", "home": "MCQUIZ", "away": "SUED", "result": "away_win", "homeAddScore": 28, "awayAddScore": 39, "locked": true },
+      { "id": "w5_m5", "home": "AMP", "away": "GRANI", "result": "home_win", "homeAddScore": 56, "awayAddScore": 38, "locked": true }
+    ],
+    "week6": [
+      { "id": "w6_m1", "home": "SCHALL", "away": "SUED", "result": "away_win", "homeAddScore": 29, "awayAddScore": 39, "locked": true },
+      { "id": "w6_m2", "home": "AHLEN", "away": "BREMER", "result": "away_win", "homeAddScore": 23, "awayAddScore": 31, "locked": true },
+      { "id": "w6_m3", "home": "KATE", "away": "MCQUIZ", "result": "away_close", "homeAddScore": 23, "awayAddScore": 24, "locked": true },
+      { "id": "w6_m4", "home": "AMP", "away": "HAUTE", "result": "home_win", "homeAddScore": 38, "awayAddScore": 31, "locked": true },
+      { "id": "w6_m5", "home": "GRANI", "away": "FBI", "result": "away_close", "homeAddScore": 30, "awayAddScore": 34, "locked": true }
+    ],
+    "week7": [
+      { "id": "w7_m1", "home": "AHLEN", "away": "AMP", "result": "away_win", "homeAddScore": 27, "awayAddScore": 38, "locked": true },
+      { "id": "w7_m2", "home": "BREMER", "away": "SCHALL", "result": "home_close", "homeAddScore": 35, "awayAddScore": 34, "locked": true },
+      { "id": "w7_m3", "home": "HAUTE", "away": "KATE", "result": "away_close", "homeAddScore": 29, "awayAddScore": 31, "locked": true },
+      { "id": "w7_m4", "home": "GRANI", "away": "MCQUIZ", "result": "away_win", "homeAddScore": 23, "awayAddScore": 37, "locked": true },
+      { "id": "w7_m5", "home": "FBI", "away": "SUED", "result": "home_win", "homeAddScore": 39, "awayAddScore": 28, "locked": true }
+    ],
+    "week8": [
+      { "id": "w8_m1", "home": "AMP", "away": "FBI", "result": "away_close", "homeAddScore": 50, "awayAddScore": 51, "locked": true },
+      { "id": "w8_m2", "home": "HAUTE", "away": "SCHALL", "result": "away_close", "homeAddScore": 40, "awayAddScore": 42, "locked": true },
+      { "id": "w8_m3", "home": "BREMER", "away": "MCQUIZ", "result": "away_win", "homeAddScore": 26, "awayAddScore": 35, "locked": true },
+      { "id": "w8_m4", "home": "KATE", "away": "SUED", "result": "away_win", "homeAddScore": 27, "awayAddScore": 42, "locked": true },
+      { "id": "w8_m5", "home": "AHLEN", "away": "GRANI", "result": "away_win", "homeAddScore": 34, "awayAddScore": 43, "locked": true }
+    ],
+    "week9": [
+      { "id": "w9_m1", "home": "AMP", "away": "MCQUIZ", "result": "none", "homeAddScore": 0, "awayAddScore": 0, "locked": false },
+      { "id": "w9_m2", "home": "GRANI", "away": "SUED", "result": "none", "homeAddScore": 0, "awayAddScore": 0, "locked": false },
+      { "id": "w9_m3", "home": "BREMER", "away": "FBI", "result": "none", "homeAddScore": 0, "awayAddScore": 0, "locked": false },
+      { "id": "w9_m4", "home": "AHLEN", "away": "HAUTE", "result": "none", "homeAddScore": 0, "awayAddScore": 0, "locked": false },
+      { "id": "w9_m5", "home": "KATE", "away": "SCHALL", "result": "none", "homeAddScore": 0, "awayAddScore": 0, "locked": false }
+    ]
+  }
+}
