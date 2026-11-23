@@ -11,9 +11,10 @@ const SITE_CONFIG = {
 
     // 2. Externe Links (erscheinen im Menü & im Footer)
     externalLinks: [
-        { label: 'QuizNations Tabelle', href: 'https://results.quiznations.com/gerix', icon: 'external-link' },
+        { label: 'QuizNations Tabelle', href: 'https://results.quiznations.com/gerix', icon: 'podium' },
         { label: 'Dateiablage', href: 'https://drive.google.com/drive/folders/1G6lD1a31IvCIhSxtoDvyEQSxyDYKhWyU?usp=drive_link', icon: 'folder-open' },
-		{ label: 'Termine', href: 'https://docs.google.com/spreadsheets/d/10579llo24tiTx4tbRTlYVezNB5G735TMe5cULdpR9VM/edit?gid=1937655390#gid=1937655390', icon: 'calendar-1' },
+		//{ label: 'Termine', href: 'https://docs.google.com/spreadsheets/d/10579llo24tiTx4tbRTlYVezNB5G735TMe5cULdpR9VM/edit?gid=1937655390#gid=1937655390', icon: 'calendar-1' },
+		{ label: 'Termine', href: 'https://www.quizverein.de/termine-2027', icon: 'calendar-1' },
         { label: 'Vorbesprechung in Zoom starten', href: 'https://us05web.zoom.us/j/5511865993?pwd=SGV3WTJENFIrdk8zSi8wRjExVkFXUT09', icon: 'video' }		
         // Hier weitere externe Links ergänzen (z. B. QuizNations, Dateiablage)
     ],
