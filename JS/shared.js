@@ -5,22 +5,19 @@ const SITE_CONFIG = {
     pages: [
         { id: 'dashboard', label: 'Startseite', href: 'index.html', icon: 'layout-dashboard' },
         { id: 'vorrunde',  label: 'Vorrunde', href: 'Vorrunde2027.html', icon: 'list-ordered' },
-       // { id: 'hauptrunde', label: 'Hauptrunde', href: 'Hauptrunde2027.html', icon: 'trophy' },
-		{ id: 'gegner', label: 'Gegner-Analyse', href: 'Gegner.html', icon: 'bar-chart' }
+        // { id: 'hauptrunde', label: 'Hauptrunde', href: 'Hauptrunde2027.html', icon: 'trophy' },
+        { id: 'gegner', label: 'Gegner-Analyse', href: 'Gegner.html', icon: 'bar-chart' }
     ],
 
     // 2. Externe Links (erscheinen im Menü & im Footer)
     externalLinks: [
-        { label: 'QuizNations Tabelle', href: 'https://results.quiznations.com/gerix', icon: 'podium' },
+        { label: 'QuizNations Tabelle', href: 'https://results.quiznations.com/gerix', icon: 'external-link' },
         { label: 'Dateiablage', href: 'https://drive.google.com/drive/folders/1G6lD1a31IvCIhSxtoDvyEQSxyDYKhWyU?usp=drive_link', icon: 'folder-open' },
-		//{ label: 'Termine', href: 'https://docs.google.com/spreadsheets/d/10579llo24tiTx4tbRTlYVezNB5G735TMe5cULdpR9VM/edit?gid=1937655390#gid=1937655390', icon: 'calendar-1' },
-		{ label: 'Termine', href: 'https://www.quizverein.de/termine-2027', icon: 'calendar-1' },
-        { label: 'Vorbesprechung in Zoom starten', href: 'https://us05web.zoom.us/j/5511865993?pwd=SGV3WTJENFIrdk8zSi8wRjExVkFXUT09', icon: 'video' }		
-        // Hier weitere externe Links ergänzen (z. B. QuizNations, Dateiablage)
+        { label: 'Termine', href: 'https://docs.google.com/spreadsheets/d/10579llo24tiTx4tbRTlYVezNB5G735TMe5cULdpR9VM/edit?gid=1937655390#gid=1937655390', icon: 'calendar-1' },
+        { label: 'Vorbesprechung in Zoom starten', href: 'https://us05web.zoom.us/j/5511865993?pwd=SGV3WTJENFIrdk8zSi8wRjExVkFXUT09', icon: 'video' }
     ],
 
     // 3. Mittlerer Bereich im Menü: Seitenspezifische Aktionen / Tools
-    // Ruft bestehende JS-Funktionen der jeweiligen Seite auf
     contextualTools: {
         'index.html': [
             { label: 'Daten neu laden', onclick: 'loadDashboardData(true)', icon: 'refresh-cw' }
@@ -32,17 +29,80 @@ const SITE_CONFIG = {
             { label: 'Zurücksetzen', onclick: 'resetTournament(); toggleMenu()', icon: 'rotate-ccw', danger: true }
         ],
         'Hauptrunde2027.html': [
-        //    { label: 'Exportieren', onclick: 'exportData(); toggleMenu()', icon: 'upload' },
-        //   { label: 'Importieren', onclick: 'importData(data); toggleMenu()', icon: 'download' },
+            // { label: 'Exportieren', onclick: 'exportData(); toggleMenu()', icon: 'upload' },
+            // { label: 'Importieren', onclick: 'importData(data); toggleMenu()', icon: 'download' },
+            { label: 'Daten laden', onclick: 'toggleDataModal(true); toggleMenu()', icon: 'database' },
             { label: 'Zurücksetzen', onclick: 'applyPreset(\'reset\'); toggleMenu()', icon: 'rotate-ccw', danger: true }
         ],
         'Gegner.html': [
             { label: 'Exportieren', onclick: 'exportData(); toggleMenu()', icon: 'upload' },
             { label: 'Importieren', onclick: 'importDataPrompt(); toggleMenu()', icon: 'download' },
             { label: 'Beispieldaten', onclick: 'loadDemoData(); toggleMenu()', icon: 'users', danger: false }
-        ]		
+        ]
     }
 };
+
+// --- APP-ICONS, APPLE HOMESCREEN & MANIFEST ---
+const APP_META = {
+    manifestHref: 'manifest.json',
+    appleTouchIconHref: 'icons/apple-touch-icon.png',
+    favicon16Href: 'icons/favicon-16x16.png',
+    favicon32Href: 'icons/favicon-32x32.png',
+    favicon192Href: 'icons/icon-192.png',
+    appleWebAppTitle: 'Amnesiophobie Dashboard',
+    themeColorDark: '#0f172a',
+    themeColorLight: '#ffffff'
+};
+
+function upsertHeadLink(rel, href, extraAttrs = {}) {
+    if (!href) return;
+    let el = document.head.querySelector(`link[rel="${rel}"]${extraAttrs.sizes ? `[sizes="${extraAttrs.sizes}"]` : ''}`);
+    if (!el) {
+        el = document.createElement('link');
+        el.rel = rel;
+        document.head.appendChild(el);
+    }
+    el.href = href;
+    Object.entries(extraAttrs).forEach(([k, v]) => {
+        if (v !== undefined && v !== null) el.setAttribute(k, v);
+    });
+}
+
+function upsertHeadMeta(name, content) {
+    if (!content) return;
+    let el = document.head.querySelector(`meta[name="${name}"]`);
+    if (!el) {
+        el = document.createElement('meta');
+        el.name = name;
+        document.head.appendChild(el);
+    }
+    el.content = content;
+}
+
+function injectAppIconsAndManifest() {
+    if (!document.head) return;
+
+    // 1. Web App Manifest
+    upsertHeadLink('manifest', APP_META.manifestHref);
+
+    // 2. Favicons
+    upsertHeadLink('icon', APP_META.favicon16Href, { type: 'image/png', sizes: '16x16' });
+    upsertHeadLink('icon', APP_META.favicon32Href, { type: 'image/png', sizes: '32x32' });
+    upsertHeadLink('icon', APP_META.favicon192Href, { type: 'image/png', sizes: '192x192' });
+
+    // 3. Apple Homescreen Logo (iOS / iPadOS)
+    upsertHeadLink('apple-touch-icon', APP_META.appleTouchIconHref, { sizes: '180x180' });
+    upsertHeadMeta('apple-mobile-web-app-capable', 'yes');
+    upsertHeadMeta('apple-mobile-web-app-status-bar-style', 'black-translucent');
+    upsertHeadMeta('apple-mobile-web-app-title', APP_META.appleWebAppTitle);
+
+    // 4. Theme-Color passend zum aktuellen Modus setzen
+    const isDark = document.documentElement.classList.contains('dark');
+    upsertHeadMeta('theme-color', isDark ? APP_META.themeColorDark : APP_META.themeColorLight);
+}
+
+// Sofort beim Parsen von shared.js ausführen
+injectAppIconsAndManifest();
 
 // Ermittelt den aktuellen Dateinamen (Fallback auf 'index.html' bei Root-Aufruf '/')
 function getCurrentPageFile() {
@@ -77,7 +137,6 @@ function injectSharedComponents() {
     // --- A. HAMBURGER-MENÜ (DRAWER) RENDERN ---
     const navPlaceholder = document.getElementById('site-drawer');
     if (navPlaceholder) {
-        // 1. Hauptseiten-Links (aktuelle Seite hervorheben)
         const pagesHtml = SITE_CONFIG.pages.map(page => {
             const isActive = currentFile.toLowerCase() === page.href.toLowerCase();
             const activeClasses = isActive
@@ -93,8 +152,6 @@ function injectSharedComponents() {
                 </a>`;
         }).join('');
 
-        // 2. Mittlerer Bereich: Seitenspezifische Tools
-        // Fallback-Matching (falls Dateiname leicht abweicht, z. B. lowercase)
         const toolKey = Object.keys(SITE_CONFIG.contextualTools).find(
             k => k.toLowerCase() === currentFile.toLowerCase()
         );
@@ -117,7 +174,6 @@ function injectSharedComponents() {
                 `).join('')}
             </div>` : '';
 
-        // 3. Externe Links
         const externalHtml = SITE_CONFIG.externalLinks.map(link => `
             <a href="${link.href}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition">
                 <span class="flex items-center gap-2.5">
@@ -143,16 +199,16 @@ function injectSharedComponents() {
                         </button>
                     </div>
 
-                    <!-- Bereich 1: Seiten (immer gleich) -->
+                    <!-- Bereich 1: Seiten -->
                     <div class="space-y-1">
                         <p class="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Seiten</p>
                         ${pagesHtml}
                     </div>
 
-                    <!-- Bereich 2: Mittlerer Bereich (dynamisch je nach Seite) -->
+                    <!-- Bereich 2: Mittlerer Bereich -->
                     ${toolsSectionHtml}
 
-                    <!-- Bereich 3: Externe Links (immer gleich) -->
+                    <!-- Bereich 3: Externe Links -->
                     <div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
                         <p class="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Externe Links</p>
                         ${externalHtml}
@@ -168,7 +224,7 @@ function injectSharedComponents() {
         `;
     }
 
-    // --- B. FOOTER RENDERN (nutzt dieselben Arrays wie das Menü) ---
+    // --- B. FOOTER RENDERN ---
     const footerPlaceholder = document.getElementById('site-footer');
     if (footerPlaceholder) {
         const footerPagesHtml = SITE_CONFIG.pages.map(p =>
@@ -181,15 +237,12 @@ function injectSharedComponents() {
 
         footerPlaceholder.innerHTML = `
         <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 mt-auto text-xs text-slate-600 dark:text-slate-400">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="space-y-3">
                     <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                         <i data-lucide="brain" class="w-4 h-4 text-sky-500"></i>
                         <span>Amnesiophobie</span>
                     </div>
-                    <!--p class="text-slate-500 dark:text-slate-400 leading-relaxed">
-                        Interaktive Tabellenrechner und Simulatoren für die DQV Online-Liga Saison 2027.
-                    </p-->
                 </div>
                 <div class="space-y-2">
                     <h4 class="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Seiten & Tools</h4>
@@ -199,17 +252,7 @@ function injectSharedComponents() {
                     <h4 class="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">Externe Links</h4>
                     <ul class="space-y-1.5">${footerExtHtml}</ul>
                 </div>
-                <!--div class="space-y-2">
-                    <h4 class="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">System</h4>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span class="text-slate-500 dark:text-slate-400">GitHub Live-Sync</span>
-                    </div-->
-                </div>
             </div>
-            <!--div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-400">
-                <p>© 2027 DQV Online-Liga • Amnesiophobie</p>
-            </div-->
         </footer>`;
     }
 
