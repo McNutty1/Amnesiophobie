@@ -58,10 +58,10 @@
             </h1>
         </div>
 
-        <!-- Gegner-Auswahl: auf Mobil eigene Zeile unten (order-3 w-full), auf Desktop direkt links neben Buttons (sm:order-1) -->
-        <div class="order-3 sm:order-1 w-full sm:w-auto flex items-center bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:min-w-[190px]">
+        <!-- Gegner-Auswahl: auf Mobil eigene Zeile unten (order-3 w-full), auf Desktop direkt links neben dem Theme-Button (sm:order-1 sm:ml-auto) -->
+        <div class="order-3 sm:order-1 w-full sm:w-auto sm:ml-auto flex items-center bg-zinc-100 dark:bg-zinc-900 px-2.5 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:min-w-[190px]">
             <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-zinc-500 mr-2 shrink-0"></i>
-            <select id="github-dropdown" onchange="loadOpponentFromGithub(this.value)" class="bg-transparent text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none cursor-pointer pr-1 w-full">
+           <select id="github-dropdown" onchange="loadOpponentFromGithub(this.value)" class="bg-transparent text-xs font-medium text-zinc-800 dark:text-zinc-200 focus:outline-none cursor-pointer pr-1 w-full">
                 <option value="">-- Gegner laden --</option>
             </select>
             <button onclick="fetchGithubFileList()" title="Liste aktualisieren" class="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 ml-1.5 p-0.5 transition shrink-0">
