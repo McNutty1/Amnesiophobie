@@ -1,0 +1,471 @@
+{
+  "title": "DQV Online-Liga 2027 — Hauptrunde",
+  "focusTeamId": "AMP",
+  "teams": [
+    {
+      "id": "AMP",
+      "name": "Amnesiophobie"
+    },
+    {
+      "id": "JuS",
+      "name": "Jäger und Stammler"
+    },
+    {
+      "id": "QVR",
+      "name": "Quiz van der Rohe"
+    },
+    {
+      "id": "BOB",
+      "name": "Best of Breitensport"
+    },
+    {
+      "id": "GEP",
+      "name": "Gemischtes Pack"
+    },
+    {
+      "id": "DQV",
+      "name": "Die Quizverzager"
+    },
+    {
+      "id": "SVK",
+      "name": "Senat und Volk von Köln"
+    },
+    {
+      "id": "QFL",
+      "name": "Quiztenflosser"
+    },
+    {
+      "id": "fue",
+      "name": "fiffig & entelligent"
+    },
+    {
+      "id": "RWB",
+      "name": "Ratwurstbude"
+    }
+  ],
+  "fixtures": {
+    "week1": [
+      {
+        "id": "w1_m1",
+        "home": "AMP",
+        "away": "RWB",
+        "result": "away_close",
+        "homeAddScore": 40,
+        "awayAddScore": 44,
+        "locked": true
+      },
+      {
+        "id": "w1_m2",
+        "home": "JuS",
+        "away": "fue",
+        "result": "away_win",
+        "homeAddScore": 36,
+        "awayAddScore": 46,
+        "locked": true
+      },
+      {
+        "id": "w1_m3",
+        "home": "QVR",
+        "away": "QFL",
+        "result": "away_win",
+        "homeAddScore": 35,
+        "awayAddScore": 44,
+        "locked": true
+      },
+      {
+        "id": "w1_m4",
+        "home": "BOB",
+        "away": "SVK",
+        "result": "draw",
+        "homeAddScore": 31,
+        "awayAddScore": 31,
+        "locked": true
+      },
+      {
+        "id": "w1_m5",
+        "home": "GEP",
+        "away": "DQV",
+        "result": "away_win",
+        "homeAddScore": 35,
+        "awayAddScore": 42,
+        "locked": true
+      }
+    ],
+    "week2": [
+      {
+        "id": "w2_m1",
+        "home": "RWB",
+        "away": "DQV",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w2_m2",
+        "home": "SVK",
+        "away": "GEP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w2_m3",
+        "home": "QFL",
+        "away": "BOB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w2_m4",
+        "home": "fue",
+        "away": "QVR",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w2_m5",
+        "home": "AMP",
+        "away": "JuS",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week3": [
+      {
+        "id": "w3_m1",
+        "home": "JuS",
+        "away": "RWB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w3_m2",
+        "home": "QVR",
+        "away": "AMP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w3_m3",
+        "home": "BOB",
+        "away": "fue",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w3_m4",
+        "home": "GEP",
+        "away": "QFL",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w3_m5",
+        "home": "DQV",
+        "away": "SVK",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week4": [
+      {
+        "id": "w4_m1",
+        "home": "RWB",
+        "away": "SVK",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w4_m2",
+        "home": "QFL",
+        "away": "DQV",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w4_m3",
+        "home": "fue",
+        "away": "GEP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w4_m4",
+        "home": "AMP",
+        "away": "BOB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w4_m5",
+        "home": "JuS",
+        "away": "QVR",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week5": [
+      {
+        "id": "w5_m1",
+        "home": "QVR",
+        "away": "RWB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w5_m2",
+        "home": "BOB",
+        "away": "JuS",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w5_m3",
+        "home": "GEP",
+        "away": "AMP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w5_m4",
+        "home": "DQV",
+        "away": "fue",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w5_m5",
+        "home": "SVK",
+        "away": "QFL",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week6": [
+      {
+        "id": "w6_m1",
+        "home": "RWB",
+        "away": "QFL",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w6_m2",
+        "home": "fue",
+        "away": "SVK",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w6_m3",
+        "home": "AMP",
+        "away": "DQV",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w6_m4",
+        "home": "JuS",
+        "away": "GEP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w6_m5",
+        "home": "QVR",
+        "away": "BOB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week7": [
+      {
+        "id": "w7_m1",
+        "home": "BOB",
+        "away": "RWB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w7_m2",
+        "home": "GEP",
+        "away": "QVR",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w7_m3",
+        "home": "DQV",
+        "away": "JuS",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w7_m4",
+        "home": "SVK",
+        "away": "AMP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w7_m5",
+        "home": "QFL",
+        "away": "fue",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week8": [
+      {
+        "id": "w8_m1",
+        "home": "RWB",
+        "away": "fue",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w8_m2",
+        "home": "AMP",
+        "away": "QFL",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w8_m3",
+        "home": "JuS",
+        "away": "SVK",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w8_m4",
+        "home": "QVR",
+        "away": "DQV",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w8_m5",
+        "home": "BOB",
+        "away": "GEP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ],
+    "week9": [
+      {
+        "id": "w9_m1",
+        "home": "GEP",
+        "away": "RWB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w9_m2",
+        "home": "DQV",
+        "away": "BOB",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w9_m3",
+        "home": "SVK",
+        "away": "QVR",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w9_m4",
+        "home": "QFL",
+        "away": "JuS",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      },
+      {
+        "id": "w9_m5",
+        "home": "fue",
+        "away": "AMP",
+        "result": "none",
+        "homeAddScore": 0,
+        "awayAddScore": 0,
+        "locked": false
+      }
+    ]
+  }
+}
