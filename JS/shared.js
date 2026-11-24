@@ -21,7 +21,7 @@ const SITE_CONFIG = {
     // 3. Mittlerer Bereich im Menü: Seitenspezifische Aktionen / Tools
     contextualTools: {
         'index.html': [
-            { label: 'Daten neu laden', onclick: 'loadDashboardData(true)', icon: 'refresh-cw' }
+            { label: 'Daten neu laden', onclick: 'loadDashboardData(true); toggleMenu()', icon: 'refresh-cw' }
         ],
         'Vorrunde2027.html': [
             { label: 'Teams verwalten', onclick: 'openTeamManager(); toggleMenu()', icon: 'users' },
