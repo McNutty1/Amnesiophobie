@@ -726,6 +726,18 @@
         };
 
         async function loadOpponentCategoryScouting(oppTeam) {
+			const ALL_CATEGORIES = [
+    'Film & Fernsehen',
+    'Welt & Natur',
+    'Geschichte',
+    'Kunst & Kultur',
+    'Lifestyle & Technik',
+    'Literatur & Medien',
+    'Musik',
+    'Sport & Spiele',
+    'Wissenschaft',
+	'Politik & Wirtschaft'
+];
             const container = document.getElementById('next-opponent-scouting');
             if (!container || !oppTeam) return;
 
@@ -836,18 +848,7 @@ const stats = new Map();
                 if (b[1].count !== a[1].count) return b[1].count - a[1].count;
                 return a[0].localeCompare(b[0], 'de');
             });
-const ALL_CATEGORIES = [
-    'Film & Fernsehen',
-    'Welt & Natur',
-    'Geschichte',
-    'Kunst & Kultur',
-    'Lifestyle & Technik',
-    'Literatur & Medien',
-    'Musik',
-    'Sport & Spiele',
-    'Wissenschaft',
-	'Politik & Wirtschaft'
-];
+
             const maxCount = sorted[0][1].count;
             const minCount = sorted[sorted.length - 1][1].count;
 
