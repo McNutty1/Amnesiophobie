@@ -292,7 +292,6 @@
             { id: 't19', name: 'Könige der Fragen' },
             { id: 't20', name: 'Mind-Games e.V.' }
         ];
-
         function toggleTheme() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
@@ -547,102 +546,231 @@
             }
 
             // 4. Mini-Tabelle (Top 6 + Amnesiophobie falls außerhalb der Top 6)
-            const miniBody = document.getElementById('mini-table-body');
-            miniBody.innerHTML = '';
+const miniBody = document.getElementById('mini-table-body');
+miniBody.innerHTML = '';
 
-            let rowsToShow = standings.slice(0, 6);
-            if (ampIndex >= 6) {
-                rowsToShow.push({ isDivider: true });
-                rowsToShow.push(standings[ampIndex]);
-            }
+// Daten sicher aus deinem JSON-Objekt lesen (falls schon als Variable vorhanden, einfach anpassen)
+const teamList = data.teams || teams || [];
+const completedRounds = data.completedRounds || [];
 
-            rowsToShow.forEach(team => {
-                if (team.isDivider) {
-                    const divTr = document.createElement('tr');
-                    divTr.innerHTML = `<td colspan="6" class="py-1 text-center text-[10px] font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/30">•••</td>`;
-                    miniBody.appendChild(divTr);
-                    return;
-                }
+function getMatchPoints(result, side) {
+    // side: 'home' | 'away'
+    // Passe diese Zuordnung bei Bedarf an dein Punktesystem an
+    if (result === 'draw') return 1;
+    if (side === 'home') {
+        if (result === 'home_win') return 3;
+        if (result === 'home_close') return 2;
+        return 0;
+    } else {
+        if (result === 'away_win') return 3;
+        if (result === 'away_close') return 2;
+        return 0;
+    }
+}
 
-                const actualRank = standings.findIndex(x => x.id === team.id) + 1;
-                const lNum = Math.floor((actualRank - 1) / 2) + 1;
-                const isAmp = isTargetTeam(team.id, teams);
+function calculateStandingsFromRounds(allTeams, rounds) {
+    const stats = new Map();
+    const opponentsByTeam = new Map();
 
-                const tr = document.createElement('tr');
-                tr.className = isAmp
-                    ? 'bg-sky-50/90 dark:bg-sky-950/50 font-medium'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/40 transition';
+    allTeams.forEach(t => {
+        stats.set(t.id, {
+            id: t.id,
+            name: t.name,
+            played: 0,
+            score: 0,
+            bhz: 0,
+            points: 0
+        });
+        opponentsByTeam.set(t.id, []);
+    });
 
-                tr.innerHTML = `
-                    <td class="py-2.5 px-3 text-center font-mono text-xs tabular-nums">
-                        <span class="${actualRank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${actualRank}</span>
-                        <span class="text-[10px] text-slate-400 ml-0.5">L${lNum}</span>
-                    </td>
-                    <td class="py-2.5 px-3 truncate max-w-[170px] sm:max-w-[220px] ${isAmp ? 'font-bold text-sky-900 dark:text-sky-200' : 'text-slate-800 dark:text-slate-200'}">
-                        ${team.name}
-                    </td>
-                    <td class="py-2.5 px-2 text-center font-mono text-slate-500 tabular-nums">${team.played}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400 tabular-nums">${team.score}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-400 tabular-nums hidden sm:table-cell">${team.bhz}</td>
-                    <td class="py-2.5 px-4 text-right font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">${team.points}</td>
-                `;
-                miniBody.appendChild(tr);
-            });
+    rounds.forEach(roundObj => {
+        (roundObj.matches || []).forEach(m => {
+            if (!m.result || m.result === 'none') return;
+
+            const home = stats.get(m.home);
+            const away = stats.get(m.away);
+            if (!home || !away) return;
+
+            home.played += 1;
+            away.played += 1;
+
+            home.score += Number(m.homeAddScore || 0);
+            away.score += Number(m.awayAddScore || 0);
+
+            home.points += getMatchPoints(m.result, 'home');
+            away.points += getMatchPoints(m.result, 'away');
+
+            opponentsByTeam.get(m.home).push(m.away);
+            opponentsByTeam.get(m.away).push(m.home);
+        });
+    });
+
+    // Buchholz (Summe der Punkte aller bisherigen Gegner)
+    stats.forEach((teamStat, id) => {
+        const oppIds = opponentsByTeam.get(id) || [];
+        teamStat.bhz = oppIds.reduce((sum, oppId) => {
+            const opp = stats.get(oppId);
+            return sum + (opp ? opp.points : 0);
+        }, 0);
+    });
+
+    return Array.from(stats.values()).sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.score !== a.score) return b.score - a.score;
+        return b.bhz - a.bhz;
+    });
+}
+
+// Stand vor dem letzten abgeschlossenen Spieltag (z. B. nach Runde 1, wenn Runde 2 gerade abgeschlossen wurde)
+const prevStandings = completedRounds.length > 0
+    ? calculateStandingsFromRounds(teamList, completedRounds.slice(0, -1))
+    : [];
+
+const prevRankById = new Map(
+    prevStandings.map((t, index) => [t.id, index + 1])
+);
+
+function renderRankDelta(actualRank, teamId) {
+    const prevRank = prevRankById.get(teamId);
+    if (!prevRank) {
+        return `<span class="inline-block w-8 text-[10px] text-slate-300 dark:text-slate-600">–</span>`;
+    }
+
+    const diff = prevRank - actualRank; // > 0: aufgestiegen, < 0: abgestiegen
+    if (diff > 0) {
+        return `
+            <span class="inline-flex items-center justify-end w-8 gap-0.5 text-[10px] font-mono font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums" title="Vorher Platz ${prevRank}">
+                <span>▲</span><span>${diff}</span>
+            </span>
+        `;
+    }
+    if (diff < 0) {
+        return `
+            <span class="inline-flex items-center justify-end w-8 gap-0.5 text-[10px] font-mono font-semibold text-rose-600 dark:text-rose-400 tabular-nums" title="Vorher Platz ${prevRank}">
+                <span>▼</span><span>${Math.abs(diff)}</span>
+            </span>
+        `;
+    }
+    return `<span class="inline-block w-8 text-[10px] font-mono text-slate-400">•</span>`;
+}
+
+let rowsToShow = standings.slice(0, 6);
+if (ampIndex >= 6) {
+    rowsToShow.push({ isDivider: true });
+    rowsToShow.push(standings[ampIndex]);
+}
+
+rowsToShow.forEach(team => {
+    if (team.isDivider) {
+        const divTr = document.createElement('tr');
+        divTr.innerHTML = `<td colspan="6" class="py-1 text-center text-[10px] font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/30">•••</td>`;
+        miniBody.appendChild(divTr);
+        return;
+    }
+
+    const actualRank = standings.findIndex(x => x.id === team.id) + 1;
+    const lNum = Math.floor((actualRank - 1) / 2) + 1;
+    const isAmp = isTargetTeam(team.id, teamList);
+    const deltaHtml = renderRankDelta(actualRank, team.id);
+
+    const tr = document.createElement('tr');
+    tr.className = isAmp
+        ? 'bg-sky-50/90 dark:bg-sky-950/50 font-medium'
+        : 'hover:bg-slate-50 dark:hover:bg-slate-800/40 transition';
+
+    tr.innerHTML = `
+        <td class="py-2.5 px-3 font-mono text-xs tabular-nums whitespace-nowrap">
+            <div class="flex items-center justify-between gap-1">
+                <div>
+                    <span class="${actualRank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${actualRank}</span>
+                ${deltaHtml}
+				</div>
+				
+            </div>
+        </td>
+        <td class="py-2.5 px-3 truncate max-w-[170px] sm:max-w-[220px] ${isAmp ? 'font-bold text-sky-900 dark:text-sky-200' : 'text-slate-800 dark:text-slate-200'}">
+            ${team.name}
+        </td>
+        <td class="py-2.5 px-2 text-center font-mono text-slate-500 tabular-nums">${team.played}</td>
+        <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400 tabular-nums">${team.score}</td>
+        <td class="py-2.5 px-3 text-right font-mono text-slate-400 tabular-nums hidden sm:table-cell">${team.bhz}</td>
+        <td class="py-2.5 px-4 text-right font-mono font-bold text-sky-600 dark:text-sky-400 tabular-nums">${team.points}</td>
+    `;
+    miniBody.appendChild(tr);
+});
 
             // 5. Alle 9 Spieltage für Amnesiophobie auflisten
-            const scheduleContainer = document.getElementById('schedule-list');
-            scheduleContainer.innerHTML = '';
+const scheduleContainer = document.getElementById('schedule-list');
+scheduleContainer.innerHTML = '';
 
-            for (let r = 1; r <= 9; r++) {
-                const date = roundDates[r] || '–';
-                const compRound = completed.find(x => x.round === r);
-                let matchObj = compRound ? (compRound.matches || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams)) : null;
+function getOutcomeForTarget(result, isHome) {
+    if (!result || result === 'none') return 'none';
+    if (result === 'draw') return 'draw';
 
-                if (!matchObj && r === currentRound) {
-                    matchObj = (data.currentPairings || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams));
-                }
-                if (!matchObj && fixedSchedule[r]) {
-                    const pair = fixedSchedule[r].find(p => isTargetTeam(p[0], teams) || isTargetTeam(p[1], teams));
-                    if (pair) matchObj = { home: pair[0], away: pair[1], result: 'none' };
-                }
+    const targetWon = isHome
+        ? (result === 'home_win' || result === 'home_close')
+        : (result === 'away_win' || result === 'away_close');
 
-                const isCurrent = r === currentRound;
-                const row = document.createElement('div');
-                row.className = `px-4 py-2.5 flex items-center justify-between gap-2 ${
-                    isCurrent ? 'bg-sky-50/70 dark:bg-sky-950/40' : ''
-                }`;
+    return targetWon ? 'win' : 'loss';
+}
 
-                let oppText = '<span class="text-slate-400 italic">noch offen</span>';
-                let rightBadge = `<span class="text-[11px] font-mono text-slate-400"></span>`;
+for (let r = 1; r <= 9; r++) {
+    const date = roundDates[r] || '–';
+    const compRound = completed.find(x => x.round === r);
+    let matchObj = compRound ? (compRound.matches || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams)) : null;
 
-                if (matchObj) {
-                    const isH = isTargetTeam(matchObj.home, teams);
-                    const opp = getTeamObj(isH ? matchObj.away : matchObj.home).name;
-                    const prefix = isH ? 'vs.' : 'vs.';
-                    oppText = `<span class="text-slate-400 font-mono text-[11px] mr-1">${prefix}</span><span class="font-medium text-slate-800 dark:text-slate-200">${opp}</span>`;
+    if (!matchObj && r === currentRound) {
+        matchObj = (data.currentPairings || []).find(m => isTargetTeam(m.home, teams) || isTargetTeam(m.away, teams));
+    }
+    if (!matchObj && fixedSchedule[r]) {
+        const pair = fixedSchedule[r].find(p => isTargetTeam(p[0], teams) || isTargetTeam(p[1], teams));
+        if (pair) matchObj = { home: pair[0], away: pair[1], result: 'none', homeAddScore: 0, awayAddScore: 0 };
+    }
 
-                    if (matchObj.result && matchObj.result !== 'none') {
-                        const p = getPointsFromResult(matchObj.result);
-                        const myP = isH ? p.homeP : p.awayP;
-                        const opP = isH ? p.awayP : p.homeP;
-                        const color = myP === 4 ? 'text-emerald-600 dark:text-emerald-400' : myP === 2 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400';
-                        rightBadge = `<span class="font-mono font-bold ${color} tabular-nums">${myP}:${opP}</span>`;
-                    } else if (isCurrent) {
-                        rightBadge = `<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300">Nächstes</span>`;
-                    }
-                }
+    const isCurrent = r === currentRound;
+    const row = document.createElement('div');
+    row.className = `px-4 py-2.5 flex items-center justify-between gap-2 ${
+        isCurrent ? 'bg-sky-50/70 dark:bg-sky-950/40' : ''
+    }`;
 
-                row.innerHTML = `
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <span class="font-mono text-[11px] text-slate-400 w-14 shrink-0">${date}</span>
-                        <div class="truncate">${oppText}</div>
-                    </div>
-                    <div class="shrink-0">${rightBadge}</div>
-                `;
-                scheduleContainer.appendChild(row);
-            }
+    let oppText = '<span class="text-slate-400 italic">noch offen</span>';
+    let rightBadge = `<span class="text-[11px] font-mono text-slate-400"></span>`;
 
-            if (window.lucide) lucide.createIcons();
+    if (matchObj) {
+        const isH = isTargetTeam(matchObj.home, teams);
+        const opp = getTeamObj(isH ? matchObj.away : matchObj.home).name;
+        const prefix = isH ? 'vs.' : 'vs.';
+        oppText = `<span class="text-slate-400 font-mono text-[11px] mr-1">${prefix}</span><span class="font-medium text-slate-800 dark:text-slate-200">${opp}</span>`;
+
+        if (matchObj.result && matchObj.result !== 'none') {
+            const myScore = isH ? (matchObj.homeAddScore ?? 0) : (matchObj.awayAddScore ?? 0);
+            const opScore = isH ? (matchObj.awayAddScore ?? 0) : (matchObj.homeAddScore ?? 0);
+            const outcome = getOutcomeForTarget(matchObj.result, isH);
+
+            const color = outcome === 'win'
+                ? 'text-emerald-600 dark:text-emerald-400'
+                : outcome === 'draw'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-rose-600 dark:text-rose-400';
+
+            rightBadge = `<span class="font-mono font-bold ${color} tabular-nums">${myScore}:${opScore}</span>`;
+        } else if (isCurrent) {
+            rightBadge = `<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-900/60 text-sky-700 dark:text-sky-300">Nächstes</span>`;
+        }
+    }
+
+    row.innerHTML = `
+        <div class="flex items-center gap-2.5 min-w-0">
+            <span class="font-mono text-[11px] text-slate-400 w-14 shrink-0">${date}</span>
+            <div class="truncate">${oppText}</div>
+        </div>
+        <div class="shrink-0">${rightBadge}</div>
+    `;
+    scheduleContainer.appendChild(row);
+}
+
+if (window.lucide) lucide.createIcons();
         }
 
         // Mapping von Teamnamen/IDs auf mögliche Datei-Kürzel im Ordner data/
