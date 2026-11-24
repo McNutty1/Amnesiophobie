@@ -770,8 +770,38 @@
                 return;
             }
 
-            const stats = new Map();
+const stats = new Map();
+
+            // Alle möglichen Kategorien mit 0 initialisieren, damit auch nie gewählte erfasst werden
+            for (const cat of ALL_CATEGORIES) {
+                stats.set(cat, { count: 0, players: new Map(), correct: 0 });
+            }
+
             for (const match of data.matches) {
+                for (const p of (match.players || [])) {
+                    const picks = [
+                        { cat: p.cat1, ok: Number(p.correct1) || 0 },
+                        { cat: p.cat2, ok: Number(p.correct2) || 0 }
+                    ];
+
+                    for (const pick of picks) {
+                        if (!pick.cat || !pick.cat.trim()) continue;
+                        const catName = pick.cat.trim();
+
+                        if (!stats.has(catName)) {
+                            stats.set(catName, { count: 0, players: new Map(), correct: 0 });
+                        }
+                        const entry = stats.get(catName);
+                        entry.count += 1;
+                        entry.correct += pick.ok;
+
+                        if (p.name) {
+                            const pName = p.name.trim();
+                            entry.players.set(pName, (entry.players.get(pName) || 0) + 1);
+                        }
+                    }
+                }
+            }            for (const match of data.matches) {
                 for (const p of (match.players || [])) {
                     const picks = [
                         { cat: p.cat1, ok: Number(p.correct1) || 0 },
@@ -806,7 +836,18 @@
                 if (b[1].count !== a[1].count) return b[1].count - a[1].count;
                 return a[0].localeCompare(b[0], 'de');
             });
-
+const ALL_CATEGORIES = [
+    'Film & Fernsehen',
+    'Welt & Natur',
+    'Geschichte',
+    'Kunst & Kultur',
+    'Lifestyle & Technik',
+    'Literatur & Medien',
+    'Musik',
+    'Sport & Spiele',
+    'Wissenschaft',
+	'Politik & Wirtschaft'
+];
             const maxCount = sorted[0][1].count;
             const minCount = sorted[sorted.length - 1][1].count;
 
@@ -820,8 +861,10 @@
                     .join(', ');
             };
 
-            const renderRows = (items) => items.map(([catName, info]) => {
-                const who = formatPlayerList(info.players) || '–';
+const renderRows = (items) => items.map(([catName, info]) => {
+                const who = info.count === 0
+                    ? 'nie gewählt'
+                    : (formatPlayerList(info.players) || '–');
                 return `
                     <div class="flex items-baseline justify-between gap-2 py-1">
                         <div class="min-w-0">
