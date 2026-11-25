@@ -91,7 +91,7 @@ input[type=number] {
                         <h3 class="font-semibold text-sm text-slate-900 dark:text-white">Tabelle</h3>
                     </div>
                     <span id="round-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60">
-                        Runde 1
+                        Spieltag 1
                     </span>
                 </div>
 
@@ -133,7 +133,7 @@ input[type=number] {
         <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900">
             <div class="flex flex-wrap items-center gap-2">
                 <i data-lucide="swords" class="w-4 h-4 text-slate-500"></i>
-                <h3 class="font-semibold text-sm text-slate-900 dark:text-white" id="current-round-title">Paarungen Runde 1</h3>
+                <h3 class="font-semibold text-sm text-slate-900 dark:text-white" id="current-round-title">Paarungen Spieltag 1</h3>
                 <span id="current-round-date" class="inline-flex items-center text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60">27. Jan.</span>
                 <span id="pairing-mode-badge" class="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">Fester Spieltag</span>
             </div>
@@ -154,7 +154,7 @@ input[type=number] {
 
                 <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
 <button onclick="finishCurrentRound()" class="px-3.5 py-2 rounded-lg bg-slate-600 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-semibold text-xs transition flex items-center gap-1.5">
-<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Runde abschließen</button>
+<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Spieltag abschließen</button>
                 </div>
             </div>
 
@@ -511,81 +511,176 @@ input[type=number] {
             }));
         }
 
-        function renderTable() {
-            const standings = calculateStandings();
-            const tbody = document.getElementById('league-table-body');
-            tbody.innerHTML = '';
+function getRankChangeBadge(currentRank, prevRank) {
+    if (!prevRank) {
+        return `<span class="inline-block w-7 text-[10px] font-mono text-slate-300 dark:text-slate-600">–</span>`;
+    }
 
-            standings.forEach((team, idx) => {
-                const rank = idx + 1;
-                const leagueNumber = Math.floor(idx / 2) + 1;
-                const isGroupEnd = rank % 2 === 0 && rank < standings.length;
+    const diff = prevRank - currentRank; // > 0: Plätze gutgemacht, < 0: Plätze verloren
+    if (diff > 0) {
+        return `
+            <span class="inline-flex items-center justify-end w-7 gap-0.5 text-[10px] font-mono font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums" title="Vorher Platz ${prevRank}">
+                <span>▲</span><span>${diff}</span>
+            </span>
+        `;
+    }
+    if (diff < 0) {
+        return `
+            <span class="inline-flex items-center justify-end w-7 gap-0.5 text-[10px] font-mono font-semibold text-rose-600 dark:text-rose-400 tabular-nums" title="Vorher Platz ${prevRank}">
+                <span>▼</span><span>${Math.abs(diff)}</span>
+            </span>
+        `;
+    }
+    return `<span class="inline-block w-7 text-[10px] font-mono text-slate-400" title="Unverändert (Platz ${prevRank})">•</span>`;
+}
 
-                const borderClass = isGroupEnd 
-                    ? 'border-b-2 border-slate-400 dark:border-slate-600' 
-                    : 'border-b border-slate-100 dark:border-slate-800/60';
+// Fallback, falls calculateStandings() in deinem Code keine Rundenliste als Parameter akzeptiert
+function calculateStandingsFromCompleted(completedList) {
+    if (typeof calculateStandings === 'function' && calculateStandings.length >= 1) {
+        return calculateStandings(completedList);
+    }
 
-                // Hervorhebung für das Team Amnesiophobie
-                const isHighlighted = team.id === 'amp' || team.name.toLowerCase().includes('amnesiophobie');
-                const rowBgClass = isHighlighted
-                    ? 'bg-sky-50/90 dark:bg-sky-950/50 hover:bg-sky-100/80 dark:hover:bg-sky-900/50'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/50';
-                const tr = document.createElement('tr');
-                tr.className = `${borderClass} ${rowBgClass} transition text-slate-700 dark:text-slate-300`;
-                tr.innerHTML = `
-                    <td class="py-2.5 px-3 text-center font-semibold text-xs">
-                        <div class="flex items-center justify-center gap-1.5">
-                            <span class="${rank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${rank}</span>
-                            <span class="text-[10px] text-slate-400 font-normal">L${leagueNumber}</span>
-                        </div>
-                    </td>					 
-                    <td class="py-2.5 px-3 ${isHighlighted ? 'font-bold text-sky-900 dark:text-sky-200' : 'font-medium text-slate-900 dark:text-white'}">${team.name}</td>
-                    <td class="py-2.5 px-2 text-center font-mono text-slate-600 dark:text-slate-400">${team.played}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400">${team.score}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.bhz}</td>
-                    <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.fbhz}</td>
-                    <td class="py-2.5 px-4 text-right font-bold font-mono text-sky-600 dark:text-sky-400 text-sm">${team.points}</td>
-                `;
-                tbody.appendChild(tr);
-            });
+    const teams = (typeof state !== 'undefined' && Array.isArray(state.teams) && state.teams.length)
+        ? state.teams
+        : fallbackTeams;
 
-            document.getElementById('round-badge').innerText = `Runde ${state.round}`;
-            document.getElementById('current-round-title').innerText = `Paarungen Runde ${state.round}`;
-            
-            const dateBadge = document.getElementById('current-round-date');
-            if (dateBadge) {
-                const dateStr = roundDates[state.round];
-                if (dateStr) {
-                    dateBadge.innerText = dateStr;
-                    dateBadge.classList.remove('hidden');
-                } else {
-                    dateBadge.classList.add('hidden');
-                }
+    const map = {};
+    teams.forEach(t => {
+        map[t.id] = {
+            ...t,
+            played: 0,
+            wins: 0,
+            draws: 0,
+            losses: 0,
+            points: 0,
+            score: 0,
+            opponents: [],
+            bhz: 0,
+            fbhz: 0
+        };
+    });
+
+    (completedList || []).forEach(r => {
+        (r.matches || []).forEach(m => {
+            if (m.result && m.result !== 'none' && map[m.home] && map[m.away]) {
+                const { homeP, awayP } = getPointsFromResult(m.result);
+                map[m.home].points += homeP;
+                map[m.away].points += awayP;
+                map[m.home].score += parseInt(m.homeAddScore || 0, 10) || 0;
+                map[m.away].score += parseInt(m.awayAddScore || 0, 10) || 0;
+                map[m.home].played += 1;
+                map[m.away].played += 1;
+                map[m.home].opponents.push(m.away);
+                map[m.away].opponents.push(m.home);
+
+                if (homeP === 4) { map[m.home].wins++; map[m.away].losses++; }
+                else if (awayP === 4) { map[m.away].wins++; map[m.home].losses++; }
+                else if (homeP === 2) { map[m.home].draws++; map[m.away].draws++; }
             }
+        });
+    });
 
-            const modeBadge = document.getElementById('pairing-mode-badge');
-            if (modeBadge) {
-                // Prüfen, ob die Runde bereits fest in den absolvierten Runden liegt oder fix im Schedule steht
-                const isCompleted = state.completedRounds.some(r => r.round === Number(state.round));
-                const isFixed = Number(state.round) <= 3 && Boolean(fixedSchedule[state.round]);
+    Object.keys(map).forEach(id => {
+        map[id].bhz = map[id].opponents.reduce((sum, oppId) => sum + (map[oppId] ? map[oppId].points : 0), 0);
+    });
+    Object.keys(map).forEach(id => {
+        map[id].fbhz = map[id].opponents.reduce((sum, oppId) => sum + (map[oppId] ? map[oppId].bhz : 0), 0);
+    });
 
-                let badgeText = 'Simulation';
-                let badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60';
+    return Object.values(map).sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.score !== a.score) return b.score - a.score;
+        if (b.bhz !== a.bhz) return b.bhz - a.bhz;
+        if (b.fbhz !== a.fbhz) return b.fbhz - a.fbhz;
+        return a.name.localeCompare(b.name);
+    });
+}
 
-                if (isCompleted || isFixed) {
-                    if (Number(state.round) <= 3) {
-                        badgeText = 'Fester Spieltag';
-                        badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700';
-                    } else {
-                        badgeText = 'Schweizer System';
-                        badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60';
-                    }
-                }
+function renderTable() {
+    const standings = calculateStandings();
+    const tbody = document.getElementById('league-table-body');
+    tbody.innerHTML = '';
 
-                modeBadge.innerText = badgeText;
-                modeBadge.className = badgeClass;
-            }			 
+    const completedList = Array.isArray(state.completedRounds)
+        ? [...state.completedRounds].sort((a, b) => (a.round ?? 0) - (b.round ?? 0))
+        : [];
+    const prevStandings = completedList.length > 0
+        ? calculateStandingsFromCompleted(completedList.slice(0, -1))
+        : [];
+    const prevRankById = new Map(prevStandings.map((t, index) => [t.id, index + 1]));
+
+    standings.forEach((team, idx) => {
+        const rank = idx + 1;
+        const leagueNumber = Math.floor(idx / 2) + 1;
+        const isGroupEnd = rank % 2 === 0 && rank < standings.length;
+        const changeBadge = getRankChangeBadge(rank, prevRankById.get(team.id));
+
+        const borderClass = isGroupEnd
+            ? 'border-b-2 border-slate-400 dark:border-slate-600'
+            : 'border-b border-slate-100 dark:border-slate-800/60';
+
+        // Hervorhebung für das Team Amnesiophobie
+        const isHighlighted = team.id === 'amp' || team.name.toLowerCase().includes('amnesiophobie');
+        const rowBgClass = isHighlighted
+            ? 'bg-sky-50/90 dark:bg-sky-950/50 hover:bg-sky-100/80 dark:hover:bg-sky-900/50'
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/50';
+        const tr = document.createElement('tr');
+        tr.className = `${borderClass} ${rowBgClass} transition text-slate-700 dark:text-slate-300`;
+        tr.innerHTML = `
+            <td class="py-2.5 px-3 text-center font-semibold text-xs whitespace-nowrap">
+                <div class="flex items-center justify-between gap-1">
+                    <div class="flex items-center gap-1.5">
+                        <span class="${rank <= 2 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-slate-600 dark:text-slate-400'}">${rank}</span>
+                    </div>
+                    ${changeBadge}
+                </div>
+            </td>
+            <td class="py-2.5 px-3 ${isHighlighted ? 'font-bold text-sky-900 dark:text-sky-200' : 'font-medium text-slate-900 dark:text-white'}">${team.name}</td>
+            <td class="py-2.5 px-2 text-center font-mono text-slate-600 dark:text-slate-400">${team.played}</td>
+            <td class="py-2.5 px-3 text-right font-mono text-slate-600 dark:text-slate-400">${team.score}</td>
+            <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.bhz}</td>
+            <td class="py-2.5 px-3 text-right font-mono text-slate-400">${team.fbhz}</td>
+            <td class="py-2.5 px-4 text-right font-bold font-mono text-sky-600 dark:text-sky-400 text-sm">${team.points}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('round-badge').innerText = `Spieltag ${state.round}`;
+    document.getElementById('current-round-title').innerText = `Paarungen Spieltag ${state.round}`;
+
+    const dateBadge = document.getElementById('current-round-date');
+    if (dateBadge) {
+        const dateStr = roundDates[state.round];
+        if (dateStr) {
+            dateBadge.innerText = dateStr;
+            dateBadge.classList.remove('hidden');
+        } else {
+            dateBadge.classList.add('hidden');
         }
+    }
+
+    const modeBadge = document.getElementById('pairing-mode-badge');
+    if (modeBadge) {
+        const isCompleted = state.completedRounds.some(r => r.round === Number(state.round));
+        const isFixed = Number(state.round) <= 3 && Boolean(fixedSchedule[state.round]);
+
+        let badgeText = 'Simulation';
+        let badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60';
+
+        if (isCompleted || isFixed) {
+            if (Number(state.round) <= 3) {
+                badgeText = 'Fester Spieltag';
+                badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700';
+            } else {
+                badgeText = 'Schweizer System';
+                badgeClass = 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/60';
+            }
+        }
+
+        modeBadge.innerText = badgeText;
+        modeBadge.className = badgeClass;
+    }
+}
 
 function renderFixtures() {
             const container = document.getElementById('current-fixtures-container');
@@ -678,7 +773,7 @@ function renderFixtures() {
         function renderHistory() {
             const container = document.getElementById('rounds-history-container');
             if (state.completedRounds.length === 0) {
-                container.innerHTML = '<p class="text-slate-400 italic">Noch keine absolvierten Runden vorhanden.</p>';
+                container.innerHTML = '<p class="text-slate-400 italic">Noch keine absolvierten Spieltage vorhanden.</p>';
                 return;
             }
 
@@ -695,7 +790,7 @@ function renderFixtures() {
                 }).join('');
 
                 const rDate = roundDates[r.round] ? ` <span class="text-slate-400 font-normal font-mono text-[11px] ml-1">(${roundDates[r.round]})</span>` : '';
-                details.innerHTML = `<summary class="font-medium cursor-pointer text-slate-700 dark:text-slate-300">Runde ${r.round}${rDate}</summary><div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-0.5">${matchesHtml}</div>`;
+                details.innerHTML = `<summary class="font-medium cursor-pointer text-slate-700 dark:text-slate-300">Spieltag ${r.round}${rDate}</summary><div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 space-y-0.5">${matchesHtml}</div>`;
                 container.appendChild(details);
             });
         }
@@ -841,8 +936,8 @@ function renderFixtures() {
             const unplayed = state.currentPairings.some(m => m.result === 'none');																				  
             if (unplayed) {
                 showConfirm(
-                    "Runde unvollständig",
-                    "Einige Duelle haben noch kein Ergebnis. Trotzdem die Runde abschließen (unvollständige Spiele werden 0:0 gewertet)?",
+                    "Spieltag unvollständig",
+                    "Einige Duelle haben noch kein Ergebnis. Den Spieltag trotzdem abschließen (unvollständige Spiele werden 0:0 gewertet)?",
                     advanceRound
                 );
                 return;
