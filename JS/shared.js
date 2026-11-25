@@ -262,4 +262,144 @@ function injectSharedComponents() {
     }
 }
 
+(function initPullToRefresh() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    const THRESHOLD = 75;   // Pull-Distanz in Pixeln bis zum Auslösen
+    const MAX_PULL = 120;   // Maximaler visueller Weg nach unten
+
+    let startY = 0;
+    let currentPull = 0;
+    let isPulling = false;
+    let isRefreshing = false;
+    let indicator = null;
+
+    function createIndicator() {
+        const el = document.createElement('div');
+        el.id = 'ptr-indicator';
+        el.setAttribute('aria-live', 'polite');
+        el.className = [
+            'fixed top-3 left-1/2 -translate-x-1/2 z-50',
+            'px-3.5 py-1.5 rounded-full shadow-md border',
+            'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200',
+            'border-slate-200 dark:border-slate-700',
+            'flex items-center gap-2 text-xs font-medium',
+            'transition-transform duration-150 pointer-events-none select-none',
+            'opacity-0 -translate-y-12'
+        ].join(' ');
+        el.innerHTML = `
+            <span id="ptr-arrow" class="inline-block transition-transform duration-150">↓</span>
+            <span id="ptr-label">Zum Aktualisieren ziehen</span>
+        `;
+        document.body.appendChild(el);
+        return el;
+    }
+
+    function setIndicatorState(pullDistance, ready = false, refreshing = false) {
+        if (!indicator) indicator = createIndicator();
+        const arrow = indicator.querySelector('#ptr-arrow');
+        const label = indicator.querySelector('#ptr-label');
+
+        if (!refreshing && pullDistance <= 0) {
+            indicator.style.opacity = '0';
+            indicator.style.transform = 'translate(-50%, -48px)';
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+            return;
+        }
+
+        const clamped = Math.min(pullDistance, MAX_PULL);
+        const offsetY = refreshing ? 12 : Math.min(clamped * 0.45 - 24, 16);
+
+        indicator.style.opacity = '1';
+        indicator.style.transform = `translate(-50%, ${offsetY}px)`;
+
+        if (refreshing) {
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+            if (arrow) arrow.textContent = '↻';
+            if (label) label.textContent = 'Aktualisiere...';
+        } else if (ready) {
+            if (arrow) arrow.textContent = '↓';
+            if (arrow) arrow.style.transform = 'rotate(180deg)';
+            if (label) label.textContent = 'Loslassen zum Aktualisieren';
+        } else {
+            if (arrow) arrow.textContent = '↓';
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+            if (label) label.textContent = 'Zum Aktualisieren ziehen';
+        }
+    }
+
+    async function triggerRefresh() {
+        isRefreshing = true;
+        setIndicatorState(THRESHOLD, true, true);
+
+        try {
+            if (typeof window.onPullToRefresh === 'function') {
+                await window.onPullToRefresh();
+            } else if (typeof window.loadDashboardData === 'function') {
+                await window.loadDashboardData(true);
+            } else {
+                window.location.reload();
+                return;
+            }
+        } catch (err) {
+            console.warn('Pull-to-Refresh fehlgeschlagen, lade Seite neu:', err);
+            window.location.reload();
+            return;
+        }
+
+        setTimeout(() => {
+            isRefreshing = false;
+            currentPull = 0;
+            setIndicatorState(0, false, false);
+        }, 400);
+    }
+
+    function getScrollTop() {
+        return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    }
+
+    document.addEventListener('touchstart', (e) => {
+        if (isRefreshing || e.touches.length !== 1) return;
+        if (getScrollTop() > 0) return;
+
+        startY = e.touches[0].clientY;
+        currentPull = 0;
+        isPulling = true;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isPulling || isRefreshing || e.touches.length !== 1) return;
+
+        const deltaY = e.touches[0].clientY - startY;
+
+        if (getScrollTop() > 0 || deltaY <= 0) {
+            currentPull = 0;
+            setIndicatorState(0, false, false);
+            return;
+        }
+
+        // Leichter Widerstand für ein natürliches Zuggefühl
+        currentPull = Math.min(deltaY * 0.6, MAX_PULL);
+        if (currentPull > 6 && e.cancelable) {
+            e.preventDefault();
+        }
+        setIndicatorState(currentPull, currentPull >= THRESHOLD, false);
+    }, { passive: false });
+
+    function finishPull() {
+        if (!isPulling || isRefreshing) return;
+        isPulling = false;
+
+        if (currentPull >= THRESHOLD) {
+            triggerRefresh();
+        } else {
+            currentPull = 0;
+            setIndicatorState(0, false, false);
+        }
+    }
+
+    document.addEventListener('touchend', finishPull, { passive: true });
+    document.addEventListener('touchcancel', finishPull, { passive: true });
+})();
+
 window.addEventListener('DOMContentLoaded', injectSharedComponents);
