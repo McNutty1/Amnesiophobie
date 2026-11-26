@@ -180,7 +180,7 @@
 
                         <!-- Mitte -->
                         <div class="text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400 px-1">
-                            
+                            Formkurve
                         </div>
 
                         <!-- Gegner Formkurve (rechts) -->
@@ -413,7 +413,7 @@
                 const oppName = resolveTeamName(isHome ? m.away : m.home);
 
                 const outcomeLabel = item.myP === 4 ? 'Sieg' : item.myP === 2 ? 'Remis' : 'Niederlage';
-                const tooltip = `Spieltag ${item.round} vs. ${oppName}: ${outcomeLabel} ${myScore}:${oppScore} (${item.myP}:${oppPts})`;
+                const tooltip = `ST ${item.round} vs. ${oppName}: ${outcomeLabel} (${item.myP}:${oppPts} Pkt. • ${myScore}:${oppScore})`;
                 const safeTooltip = escapeAttr(tooltip);
 
                 const styleClass = item.myP === 4
@@ -894,11 +894,14 @@
                 return a[0].localeCompare(b[0], 'de');
             });
 
-            const maxCount = sorted[0][1].count;
-            const minCount = sorted[sorted.length - 1][1].count;
-
-            const mostCommon = sorted.filter(([, v]) => v.count === maxCount);
-            const leastCommon = sorted.filter(([, v]) => v.count === minCount);
+            // Immer die 3 häufigsten und die 3 seltensten Kategorien auswählen
+            const mostCommon = sorted.slice(0, 3);
+            const leastCommon = [...sorted]
+                .sort((a, b) => {
+                    if (a[1].count !== b[1].count) return a[1].count - b[1].count;
+                    return a[0].localeCompare(b[0], 'de');
+                })
+                .slice(0, 3);
 
             const formatPlayerList = (playerMap) => {
                 return Array.from(playerMap.entries())
@@ -928,7 +931,7 @@
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-1">
                                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                    Häufigste Kategorie
+                                    Häufigste Kategorien (Top 3)
                                 </span>
                                 <span class="inline-flex sm:hidden items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400">
                                     <span>Details</span>
@@ -942,7 +945,7 @@
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-1">
                                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                    Seltenste Kategorie
+                                    Seltenste Kategorien (Top 3)
                                 </span>
                                 <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400">
                                     <span>Details</span>
