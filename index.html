@@ -374,20 +374,41 @@
             return history;
         }
 
-        function renderFormBadges(historySlice = []) {
-            if (!historySlice.length) {
-                return `<span class="text-xs text-slate-400 italic">Noch keine Spiele</span>`;
-            }
-            return historySlice.slice(-5).map(item => {
-                if (item.myP === 4) {
-                    return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold" title="Spieltag ${item.round}: Sieg">S</span>`;
-                }
-                if (item.myP === 2) {
-                    return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold" title="Spieltag ${item.round}: Remis">U</span>`;
-                }
-                return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold" title="Spieltag ${item.round}: Niederlage">N</span>`;
-            }).join('');
+function renderFormBadges(historySlice = [], teams = []) {
+    if (!historySlice.length) {
+        return `<span class="text-xs text-slate-400 italic">Noch keine Spiele</span>`;
+    }
+
+    const resolveTeamName = (id) => {
+        const found = teams.find(t => t.id === id);
+        return found ? found.name : id;
+    };
+
+    return historySlice.slice(-5).map(item => {
+        const m = item.match || {};
+        const p = getPointsFromResult(m.result);
+        // Prüfen, ob das betrachtete Team in diesem Match Heim- oder Auswärtsteam war
+        const isHome = p.homeP === item.myP && (
+            m.result !== 'draw' || isTargetTeam(m.home, teams) || m.home === item.teamId
+        );
+
+        const myScore = isHome ? (m.homeAddScore ?? 0) : (m.awayAddScore ?? 0);
+        const oppScore = isHome ? (m.awayAddScore ?? 0) : (m.homeAddScore ?? 0);
+        const oppPts = isHome ? p.awayP : p.homeP;
+        const oppName = resolveTeamName(isHome ? m.away : m.home);
+
+        const outcomeLabel = item.myP === 4 ? 'Sieg' : item.myP === 2 ? 'Remis' : 'Niederlage';
+        const tooltip = `Spieltag ${item.round} vs. ${oppName}: ${outcomeLabel} ${myScore}:${oppScore} (${item.myP}:${oppPts})`;
+
+        if (item.myP === 4) {
+            return `<span class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold cursor-help" title="${tooltip}">S</span>`;
         }
+        if (item.myP === 2) {
+            return `<span class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/15 text-amber-700 dark:text-amber-400 font-bold cursor-help" title="${tooltip}">U</span>`;
+        }
+        return `<span class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/15 text-rose-700 dark:text-rose-400 font-bold cursor-help" title="${tooltip}">N</span>`;
+    }).join('');
+}
 
         // Tabelle exakt wie in Vorrunde2027.html berechnen
         function computeStandings(data, roundsOverride = null) {
