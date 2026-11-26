@@ -2,43 +2,43 @@
   "round": 9,
   "teams": [
     {
-      "id": "amp",
+      "id": "AMP",
       "name": "Amnesiophobie"
     },
     {
-      "id": "t4",
+      "id": "FBI",
       "name": "Federal Bureau of Inquizication"
     },
     {
-      "id": "t8",
+      "id": "QmK",
       "name": "Qiss me, Kate"
     },
     {
-      "id": "t10",
+      "id": "HTQ",
       "name": "Haute Quizine"
     },
     {
-      "id": "t6",
+      "id": "QMQ",
       "name": "Quizzy McQuizface"
     },
     {
-      "id": "t9",
+      "id": "AFE",
       "name": "Ahlenfelders Erben"
     },
     {
-      "id": "t7",
+      "id": "SuR",
       "name": "Schall & Rauch"
     },
     {
-      "id": "t2",
+      "id": "SWK",
       "name": "Südwestkurve"
     },
     {
-      "id": "t5",
+      "id": "AQG",
       "name": "AC-Quiz-Grani"
     },
     {
-      "id": "t3",
+      "id": "BRE",
       "name": "Die Bremer Stadtquizzikanten"
     }
   ],
@@ -48,40 +48,40 @@
       "matches": [
         {
           "id": "r1_m1",
-          "home": "t4",
-          "away": "t8",
+          "home": "FBI",
+          "away": "QmK",
           "result": "away_close",
           "homeAddScore": 44,
           "awayAddScore": 46
         },
         {
           "id": "r1_m2",
-          "home": "t10",
-          "away": "t6",
+          "home": "HTQ",
+          "away": "QMQ",
           "result": "away_close",
           "homeAddScore": 24,
           "awayAddScore": 28
         },
         {
           "id": "r1_m3",
-          "home": "t9",
-          "away": "t7",
+          "home": "AFE",
+          "away": "SuR",
           "result": "away_win",
           "homeAddScore": 33,
           "awayAddScore": 38
         },
         {
           "id": "r1_m4",
-          "home": "amp",
-          "away": "t2",
+          "home": "AMP",
+          "away": "SWK",
           "result": "home_win",
           "homeAddScore": 52,
           "awayAddScore": 30
         },
         {
           "id": "r1_m5",
-          "home": "t5",
-          "away": "t3",
+          "home": "AQG",
+          "away": "BRE",
           "result": "away_close",
           "homeAddScore": 30,
           "awayAddScore": 31
@@ -93,40 +93,40 @@
       "matches": [
         {
           "id": "r2_m1",
-          "home": "t5",
-          "away": "t10",
+          "home": "AQG",
+          "away": "HTQ",
           "result": "home_win",
           "homeAddScore": 31,
           "awayAddScore": 16
         },
         {
           "id": "r2_m2",
-          "home": "amp",
-          "away": "t7",
+          "home": "AMP",
+          "away": "SuR",
           "result": "home_win",
           "homeAddScore": 33,
           "awayAddScore": 27
         },
         {
           "id": "r2_m3",
-          "home": "t3",
-          "away": "t8",
+          "home": "BRE",
+          "away": "QmK",
           "result": "home_win",
           "homeAddScore": 36,
           "awayAddScore": 22
         },
         {
           "id": "r2_m4",
-          "home": "t9",
-          "away": "t2",
+          "home": "AFE",
+          "away": "SWK",
           "result": "away_win",
           "homeAddScore": 24,
           "awayAddScore": 36
         },
         {
           "id": "r2_m5",
-          "home": "t4",
-          "away": "t6",
+          "home": "FBI",
+          "away": "QMQ",
           "result": "home_win",
           "homeAddScore": 33,
           "awayAddScore": 24
@@ -138,40 +138,40 @@
       "matches": [
         {
           "id": "r3_m1",
-          "home": "t9",
-          "away": "t4",
+          "home": "AFE",
+          "away": "FBI",
           "result": "home_win",
           "homeAddScore": 50,
           "awayAddScore": 45
         },
         {
           "id": "r3_m2",
-          "home": "amp",
-          "away": "t3",
+          "home": "AMP",
+          "away": "BRE",
           "result": "home_win",
           "homeAddScore": 52,
           "awayAddScore": 30
         },
         {
           "id": "r3_m3",
-          "home": "t10",
-          "away": "t2",
+          "home": "HTQ",
+          "away": "SWK",
           "result": "away_close",
           "homeAddScore": 42,
           "awayAddScore": 46
         },
         {
           "id": "r3_m4",
-          "home": "t6",
-          "away": "t7",
+          "home": "QMQ",
+          "away": "SuR",
           "result": "away_win",
           "homeAddScore": 26,
           "awayAddScore": 41
         },
         {
           "id": "r3_m5",
-          "home": "t5",
-          "away": "t8",
+          "home": "AQG",
+          "away": "QmK",
           "result": "home_win",
           "homeAddScore": 45,
           "awayAddScore": 33
@@ -183,40 +183,40 @@
       "matches": [
         {
           "id": "r4_m1",
-          "home": "t5",
-          "away": "t7",
+          "home": "AQG",
+          "away": "SuR",
           "result": "home_win",
           "homeAddScore": 34,
           "awayAddScore": 25
         },
         {
           "id": "r4_m2",
-          "home": "t9",
-          "away": "t6",
+          "home": "AFE",
+          "away": "QMQ",
           "result": "away_win",
           "homeAddScore": 21,
           "awayAddScore": 33
         },
         {
           "id": "r4_m3",
-          "home": "t3",
-          "away": "t2",
+          "home": "BRE",
+          "away": "SWK",
           "result": "away_win",
           "homeAddScore": 21,
           "awayAddScore": 38
         },
         {
           "id": "r4_m4",
-          "home": "amp",
-          "away": "t8",
+          "home": "AMP",
+          "away": "QmK",
           "result": "home_win",
           "homeAddScore": 43,
           "awayAddScore": 29
         },
         {
           "id": "r4_m5",
-          "home": "t4",
-          "away": "t10",
+          "home": "FBI",
+          "away": "HTQ",
           "result": "home_close",
           "homeAddScore": 39,
           "awayAddScore": 37
@@ -228,40 +228,40 @@
       "matches": [
         {
           "id": "r5_m1",
-          "home": "t4",
-          "away": "t7",
+          "home": "FBI",
+          "away": "SuR",
           "result": "draw",
           "homeAddScore": 46,
           "awayAddScore": 46
         },
         {
           "id": "r5_m2",
-          "home": "t9",
-          "away": "t8",
+          "home": "AFE",
+          "away": "QmK",
           "result": "away_close",
           "homeAddScore": 36,
           "awayAddScore": 37
         },
         {
           "id": "r5_m3",
-          "home": "t3",
-          "away": "t10",
+          "home": "BRE",
+          "away": "HTQ",
           "result": "home_close",
           "homeAddScore": 40,
           "awayAddScore": 38
         },
         {
           "id": "r5_m4",
-          "home": "t6",
-          "away": "t2",
+          "home": "QMQ",
+          "away": "SWK",
           "result": "away_win",
           "homeAddScore": 28,
           "awayAddScore": 39
         },
         {
           "id": "r5_m5",
-          "home": "amp",
-          "away": "t5",
+          "home": "AMP",
+          "away": "AQG",
           "result": "home_win",
           "homeAddScore": 56,
           "awayAddScore": 38
@@ -273,40 +273,40 @@
       "matches": [
         {
           "id": "r6_m1",
-          "home": "t7",
-          "away": "t2",
+          "home": "SuR",
+          "away": "SWK",
           "result": "away_win",
           "homeAddScore": 29,
           "awayAddScore": 39
         },
         {
           "id": "r6_m2",
-          "home": "t9",
-          "away": "t3",
+          "home": "AFE",
+          "away": "BRE",
           "result": "away_win",
           "homeAddScore": 23,
           "awayAddScore": 31
         },
         {
           "id": "r6_m3",
-          "home": "t8",
-          "away": "t6",
+          "home": "QmK",
+          "away": "QMQ",
           "result": "away_close",
           "homeAddScore": 23,
           "awayAddScore": 24
         },
         {
           "id": "r6_m4",
-          "home": "amp",
-          "away": "t10",
+          "home": "AMP",
+          "away": "HTQ",
           "result": "home_win",
           "homeAddScore": 38,
           "awayAddScore": 31
         },
         {
           "id": "r6_m5",
-          "home": "t5",
-          "away": "t4",
+          "home": "AQG",
+          "away": "FBI",
           "result": "away_close",
           "homeAddScore": 30,
           "awayAddScore": 34
@@ -318,40 +318,40 @@
       "matches": [
         {
           "id": "r7_m1",
-          "home": "t9",
-          "away": "amp",
+          "home": "AFE",
+          "away": "AMP",
           "result": "away_win",
           "homeAddScore": 27,
           "awayAddScore": 38
         },
         {
           "id": "r7_m2",
-          "home": "t3",
-          "away": "t7",
+          "home": "BRE",
+          "away": "SuR",
           "result": "home_close",
           "homeAddScore": 35,
           "awayAddScore": 34
         },
         {
           "id": "r7_m3",
-          "home": "t10",
-          "away": "t8",
+          "home": "HTQ",
+          "away": "QmK",
           "result": "away_close",
           "homeAddScore": 29,
           "awayAddScore": 31
         },
         {
           "id": "r7_m4",
-          "home": "t5",
-          "away": "t6",
+          "home": "AQG",
+          "away": "QMQ",
           "result": "away_win",
           "homeAddScore": 23,
           "awayAddScore": 37
         },
         {
           "id": "r7_m5",
-          "home": "t4",
-          "away": "t2",
+          "home": "FBI",
+          "away": "SWK",
           "result": "home_win",
           "homeAddScore": 39,
           "awayAddScore": 28
@@ -363,40 +363,40 @@
       "matches": [
         {
           "id": "r8_m1",
-          "home": "amp",
-          "away": "t4",
+          "home": "AMP",
+          "away": "FBI",
           "result": "away_close",
           "homeAddScore": 50,
           "awayAddScore": 51
         },
         {
           "id": "r8_m2",
-          "home": "t10",
-          "away": "t7",
+          "home": "HTQ",
+          "away": "SuR",
           "result": "away_close",
           "homeAddScore": 40,
           "awayAddScore": 42
         },
         {
           "id": "r8_m3",
-          "home": "t3",
-          "away": "t6",
+          "home": "BRE",
+          "away": "QMQ",
           "result": "away_win",
           "homeAddScore": 26,
           "awayAddScore": 35
         },
         {
           "id": "r8_m4",
-          "home": "t8",
-          "away": "t2",
+          "home": "QmK",
+          "away": "SWK",
           "result": "away_win",
           "homeAddScore": 27,
           "awayAddScore": 42
         },
         {
           "id": "r8_m5",
-          "home": "t9",
-          "away": "t5",
+          "home": "AFE",
+          "away": "AQG",
           "result": "away_win",
           "homeAddScore": 34,
           "awayAddScore": 43
@@ -407,40 +407,40 @@
   "currentPairings": [
     {
       "id": "r9_m1",
-      "home": "amp",
-      "away": "t6",
+      "home": "AMP",
+      "away": "QMQ",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
       "id": "r9_m2",
-      "home": "t5",
-      "away": "t2",
+      "home": "AQG",
+      "away": "SWK",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
       "id": "r9_m3",
-      "home": "t3",
-      "away": "t4",
+      "home": "BRE",
+      "away": "FBI",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
       "id": "r9_m4",
-      "home": "t9",
-      "away": "t10",
+      "home": "AFE",
+      "away": "HTQ",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
     },
     {
       "id": "r9_m5",
-      "home": "t8",
-      "away": "t7",
+      "home": "QmK",
+      "away": "SuR",
       "result": "none",
       "homeAddScore": 0,
       "awayAddScore": 0
